@@ -8,23 +8,24 @@ from langchain_core.prompts import ChatPromptTemplate
 from tools import search_tool
 
 load_dotenv()
-
-llm = ChatOpenAI(model="gpt-4o-mini")
+model="gpt-4o-mini"
+temperature=0 # 0 for deterministic output
+llm = ChatOpenAI(model=model, temperature=temperature)
 # response = llm.invoke("In a few words, what is the fwd pe ratio?")
 # print(response)
 
-# prompt = "You are a smart assistant that can search the web to fetch current metrics."
 prompt = ChatPromptTemplate.from_messages([
     ("system", """
-    You are a smart assistant that searches the web to fetch current data.
+    You are a smart assistant that searches the web to fetch very recent data.
+    Your output must be shorter than 30 words.
     Respond in the format below and don't include any other information:
-    1. Closing Price: <closing_price> as a number without $ or commas
+    1. Closing Price: <closing_price> as a number without $ or commas; data for today or the last market day.
     2. Closing Price Date: <closing_price_date> in YYYYMMDD format
-    3. FY 2026 EPS Estimate: <eps_estimate> as a number without $ or commas
+    3. FY 2026 EPS Estimate: <eps_estimate> as a number without $ or commas; confirm this data with at least 2 sources
     """
     ),
-    ("placeholder", "{chat_history}"),
     ("human", "{query}"),
+    ("ai", "Closing Price: <closing_price>\nClosing Price Date: <closing_price_date>\nFY 2026 EPS Estimate: <eps_estimate>"),
     ("placeholder", "{agent_scratchpad}"),
 ])
 
@@ -40,7 +41,8 @@ agent_executor = AgentExecutor(
     verbose=True,
 )
 
-ticker = input("Enter the stock ticker: ")
+ticker = input("Enter stock symbol: ")
+print(f"Calling AI agent; model={model}, temperature={temperature}")
 raw_response = agent_executor.invoke({"query": f"For {ticker}, what is the most recent closing price and estimated eps for the year 2026?"})
 
 # Extract the closing price, closing date and fy 2026 eps estimate into a json object
