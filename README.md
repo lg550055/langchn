@@ -1,7 +1,9 @@
 ## LangChain
-Test langchain project
+Test langchain project; has two parts:
+1. LangChain demo calling OpenAI to conduct a task
+2. LangGraph demo calling OpenAI to conduct a series of tasks (demo source: https://realpython.com/langgraph-python/)
 
-## Set up
+### Set up
 1. create a virtual environment
 `python3 -m venv venv`
 
@@ -9,7 +11,8 @@ Test langchain project
 `pip install -r requirements.txt`
 
 ### Run
-`python3 main.py`
+- langChain: `python3 main.py`
+- langGraph: TBD
 
 #### Check output
 Check output carefully because LLM tends to hallucinate
