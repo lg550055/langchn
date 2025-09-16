@@ -16,3 +16,12 @@ Test langchain project; has two parts:
 
 #### Check output
 Check output carefully because LLM tends to hallucinate
+
+To get an image of the graph, use (and open the file to see it):
+```
+>>> from graphs.notice_extraction import NOTICE_EXTRACTION_GRAPH
+
+>>> image_data = NOTICE_EXTRACTION_GRAPH.get_graph().draw_mermaid_png()
+>>> with open("notice_extraction_graph.png", mode="wb") as f:
+...     f.write(image_data)
+```
