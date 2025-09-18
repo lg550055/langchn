@@ -64,5 +64,101 @@
         "stock_price": "301.41",
         "date": "2025-09-17",
         "eps_estimate": "8.05"
+    },
+    "GS": {
+        "ticker": "GS",
+        "stock_price": "794.22",
+        "date": "2025-09-17",
+        "eps_estimate": "52.3"
+    },
+    "HD": {
+        "ticker": "HD",
+        "stock_price": "417.00",
+        "date": "2025-09-17",
+        "eps_estimate": "16.28"
+    },
+    "V": {
+        "ticker": "V",
+        "stock_price": "346.20",
+        "date": "2025-09-17",
+        "eps_estimate": "12.84"
+    },
+    "SHW": {
+        "ticker": "SHW",
+        "stock_price": "350.21",
+        "date": "2025-09-17",
+        "eps_estimate": "12.77"
+    },
+    "JPM": {
+        "ticker": "JPM",
+        "stock_price": "311.75",
+        "date": "2025-09-17",
+        "eps_estimate": "20.67"
+    },
+    "AMGN": {
+        "ticker": "AMGN",
+        "stock_price": "274.71",
+        "date": "2025-09-17",
+        "eps_estimate": "21.6"
+    },
+    "CRM": {
+        "ticker": "CRM",
+        "stock_price": "242.21",
+        "date": "2025-09-17",
+        "eps_estimate": "12.7"
+    },
+    "GOOGL": {
+        "ticker": "GOOGL",
+        "stock_price": "249.53",
+        "date": "2025-09-17",
+        "eps_estimate": "10.61"
+    },
+    "COST": {
+        "ticker": "COST",
+        "stock_price": "963.03",
+        "date": "2025-09-17",
+        "eps_estimate": "20.04"
+    },
+    "AVGO": {
+        "ticker": "AVGO",
+        "stock_price": "346.17",
+        "date": "2025-09-17",
+        "eps_estimate": "9.21"
+    },
+    "NFLX": {
+        "ticker": "NFLX",
+        "stock_price": "1,228.50",
+        "date": "2025-09-17",
+        "eps_estimate": "32.39"
+    },
+    "PLTR": {
+        "ticker": "PLTR",
+        "stock_price": "168.33",
+        "date": "2025-09-17",
+        "eps_estimate": "0.85"
+    },
+    "CAT": {
+        "ticker": "CAT",
+        "stock_price": "450.66",
+        "date": "2025-09-17",
+        "eps_estimate": "21.16"
+    },
+    "AXP": {
+        "ticker": "AXP",
+        "stock_price": "336.00",
+        "date": "2025-09-17",
+        "eps_estimate": "17.31"
+    },
+    "MCD": {
+        "ticker": "MCD",
+        "stock_price": "304.97",
+        "date": "2025-09-17",
+        "eps_estimate": "13.36"
+    },
+    "TRV": {
+        "ticker": "TRV",
+        "stock_price": "275.03",
+        "date": "2025-09-17",
+        "eps_estimate": "25.6"
     }
 }

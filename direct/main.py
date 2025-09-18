@@ -158,10 +158,12 @@ class YahooFinanceAgent:
         print(f"Saved data to {cache_file_path}")
         return results
 
-# Example usage
+
 if __name__ == "__main__":
     agent = YahooFinanceAgent()
 
     # Get eps estimates for multiple stocks; case insensitive
-    tickers = ["amzn", "msft", "goog", "aapl", "tsla", "nvda", "meta", "orcl"]
-    all_data = agent.get_multiple_stocks(tickers)
+    dow_top = ["GS", "MSFT", "CAT", "HD", "SHW", "V", "UNH", "AXP", "JPM", "MCD", "TRV"]
+    qqq_top = ["nvda", "msft", "aapl", "amzn", "tsla", "meta", "googl", "cost", "avgo", "nflx", "pltr"]
+    spy_top = ["brk-b", "unh", "meta", "msft", "googl", "amzn", "aapl", "nvda", "tsla", "xom"]
+    all_data = agent.get_multiple_stocks(dow_top)
