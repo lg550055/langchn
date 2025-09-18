@@ -1,10 +1,10 @@
-import requests
 from bs4 import BeautifulSoup, Tag
-import re
-import time
 from datetime import datetime
-import json
 from typing import Dict, Optional
+import json
+import os
+import requests
+import time
 
 class YahooFinanceAgent:
     def __init__(self):
@@ -25,7 +25,7 @@ class YahooFinanceAgent:
             'Cache-Control': 'max-age=0'
         })
     
-    def get_stock_data(self, ticker: str) -> Dict[str, Optional[str]]:
+    def get_stock_data(self, ticker: str, date: str) -> Dict[str, Optional[str]]:
         """
         Get most recent price and eps estimate for a given stock
         Args:
@@ -33,17 +33,10 @@ class YahooFinanceAgent:
         Returns:
             dict: Dictionary containing stock_price, date, and eps_estimate
         """
-        # If today is not a trading day, calculate the most recent trading date
-        # for now, just use today if weekday, else go back to last Friday
-        date = datetime.now()
-        if date.weekday() > 4:  # Saturday or Sunday
-            days_to_subtract = date.weekday() - 4  # Go back to Friday
-            date = date.replace(day=date.day - days_to_subtract)
-
         result = {
             'ticker': ticker,
             'stock_price': None,
-            'date': date.strftime('%Y-%m-%d'),
+            'date': date,
             'eps_estimate': None
         }
         
@@ -131,29 +124,44 @@ class YahooFinanceAgent:
         Returns:
             dict: Dictionary with ticker as key and stock data as value
         """
-        # Wait some time, 2 - 6 sec, to respect Yahoo Finance servers
+        # If today is not a trading day, calculate the most recent trading date
+        # for now, just use today if weekday, else go back to last Friday
+        date = datetime.now()
+        if date.weekday() > 4:  # Saturday or Sunday
+            days_to_subtract = date.weekday() - 4  # Go back to Friday
+            date = date.replace(day=date.day - days_to_subtract)
+        date_str = date.strftime('%Y-%m-%d')
+        # Wait time, 2 - 6 sec, to respect Yahoo Finance servers
         wait_time = 2 + (4 * (time.time() % 1))  # % 1 -> decimal = nanoseconds part
-        results = {}
+        # check if a file named 'date_str.json' exists; if so, load it and assign to results
+        cache_file_path = f"archive/{date_str}.json"
+        if os.path.exists(cache_file_path):
+            with open(cache_file_path, 'r') as f:
+                results = json.load(f)
+            print(f"Loaded {date_str}.json; contains data for {results.keys()}")
+        else:   
+            results = {}
 
         for ticker in tickers:
             ticker = ticker.strip().upper()
+            # if ticker already in results, skip
+            if ticker in results:
+                print(f"Skipping {ticker}, already in results: {results[ticker]}")
+                continue
             print(f"\nFetching data for {ticker}...")
-            results[ticker] = self.get_stock_data(ticker)
+            results[ticker] = self.get_stock_data(ticker, date_str)
             time.sleep(wait_time)
 
+        # Save results to a file named 'date_str.json'
+        with open(cache_file_path, 'w') as f:
+            json.dump(results, f, indent=4)
+        print(f"Saved data to {cache_file_path}")
         return results
 
 # Example usage
 if __name__ == "__main__":
     agent = YahooFinanceAgent()
 
-    # Get eps estimates for single stock, case insensitive
-    ticker = "lulu"
-    ticker = ticker.strip().upper()
-    data = agent.get_stock_data(ticker)
-    print(f"Data for {ticker}:")
-    print(json.dumps(data, indent=2))
-
     # Get eps estimates for multiple stocks; case insensitive
-    # tickers = ["AAPL", "MSFT", "GOOGL"]
-    # all_data = agent.get_multiple_stocks(tickers)
+    tickers = ["amzn", "msft", "goog", "aapl", "tsla", "nvda", "meta", "orcl"]
+    all_data = agent.get_multiple_stocks(tickers)

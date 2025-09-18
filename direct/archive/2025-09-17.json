@@ -1,0 +1,68 @@
+{
+    "AAPL": {
+        "ticker": "AAPL",
+        "stock_price": "238.99",
+        "date": "2025-09-17",
+        "eps_estimate": "7.97"
+    },
+    "GOOG": {
+        "ticker": "GOOG",
+        "stock_price": "249.85",
+        "date": "2025-09-17",
+        "eps_estimate": "10.65"
+    },
+    "ET": {
+        "ticker": "ET",
+        "stock_price": "17.53",
+        "date": "2025-09-17",
+        "eps_estimate": "1.57"
+    },
+    "UNH": {
+        "ticker": "UNH",
+        "stock_price": "341.61",
+        "date": "2025-09-17",
+        "eps_estimate": "18.08"
+    },
+    "VZ": {
+        "ticker": "VZ",
+        "stock_price": "44.21",
+        "date": "2025-09-17",
+        "eps_estimate": "4.85"
+    },
+    "AMZN": {
+        "ticker": "AMZN",
+        "stock_price": "231.62",
+        "date": "2025-09-17",
+        "eps_estimate": "7.56"
+    },
+    "MSFT": {
+        "ticker": "MSFT",
+        "stock_price": "510.02",
+        "date": "2025-09-17",
+        "eps_estimate": "18.2"
+    },
+    "TSLA": {
+        "ticker": "TSLA",
+        "stock_price": "425.86",
+        "date": "2025-09-17",
+        "eps_estimate": "2.48"
+    },
+    "NVDA": {
+        "ticker": "NVDA",
+        "stock_price": "170.29",
+        "date": "2025-09-17",
+        "eps_estimate": "6.34"
+    },
+    "META": {
+        "ticker": "META",
+        "stock_price": "775.72",
+        "date": "2025-09-17",
+        "eps_estimate": "29.97"
+    },
+    "ORCL": {
+        "ticker": "ORCL",
+        "stock_price": "301.41",
+        "date": "2025-09-17",
+        "eps_estimate": "8.05"
+    }
+}
