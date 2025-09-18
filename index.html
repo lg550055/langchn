@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>P/E of stocks adding to 50%+ of market</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="./direct/archive/latest.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>📈 P/E of stocks adding to 50%+ of market</h1>
+        
+        <div id="loadingMessage" class="loading">
+            Loading financial data...
+        </div>
+
+        <div id="noData" class="no-data" style="display: none;">
+            Please wait while financial data loads...
+        </div>
+
+        <table id="dataTable">
+            <thead>
+                <tr>
+                    <th class="sortable" data-sort="symbol">Stock</th>
+                    <th class="sortable" data-sort="price">Price</th>
+                    <th>Fwd EPS</th>
+                    <th class="sortable" data-sort="pe">Fwd P/E</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        let currentData = {};
+        let currentSort = { column: null, direction: 'asc' };
+
+        // Load JSON data from imported script
+        function loadJSONData() {
+            try {
+                if (typeof financialData !== 'undefined') {
+                    currentData = financialData;
+                    // Parse numeric fields (price may have comma); to avoid double parsing later
+                    Object.values(currentData).forEach(item => {
+                        item.stock_price = parseFloat(item.stock_price.replace(/,/g, ''));
+                        item.eps_estimate = parseFloat(item.eps_estimate);
+                    });
+                    populateTable(currentData);
+                } else {
+                    throw new Error('Financial data not found. Make sure latest.js is properly loaded.');
+                }
+            } catch (error) {
+                console.error('Error loading JSON data:', error);
+                document.getElementById('loadingMessage').style.display = 'none';
+                document.getElementById('noData').innerHTML = 'Error loading data from ./direct/archive/latest.js<br>Make sure the file exists and contains: var financialData = { ... };';
+                document.getElementById('noData').style.display = 'block';
+            }
+        }
+
+        // Add click listeners to sortable headers
+        document.querySelectorAll('th.sortable').forEach(header => {
+            header.addEventListener('click', () => {
+                const sortColumn = header.dataset.sort;
+                sortTable(sortColumn);
+            });
+        });
+
+        function sortTable(column) {
+            // Determine sort direction
+            if (currentSort.column === column) {
+                currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
+            } else {
+                currentSort.column = column;
+                currentSort.direction = 'asc';
+            }
+
+            // Update header indicators
+            document.querySelectorAll('th').forEach(th => {
+                th.classList.remove('sort-asc', 'sort-desc');
+            });
+            
+            const currentHeader = document.querySelector(`th[data-sort="${column}"]`);
+            currentHeader.classList.add(currentSort.direction === 'asc' ? 'sort-asc' : 'sort-desc');
+
+            // Sort the data
+            const entries = Object.entries(currentData);
+            entries.sort((a, b) => {
+                let valueA, valueB;
+
+                switch(column) {
+                    case 'symbol':
+                        valueA = a[0];
+                        valueB = b[0];
+                        break;
+                    case 'price':
+                        valueA = a[1].stock_price;
+                        valueB = b[1].stock_price;
+                        break;
+                    case 'pe':
+                        const priceA = a[1].stock_price;
+                        const epsA = a[1].eps_estimate;
+                        const priceB = b[1].stock_price;
+                        const epsB = b[1].eps_estimate;
+                        valueA = epsA !== 0 ? priceA / epsA : Infinity;
+                        valueB = epsB !== 0 ? priceB / epsB : Infinity;
+                        break;
+                }
+
+                if (typeof valueA === 'string') {
+                    return currentSort.direction === 'asc' 
+                        ? valueA.localeCompare(valueB)
+                        : valueB.localeCompare(valueA);
+                } else {
+                    return currentSort.direction === 'asc' 
+                        ? valueA - valueB
+                        : valueB - valueA;
+                }
+            });
+
+            // Rebuild table with sorted data
+            const sortedData = {};
+            entries.forEach(([symbol, data]) => {
+                sortedData[symbol] = data;
+            });
+            
+            populateTable(sortedData, false);
+        }
+
+        function populateTable(data, resetSort = true) {
+            const tableBody = document.getElementById('tableBody');
+            tableBody.innerHTML = '';
+
+            // Reset sort indicators if this is initial load
+            if (resetSort) {
+                currentSort = { column: null, direction: 'asc' };
+                document.querySelectorAll('th').forEach(th => {
+                    th.classList.remove('sort-asc', 'sort-desc');
+                });
+            }
+
+            // Convert data to array - keep original order if already sorted
+            const entries = resetSort 
+                ? Object.entries(data).sort((a, b) => a[0].localeCompare(b[0]))
+                : Object.entries(data);
+
+            entries.forEach(([symbol, stockData]) => {
+                const row = document.createElement('tr');
+                row.className = 'fade-in';
+                const price = stockData.stock_price;
+                const eps = stockData.eps_estimate;
+                const pe = eps !== 0 ? (price / eps).toFixed(1) : 'N/A';
+
+                row.innerHTML = `
+                    <td class="symbol">${symbol}</td>
+                    <td class="price">${price.toFixed(2)}</td>
+                    <td class="eps">${eps.toFixed(2)}</td>
+                    <td class="pe">${pe}</td>
+                `;
+                
+                tableBody.appendChild(row);
+            });
+
+            // Hide loading and show table
+            document.getElementById('loadingMessage').style.display = 'none';
+            document.getElementById('noData').style.display = 'none';
+            document.getElementById('dataTable').style.display = 'table';
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            loadJSONData();
+        });
+    </script>
+</body>
+</html>

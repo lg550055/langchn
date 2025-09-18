@@ -56,27 +56,7 @@ class YahooFinanceAgent:
                 print(f"===== Price element not found for {ticker}")
             
             # Extract date from market time notice -only has time; using today as noted above
-            # date_element = soup.find('div', {'slot': 'marketTimeNotice'})
-            # if date_element:
-            #     # Extract date from the text content
-            #     date_text = date_element.text.strip()
-            #     print(f"Raw date text: {date_text}")
-            #     # The text usually contains date info, parse it to get YYYY-MM-DD format
-            #     try:
-            #         # Common formats: "As of 4:00PM EST, 12/15/2023" or similar
-            #         date_match = re.search(r'(\d{1,2})/(\d{1,2})/(\d{4})', date_text)
-            #         if date_match:
-            #             month, day, year = date_match.groups()
-            #             result['date'] = f"{year}-{month.zfill(2)}-{day.zfill(2)}"
-            #         else:
-            #             print("Date format not recognized, using current date.")
-            #             result['date'] = datetime.now().strftime('%Y-%m-%d')
-            #     except:
-            #         print("Failed to parse date, using current date.")
-            #         result['date'] = datetime.now().strftime('%Y-%m-%d')
-            # else:
-            #     print("Date element not found, using current date.")
-            #     result['date'] = datetime.now().strftime('%Y-%m-%d')
+            # block deleted
             
             # Extract earnings estimate from earnings estimate section
             earnings_section = soup.find('section', {'data-testid': 'earningsEstimate'})
@@ -116,7 +96,7 @@ class YahooFinanceAgent:
         return result
 
 
-    def get_multiple_stocks(self, tickers: list) -> Dict[str, Dict]:
+    def get_multiple_stocks(self, tickers: list) -> None:
         """
         Get data for multiple stock tickers
         Args:
@@ -138,10 +118,11 @@ class YahooFinanceAgent:
         if os.path.exists(cache_file_path):
             with open(cache_file_path, 'r') as f:
                 results = json.load(f)
-            print(f"Loaded {date_str}.json; contains data for {results.keys()}")
+            print(f"Loaded {date_str}.json; contains {len(results)} entries")
         else:   
             results = {}
 
+        new_data_count = 0
         for ticker in tickers:
             ticker = ticker.strip().upper()
             # if ticker already in results, skip
@@ -150,20 +131,33 @@ class YahooFinanceAgent:
                 continue
             print(f"\nFetching data for {ticker}...")
             results[ticker] = self.get_stock_data(ticker, date_str)
+            new_data_count += 1
             time.sleep(wait_time)
 
-        # Save results to a file named 'date_str.json'
+        # Only save if new data was fetched
+        if new_data_count == 0:
+            print("No new data fetched; all tickers already in results.")
+            return
+        # Save results to a file named '<date_str>.json'
         with open(cache_file_path, 'w') as f:
             json.dump(results, f, indent=4)
+        # overwrite 'archive/latest.js'
         print(f"Saved data to {cache_file_path}")
-        return results
+        with open('archive/latest.js', 'w') as latest_file:
+            latest_file.write('var financialData = ')
+            json.dump(results, latest_file, indent=4)
+            latest_file.write(';')
+        print("Updated archive/latest.js")
 
 
 if __name__ == "__main__":
     agent = YahooFinanceAgent()
 
     # Get eps estimates for multiple stocks; case insensitive
-    dow_top = ["GS", "MSFT", "CAT", "HD", "SHW", "V", "UNH", "AXP", "JPM", "MCD", "TRV"]
-    qqq_top = ["nvda", "msft", "aapl", "amzn", "tsla", "meta", "googl", "cost", "avgo", "nflx", "pltr"]
+    dow = ["gs", "msft", "cat", "hd", "shw", "v", "unh", "axp", "jpm", "mcd", "trv", "crm", "wmt", "vz"]
+    qqq = ["nvda", "msft", "aapl", "amzn", "tsla", "meta", "googl", "cost", "avgo", "nflx", "pltr"]
     spy_top = ["brk-b", "unh", "meta", "msft", "googl", "amzn", "aapl", "nvda", "tsla", "xom"]
-    all_data = agent.get_multiple_stocks(dow_top)
+    other = ["et", "lulu", "nflx"]
+    all = list(set(dow + qqq + spy_top + other))
+    agent.get_multiple_stocks(other)
+    # agent.get_stock_data("nflx", "2025-09-18")

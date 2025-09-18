@@ -1,0 +1,170 @@
+{
+    "GS": {
+        "ticker": "GS",
+        "stock_price": "804.31",
+        "date": "2025-09-18",
+        "eps_estimate": "52.3"
+    },
+    "MSFT": {
+        "ticker": "MSFT",
+        "stock_price": "508.45",
+        "date": "2025-09-18",
+        "eps_estimate": "18.2"
+    },
+    "CAT": {
+        "ticker": "CAT",
+        "stock_price": "466.96",
+        "date": "2025-09-18",
+        "eps_estimate": "21.16"
+    },
+    "HD": {
+        "ticker": "HD",
+        "stock_price": "417.48",
+        "date": "2025-09-18",
+        "eps_estimate": "16.3"
+    },
+    "SHW": {
+        "ticker": "SHW",
+        "stock_price": "349.56",
+        "date": "2025-09-18",
+        "eps_estimate": "12.76"
+    },
+    "V": {
+        "ticker": "V",
+        "stock_price": "338.18",
+        "date": "2025-09-18",
+        "eps_estimate": "12.84"
+    },
+    "UNH": {
+        "ticker": "UNH",
+        "stock_price": "334.82",
+        "date": "2025-09-18",
+        "eps_estimate": "18.08"
+    },
+    "AXP": {
+        "ticker": "AXP",
+        "stock_price": "341.67",
+        "date": "2025-09-18",
+        "eps_estimate": "17.31"
+    },
+    "JPM": {
+        "ticker": "JPM",
+        "stock_price": "313.23",
+        "date": "2025-09-18",
+        "eps_estimate": "20.67"
+    },
+    "MCD": {
+        "ticker": "MCD",
+        "stock_price": "301.14",
+        "date": "2025-09-18",
+        "eps_estimate": "13.36"
+    },
+    "TRV": {
+        "ticker": "TRV",
+        "stock_price": "277.90",
+        "date": "2025-09-18",
+        "eps_estimate": "25.6"
+    },
+    "NVDA": {
+        "ticker": "NVDA",
+        "stock_price": "176.24",
+        "date": "2025-09-18",
+        "eps_estimate": "6.34"
+    },
+    "AAPL": {
+        "ticker": "AAPL",
+        "stock_price": "237.88",
+        "date": "2025-09-18",
+        "eps_estimate": "7.97"
+    },
+    "AMZN": {
+        "ticker": "AMZN",
+        "stock_price": "231.23",
+        "date": "2025-09-18",
+        "eps_estimate": "7.56"
+    },
+    "TSLA": {
+        "ticker": "TSLA",
+        "stock_price": "416.85",
+        "date": "2025-09-18",
+        "eps_estimate": "2.43"
+    },
+    "META": {
+        "ticker": "META",
+        "stock_price": "780.25",
+        "date": "2025-09-18",
+        "eps_estimate": "29.98"
+    },
+    "GOOGL": {
+        "ticker": "GOOGL",
+        "stock_price": "252.03",
+        "date": "2025-09-18",
+        "eps_estimate": "10.62"
+    },
+    "COST": {
+        "ticker": "COST",
+        "stock_price": "952.36",
+        "date": "2025-09-18",
+        "eps_estimate": "20.05"
+    },
+    "AVGO": {
+        "ticker": "AVGO",
+        "stock_price": "345.35",
+        "date": "2025-09-18",
+        "eps_estimate": "9.21"
+    },
+    "NFLX": {
+        "ticker": "NFLX",
+        "stock_price": "1,207.78",
+        "date": "2025-09-18",
+        "eps_estimate": "32.39"
+    },
+    "PLTR": {
+        "ticker": "PLTR",
+        "stock_price": "176.97",
+        "date": "2025-09-18",
+        "eps_estimate": "0.85"
+    },
+    "BRK-B": {
+        "ticker": "BRK-B",
+        "stock_price": "490.50",
+        "date": "2025-09-18",
+        "eps_estimate": "21.7"
+    },
+    "XOM": {
+        "ticker": "XOM",
+        "stock_price": "113.93",
+        "date": "2025-09-18",
+        "eps_estimate": "7.49"
+    },
+    "ET": {
+        "ticker": "ET",
+        "stock_price": "17.44",
+        "date": "2025-09-18",
+        "eps_estimate": "1.57"
+    },
+    "VZ": {
+        "ticker": "VZ",
+        "stock_price": "43.67",
+        "date": "2025-09-18",
+        "eps_estimate": "4.85"
+    },
+    "LULU": {
+        "ticker": "LULU",
+        "stock_price": "169.76",
+        "date": "2025-09-18",
+        "eps_estimate": "13.43"
+    },
+    "CRM": {
+        "ticker": "CRM",
+        "stock_price": "244.28",
+        "date": "2025-09-18",
+        "eps_estimate": "12.67"
+    },
+    "WMT": {
+        "ticker": "WMT",
+        "stock_price": "103.60",
+        "date": "2025-09-18",
+        "eps_estimate": "2.94"
+    }
+}
