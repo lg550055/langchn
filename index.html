@@ -19,6 +19,12 @@
             Please wait while financial data loads...
         </div>
 
+        <div class="filter-buttons" id="filterButtons" style="display: none;">
+            <button id="allBtn" class="filter-btn active" onclick="filterStocks('all')">All Stocks</button>
+            <button id="qqqBtn" class="filter-btn" onclick="filterStocks('qqq')">QQQ Top</button>
+            <button id="dowBtn" class="filter-btn" onclick="filterStocks('dow')">DOW Top</button>
+        </div>
+
         <table id="dataTable">
             <thead>
                 <tr>
@@ -35,19 +41,49 @@
 
     <script>
         let currentData = {};
+        let allData = {};
         let currentSort = { column: null, direction: 'asc' };
+
+        // Filter lists
+        const filters = {
+            qqq: ["AAPL", "NVDA", "MSFT", "GOOGL", "META", "TSLA"],
+            dow: ["GS", "MSFT", "HD", "V", "SHW", "UNH"]
+        };
+
+        function filterStocks(filterType) {
+            // Update button states
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(filterType + 'Btn').classList.add('active');
+
+            if (filterType === 'all') {
+                currentData = allData;
+            } else {
+                const filterList = filters[filterType];
+                currentData = {};
+                filterList.forEach(symbol => {
+                    const upperSymbol = symbol.toUpperCase();
+                    if (allData[upperSymbol]) {
+                        currentData[upperSymbol] = allData[upperSymbol];
+                    }
+                });
+            }
+            // Reset sort and populate table
+            populateTable(currentData, true);
+        }
 
         // Load JSON data from imported script
         function loadJSONData() {
             try {
                 if (typeof financialData !== 'undefined') {
                     currentData = financialData;
+                    allData = financialData;
                     // Parse numeric fields (price may have comma); to avoid double parsing later
-                    Object.values(currentData).forEach(item => {
+                    Object.values(allData).forEach(item => {
                         item.stock_price = parseFloat(item.stock_price.replace(/,/g, ''));
                         item.eps_estimate = parseFloat(item.eps_estimate);
                     });
-                    populateTable(currentData);
+                    populateTable(allData);
+                    document.getElementById('filterButtons').style.display = 'block';
                 } else {
                     throw new Error('Financial data not found. Make sure latest.js is properly loaded.');
                 }
