@@ -29,9 +29,9 @@
             <thead>
                 <tr>
                     <th class="sortable" data-sort="symbol">Stock</th>
-                    <th class="sortable" data-sort="price">Price</th>
-                    <th>Fwd EPS</th>
-                    <th class="sortable" data-sort="pe">Fwd P/E</th>
+                    <th class="sortable right-align" data-sort="price">Price</th>
+                    <th class="right-align">Fwd EPS</th>
+                    <th class="sortable right-align" data-sort="pe">Fwd P/E</th>
                 </tr>
             </thead>
             <tbody id="tableBody">
@@ -190,9 +190,9 @@
 
                 row.innerHTML = `
                     <td class="symbol">${symbol}</td>
-                    <td class="price">${price.toFixed(2)}</td>
-                    <td class="eps">${eps.toFixed(2)}</td>
-                    <td class="pe">${pe}</td>
+                    <td class="price right-align">${price.toFixed(2)}</td>
+                    <td class="eps right-align">${eps.toFixed(2)}</td>
+                    <td class="pe right-align">${pe}</td>
                 `;
                 
                 tableBody.appendChild(row);
