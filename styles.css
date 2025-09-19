@@ -1,24 +1,32 @@
+:root {
+    --primary-color: #667eea;
+    --secondary-color: #764ba2;
+    --text-color: lightcyan;
+    --bg-color: navy;
+    --highlight-bg: lightseagreen;
+}
+
 body {
+    color: var(--text-color);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 20px;
-    background: #667eea;
+    background: var(--bg-color);
     min-height: 100vh;
 }
 .container {
     max-width: 1200px;
     margin: 0 auto;
-    background: radial-gradient(#6a42a0, #667eea);
+    background: rgba(0, 0, 0, 0.1);
     border-radius: 15px;
-    padding: 20px;
+    padding: 2rem;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
 }
 h1 {
     text-align: center;
     margin-bottom: 2rem;
     font-size: 2rem;
-    font-weight: 400;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-weight: 500;
 }
 
 .filter-buttons {
@@ -31,93 +39,87 @@ h1 {
 }
 .filter-btn {
     padding: 10px 20px;
-    border: 2px solid #667eea;
+    border: 2px solid var(--primary-color);
     background: transparent;
-    color: #667eea;
-    border-radius: 20px;
+    color: var(--text-color);
+    border-radius: 10px;
     cursor: pointer;
     font-weight: 500;
     transition: all 0.3s ease;
     font-size: 0.9em;
 }
 .filter-btn:hover {
-    background: #667eea;
-    color: white;
+    background: var(--primary-color);
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
 }
 .filter-btn.active {
-    background: linear-gradient(45deg, #667eea, #764ba2);
-    color: white;
-    border-color: #764ba2;
+    background: var(--highlight-bg);
 }
 .filter-btn.active:hover {
-    background: linear-gradient(45deg, #5a6fd8, #6a42a0);
+    background: var(--primary-color);
 }
 
 table {
     width: 100%;
     max-width: 500px;
-    margin: 20px auto;
+    margin: 2rem auto;
     border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
 }
 th {
-    background: radial-gradient(#667eea, #764ba2);
-    color: white;
+    background: var(--highlight-bg);
     padding: 10px;
     text-align: left;
-    font-weight: 600;
     letter-spacing: 0.5px;
-    font-size: 0.9em;
+    /* font-size: 0.9em; */
+    font-weight: 500;
     cursor: pointer;
     position: relative;
     user-select: none;
 }
 th:hover {
-    background: radial-gradient(#5a6fd8, #6a42a0);
+    background: var(--primary-color);
 }
 th.sortable::after {
-    content: ' ↕️';
+    content: ' ⇅';
     opacity: 0.5;
     margin-left: 8px;
 }
 th.sort-asc::after {
-    content: ' ↑';
+    content: ' ⇩';
     opacity: 1;
-    color: #fff;
 }
 th.sort-desc::after {
-    content: ' ↓';
+    content: ' ⇧';
     opacity: 1;
-    color: #fff;
 }
 th.right-align, td.right-align {
     text-align: right;
+}
+tr:nth-child(even) {
+    background: var(--bg-color);
 }
 td {
     padding: 10px;
 }
 
 tr:hover td {
-    background-color: lightseagreen;
+    background-color: var(--primary-color);
 }
 
-.symbol {
-    color: black;
-    font-size: 1.1em;
+/* .symbol {
     font-weight: 600;
-}
-.price {
+} */
+/* .price {
     color: black;
-}
-.eps {
+} */
+/* .eps {
     font-weight: 500;
-}
+} */
 .pe {
     font-style: italic;
-    font-weight: 500;
 }
 
 #dataTable {
@@ -135,7 +137,6 @@ tr:hover td {
 .loading {
     text-align: center;
     padding: 20px;
-    color: #667eea;
     font-weight: 500;
 }
 

@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>P/E of stocks adding to 50%+ of market</title>
+    <title>P/E of stocks representing 50%+ of market</title>
     <link rel="stylesheet" href="styles.css">
     <script src="./direct/archive/latest.js"></script>
 </head>
 <body>
     <div class="container">
-        <h1>📈 P/E of stocks adding to 50%+ of market</h1>
+        <h1>📈 Fwd p/e of stocks representing 50%+ of market</h1>
         
         <div id="loadingMessage" class="loading">
             Loading financial data...
@@ -22,7 +22,7 @@
         <div class="filter-buttons" id="filterButtons" style="display: none;">
             <button id="allBtn" class="filter-btn active" onclick="filterStocks('all')">All Stocks</button>
             <button id="qqqBtn" class="filter-btn" onclick="filterStocks('qqq')">QQQ Top</button>
-            <button id="dowBtn" class="filter-btn" onclick="filterStocks('dow')">DOW Top</button>
+            <button id="dowBtn" class="filter-btn" onclick="filterStocks('dow')">DOW</button>
         </div>
 
         <table id="dataTable">
@@ -46,8 +46,8 @@
 
         // Filter lists
         const filters = {
-            qqq: ["AAPL", "NVDA", "MSFT", "GOOGL", "META", "TSLA"],
-            dow: ["GS", "MSFT", "HD", "V", "SHW", "UNH"]
+            qqq: ["AAPL", "NVDA", "MSFT", "GOOGL", "META", "TSLA", "AMZN", "AVGO", "NFLX", "COST", "PLTR"],
+            dow: ["GS", "MSFT", "HD", "V", "SHW", "UNH", "CAT", "SHW", "AXP", "JPM", "MCD", "TRV", "WMT", "DIS", "IBM", "MMM", "NKE", "KO", "NVDA", "CVX", "BA", "JNJ", "PG", "AAPL", "AMZN", "CRM", "VZ"]
         };
 
         function filterStocks(filterType) {
