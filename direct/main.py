@@ -1,10 +1,16 @@
 from bs4 import BeautifulSoup, Tag
 from datetime import datetime
+from enum import StrEnum, auto
 from typing import Dict, Optional
 import json
 import os
 import requests
 import time
+
+class Index(StrEnum):
+    DOW = auto()
+    QQQ = auto()
+    # SPY = auto()
 
 class YahooFinanceAgent:
     def __init__(self):
@@ -149,14 +155,14 @@ class YahooFinanceAgent:
         return comp
     
 
-    def get_comp(self, indx: str = 'dow') -> None:
+    def get_comp(self, indx: Index) -> None:
         comp = []
         comp_file = f"archive/{indx}_comp.json"
-        # check if file is less than 1 day old; if so, skip
+        # check if comp file is less than 8 hrs old; if so, skip
         if os.path.exists(comp_file):
             file_mtime = os.path.getmtime(comp_file)
-            if (time.time() - file_mtime) < (1 * 24 * 60 * 60):
-                print("File is less than 1 days old; skipping fetch.")
+            if (time.time() - file_mtime) < (8 * 60 * 60):
+                print("File is less than 8 hrs old; skipped fetch - ", file_mtime)
                 return
         try:
             print(f"\nFetching {indx} components...")
@@ -205,13 +211,13 @@ class YahooFinanceAgent:
         return
 
 
-    def get_multiple_stocks(self, tickers: list) -> None:
+    def get_multiple_stocks(self, tickers: list, wait_time: float) -> None:
         """
-        Get data for multiple stock tickers
+        Get data for multiple stocks and save to a dated and latest JSON file
         Args:
             tickers (list): List of stock symbols; case insensitive
         Returns:
-            dict: Dictionary with ticker as key and stock data as value
+            None
         """
         # If today is not a trading day, calculate the most recent trading date
         # for now, just use today if weekday, else go back to last Friday
@@ -220,8 +226,6 @@ class YahooFinanceAgent:
             days_to_subtract = date.weekday() - 4  # Go back to Friday
             date = date.replace(day=date.day - days_to_subtract)
         date_str = date.strftime('%Y-%m-%d')
-        # Wait time, 2 - 6 sec, to respect Yahoo Finance servers
-        wait_time = 2 + (4 * (time.time() % 1))  # % 1 -> decimal = nanoseconds part
         # check if a file named 'date_str.json' exists; if so, load it and assign to results
         cache_file_path = f"archive/{date_str}.json"
         if os.path.exists(cache_file_path):
@@ -250,8 +254,8 @@ class YahooFinanceAgent:
         # Save results to file named 'date_str.json'
         with open(cache_file_path, 'w') as f:
             json.dump(results, f, indent=4)
-        # overwrite 'archive/latest.js'
         print(f"Saved data to {cache_file_path}")
+        # overwrite 'archive/latest.js'
         with open('archive/latest.js', 'w') as latest_file:
             latest_file.write('var financialData = ')
             json.dump(results, latest_file, indent=4)
@@ -261,12 +265,16 @@ class YahooFinanceAgent:
 
 if __name__ == "__main__":
     agent = YahooFinanceAgent()
+    # Wait time, 2 - 6 sec, to respect server load
+    wait_time = 2 + (4 * (time.time() % 1))  # % 1 -> decimal = nanoseconds part
 
     dow = ["gs", "msft", "cat", "hd", "shw", "v", "unh", "axp", "jpm", "mcd", "amgn", "trv", "crm", "nvda", "aapl", "amzn", "wmt", "dis", "nke", "vz"]
     qqq = ["nvda", "msft", "aapl", "amzn", "tsla", "meta", "googl", "cost", "avgo", "nflx", "pltr"]
     spy_top = ["brk-b", "xom"]
     other = ["et", "lulu", "epd", "wmb", "kmi"]
     all = list(set(dow + qqq + spy_top + other))
-    # agent.get_multiple_stocks(all)
-    # agent.get_stock_data("nflx")
-    agent.get_comp("dow")
+    # agent.get_stock_data("nflx")  # test single stock
+    agent.get_multiple_stocks(all, wait_time)
+    agent.get_comp(Index.DOW)
+    time.sleep(wait_time)
+    agent.get_comp(Index.QQQ)
