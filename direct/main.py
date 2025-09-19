@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup, Tag
 from datetime import datetime
 from typing import Dict, Optional
+import gzip
 import json
 import os
 import requests
@@ -9,7 +10,7 @@ import time
 class YahooFinanceAgent:
     def __init__(self):
         self.session = requests.Session()
-        # Set comprehensive headers to mimic a real browser
+        # Set comprehensive headers
         self.session.headers.update({
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
@@ -96,6 +97,70 @@ class YahooFinanceAgent:
         return result
 
 
+    def get_qqq_comp(self) -> None:
+        comp = []
+        # check if 'archive/qqq_comp.json' is less than 1 day old; if so, skip
+        if os.path.exists('archive/qqq_comp.json'):
+            file_mtime = os.path.getmtime('archive/qqq_comp.json')
+            if (time.time() - file_mtime) < (1 * 24 * 60 * 60):
+                print("qqq_comp.json is less than 1 days old; skipping fetch.")
+                return
+        try:
+            print("\nFetching QQQ components...")
+            url = "https://www.slickcharts.com/nasdaq100"
+            # update headers for this request to only Accept-Encoding: identity
+            self.session.headers.update({
+                'Accept-Encoding': 'identity'
+            })
+            response = self.session.get(url)
+            response.raise_for_status()
+            print("Page fetched; code: ", response.status_code, type(response.content), response.text[:10], response.headers.get('Content-Type'), response.encoding)
+            
+            soup = BeautifulSoup(response.text, 'html.parser')
+            table = soup.find(id='companyListComponent')
+            if not table:
+                print("Table not found.")
+                return
+            # 'table' has 'tr' children, half have 'id' attributes and half have 'style' attributes; keep only those with 'id'
+            if type(table) is Tag:
+                rows = [row for row in table.find_all('tr') if type(row) is Tag and row.get('id')]
+                print(f"Found {len(rows)} rows")
+                # from each row, get the 3rd an 4th 'td' children; 3rd is an 'a' tag whose contents is the ticker, 4th is the weight
+                for row in rows:
+                    cells = row.find_all('td')
+                    if len(cells) > 3:
+                        ticker = cells[2].get_text().strip()
+                        weight = cells[3].get_text().strip()
+                        comp.append((ticker, weight))
+                # consolidate GOOGL and GOOG into one entry
+                googl = next((item for item in comp if item[0] == 'GOOGL'), None)
+                goog = next((item for item in comp if item[0] == 'GOOG'), None)
+                if googl and goog:
+                    combined_weight = float(googl[1].replace('%', '')) + float(goog[1].replace('%', ''))
+                    comp = [item for item in comp if item[0] not in ('GOOGL', 'GOOG')]
+                    # insert combined GOOGL entry right before the next largest weight
+                    inserted = False
+                    for i, item in enumerate(comp):
+                        if float(item[1].replace('%', '')) < combined_weight:
+                            comp.insert(i, ('GOOGL', f"{combined_weight:.2f}%"))
+                            inserted = True
+                            break
+                    if not inserted:
+                        comp.append(('GOOGL', f"{combined_weight:.2f}%"))
+            else:
+                print("Table is not a Tag.")
+
+        except requests.RequestException as e:
+            print(f"Error fetching data: {e}")
+        except Exception as e:
+            print(f"Error parsing data: {e}")
+        # save to qqq_comp.json in format [{"AAPL": "12.34%"}]
+        with open('archive/qqq_comp.json', 'w') as f:
+            json.dump({ticker: weight for ticker, weight in comp}, f)
+        print(f"Top QQQ components: ", comp[:9])
+        return
+
+
     def get_multiple_stocks(self, tickers: list) -> None:
         """
         Get data for multiple stock tickers
@@ -158,5 +223,6 @@ if __name__ == "__main__":
     spy_top = ["brk-b", "xom"]
     other = ["et", "lulu"]
     all = list(set(dow + qqq + spy_top + other))
-    agent.get_multiple_stocks(other)
+    # agent.get_multiple_stocks(other)
     # agent.get_stock_data("nflx", "2025-09-18")
+    agent.get_qqq_comp()
