@@ -153,11 +153,10 @@ class YahooFinanceAgent:
 if __name__ == "__main__":
     agent = YahooFinanceAgent()
 
-    # Get eps estimates for multiple stocks; case insensitive
-    dow = ["gs", "msft", "cat", "hd", "shw", "v", "unh", "axp", "jpm", "mcd", "trv", "crm", "wmt", "vz"]
+    dow = ["gs", "msft", "cat", "hd", "shw", "v", "unh", "axp", "jpm", "mcd", "amgn", "trv", "crm", "nvda", "aapl", "amzn", "wmt", "dis", "nke", "vz"]
     qqq = ["nvda", "msft", "aapl", "amzn", "tsla", "meta", "googl", "cost", "avgo", "nflx", "pltr"]
-    spy_top = ["brk-b", "unh", "meta", "msft", "googl", "amzn", "aapl", "nvda", "tsla", "xom"]
-    other = ["et", "lulu", "nflx"]
+    spy_top = ["brk-b", "xom"]
+    other = ["et", "lulu"]
     all = list(set(dow + qqq + spy_top + other))
     agent.get_multiple_stocks(other)
     # agent.get_stock_data("nflx", "2025-09-18")
