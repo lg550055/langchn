@@ -1,7 +1,6 @@
 from bs4 import BeautifulSoup, Tag
 from datetime import datetime
 from typing import Dict, Optional
-import gzip
 import json
 import os
 import requests
@@ -26,19 +25,17 @@ class YahooFinanceAgent:
             'Cache-Control': 'max-age=0'
         })
     
-    def get_stock_data(self, ticker: str, date: str) -> Dict[str, Optional[str]]:
+    def get_stock_data(self, ticker: str) -> Dict[str, Optional[str]]:
         """
         Get most recent price and eps estimate for a given stock
         Args:
             ticker (str): Stock symbol
         Returns:
-            dict: Dictionary containing stock_price, date, and eps_estimate
+            dict: Dictionary containing stock_price and eps_estimate
         """
         result = {
-            'ticker': ticker,
             'stock_price': None,
-            'date': date,
-            'eps_estimate': None
+            'eps_estimate': ""
         }
         
         try:
@@ -93,7 +90,7 @@ class YahooFinanceAgent:
                 fwd_pe = round(price / fwd_eps, 1)
             else:
                 print(f"\n--- Missing or negative fwd eps for {ticker}")
-        print(f"\n{ticker} {price}, fwd eps: {result['eps_estimate']}, fwd p/e {fwd_pe}")
+        print(f"{ticker} {price}, fwd eps: {result['eps_estimate']}, fwd p/e {fwd_pe}")
         return result
 
 
@@ -117,13 +114,13 @@ class YahooFinanceAgent:
             print("Page fetched; code: ", response.status_code, type(response.content), response.text[:10], response.headers.get('Content-Type'), response.encoding)
             
             soup = BeautifulSoup(response.text, 'html.parser')
-            table = soup.find(id='companyListComponent')
-            if not table:
-                print("Table not found.")
+            table_body = soup.find(id='companyListComponent')
+            if not table_body:
+                print("Table_body not found.")
                 return
-            # 'table' has 'tr' children, half have 'id' attributes and half have 'style' attributes; keep only those with 'id'
-            if type(table) is Tag:
-                rows = [row for row in table.find_all('tr') if type(row) is Tag and row.get('id')]
+            # 'table_body' has 'tr' children, half have 'id' attributes and half have 'style' attributes; keep only those with 'id'
+            if type(table_body) is Tag:
+                rows = [row for row in table_body.find_all('tr') if type(row) is Tag and row.get('id')]
                 print(f"Found {len(rows)} rows")
                 # from each row, get the 3rd an 4th 'td' children; 3rd is an 'a' tag whose contents is the ticker, 4th is the weight
                 for row in rows:
@@ -148,7 +145,7 @@ class YahooFinanceAgent:
                     if not inserted:
                         comp.append(('GOOGL', f"{combined_weight:.2f}%"))
             else:
-                print("Table is not a Tag.")
+                print("Table_body is not a Tag.")
 
         except requests.RequestException as e:
             print(f"Error fetching data: {e}")
@@ -157,6 +154,28 @@ class YahooFinanceAgent:
         # save to qqq_comp.json in format [{"AAPL": "12.34%"}]
         with open('archive/qqq_comp.json', 'w') as f:
             json.dump({ticker: weight for ticker, weight in comp}, f)
+        # open 'archive/latest.js' and add or rplace the field qqq_weight for each matching ticker
+        if os.path.exists('archive/latest.js'):
+            with open('archive/latest.js', 'r') as f:
+                latest_data = f.read()
+            # remove 'var financialData = ' and the trailing ';'
+            if latest_data.startswith('var financialData = '):
+                latest_data = latest_data[len('var financialData = '):]
+            if latest_data.endswith(';'):
+                latest_data = latest_data[:-1]
+            try:
+                latest_json = json.loads(latest_data)
+                for ticker, weight in comp:
+                    if ticker in latest_json:
+                        latest_json[ticker]['qqq_weight'] = weight
+                with open('archive/latest.js', 'w') as f:
+                    f.write('var financialData = ')
+                    json.dump(latest_json, f, indent=4)
+                    f.write(';')
+                print("Updated archive/latest.js with QQQ weights.")
+            except json.JSONDecodeError as e:
+                print(f"Error decoding latest.js JSON: {e}")
+    
         print(f"Top QQQ components: ", comp[:9])
         return
 
@@ -195,7 +214,7 @@ class YahooFinanceAgent:
                 print(f"Skipping {ticker}, already in results: {results[ticker]}")
                 continue
             print(f"\nFetching data for {ticker}...")
-            results[ticker] = self.get_stock_data(ticker, date_str)
+            results[ticker] = self.get_stock_data(ticker)
             new_data_count += 1
             time.sleep(wait_time)
 
@@ -203,7 +222,7 @@ class YahooFinanceAgent:
         if new_data_count == 0:
             print("No new data fetched; all tickers already in results.")
             return
-        # Save results to a file named '<date_str>.json'
+        # Save results to file named 'date_str.json'
         with open(cache_file_path, 'w') as f:
             json.dump(results, f, indent=4)
         # overwrite 'archive/latest.js'
@@ -221,8 +240,8 @@ if __name__ == "__main__":
     dow = ["gs", "msft", "cat", "hd", "shw", "v", "unh", "axp", "jpm", "mcd", "amgn", "trv", "crm", "nvda", "aapl", "amzn", "wmt", "dis", "nke", "vz"]
     qqq = ["nvda", "msft", "aapl", "amzn", "tsla", "meta", "googl", "cost", "avgo", "nflx", "pltr"]
     spy_top = ["brk-b", "xom"]
-    other = ["et", "lulu"]
+    other = ["et", "lulu", "epd", "wmb", "kmi"]
     all = list(set(dow + qqq + spy_top + other))
-    # agent.get_multiple_stocks(other)
-    # agent.get_stock_data("nflx", "2025-09-18")
-    agent.get_qqq_comp()
+    agent.get_multiple_stocks(all)
+    # agent.get_stock_data("nflx")
+    # agent.get_qqq_comp()

@@ -1,4 +1,4 @@
-var financialData = {
+{
     "VZ": {
         "ticker": "VZ",
         "stock_price": "43.48",
@@ -169,4 +169,4 @@ var financialData = {
         "stock_price": "778.38",
         "eps_estimate": "30.03"
     }
-};
+}
