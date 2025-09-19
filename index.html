@@ -187,9 +187,10 @@
                 const price = stockData.stock_price;
                 const eps = stockData.eps_estimate;
                 const pe = eps !== 0 ? (price / eps).toFixed(1) : 'N/A';
+                const target = `https://finance.yahoo.com/quote/${symbol}/analysis/`
 
                 row.innerHTML = `
-                    <td class="symbol">${symbol}</td>
+                    <td class="symbol"><a href=${target} target="_blank">${symbol}</a></td>
                     <td class="price right-align">${price.toFixed(2)}</td>
                     <td class="eps right-align">${eps.toFixed(2)}</td>
                     <td class="pe right-align">${pe}</td>

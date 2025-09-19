@@ -27,6 +27,7 @@ h1 {
     margin-bottom: 2rem;
     font-size: 2rem;
     font-weight: 500;
+    opacity: 0.9;
 }
 
 .filter-buttons {
@@ -70,10 +71,9 @@ table {
 }
 th {
     background: var(--highlight-bg);
-    padding: 10px;
+    padding: 0.3rem 0.5rem;
     text-align: left;
     letter-spacing: 0.5px;
-    /* font-size: 0.9em; */
     font-weight: 500;
     cursor: pointer;
     position: relative;
@@ -102,9 +102,12 @@ tr:nth-child(even) {
     background: var(--bg-color);
 }
 td {
-    padding: 10px;
+    padding: 0.5rem;
 }
-
+td a {
+    color: var(--text-color);
+    /* text-decoration: none; */
+}
 tr:hover td {
     background-color: var(--primary-color);
 }
@@ -115,9 +118,9 @@ tr:hover td {
 /* .price {
     color: black;
 } */
-/* .eps {
-    font-weight: 500;
-} */
+.eps {
+    opacity: 0.7;;
+}
 .pe {
     font-style: italic;
 }
@@ -129,7 +132,6 @@ tr:hover td {
 .no-data {
     text-align: center;
     padding: 40px;
-    color: #666;
     font-style: italic;
     font-size: 1.1em;
 }
