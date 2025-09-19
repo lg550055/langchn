@@ -27,7 +27,8 @@ var financialData = {
     "PLTR": {
         "ticker": "PLTR",
         "stock_price": "182.39",
-        "eps_estimate": "0.85"
+        "eps_estimate": "0.85",
+        "qqq_weight": "1.34%"
     },
     "JPM": {
         "ticker": "JPM",
@@ -42,7 +43,8 @@ var financialData = {
     "AVGO": {
         "ticker": "AVGO",
         "stock_price": "344.94",
-        "eps_estimate": "9.21"
+        "eps_estimate": "9.21",
+        "qqq_weight": "5.04%"
     },
     "HD": {
         "ticker": "HD",
@@ -57,12 +59,14 @@ var financialData = {
     "NVDA": {
         "ticker": "NVDA",
         "stock_price": "176.67",
-        "eps_estimate": "6.34"
+        "eps_estimate": "6.34",
+        "qqq_weight": "13.26%"
     },
     "AMZN": {
         "ticker": "AMZN",
         "stock_price": "231.48",
-        "eps_estimate": "7.56"
+        "eps_estimate": "7.56",
+        "qqq_weight": "7.64%"
     },
     "XOM": {
         "ticker": "XOM",
@@ -92,12 +96,14 @@ var financialData = {
     "AAPL": {
         "ticker": "AAPL",
         "stock_price": "245.50",
-        "eps_estimate": "7.98"
+        "eps_estimate": "7.98",
+        "qqq_weight": "11.26%"
     },
     "NFLX": {
         "ticker": "NFLX",
         "stock_price": "1,226.97",
-        "eps_estimate": "32.39"
+        "eps_estimate": "32.39",
+        "qqq_weight": "1.61%"
     },
     "CRM": {
         "ticker": "CRM",
@@ -107,7 +113,8 @@ var financialData = {
     "MSFT": {
         "ticker": "MSFT",
         "stock_price": "517.93",
-        "eps_estimate": "18.2"
+        "eps_estimate": "18.2",
+        "qqq_weight": "11.88%"
     },
     "UNH": {
         "ticker": "UNH",
@@ -117,17 +124,20 @@ var financialData = {
     "COST": {
         "ticker": "COST",
         "stock_price": "951.16",
-        "eps_estimate": "20.05"
+        "eps_estimate": "20.05",
+        "qqq_weight": "1.30%"
     },
     "AMGN": {
         "ticker": "AMGN",
         "stock_price": "285.41",
-        "eps_estimate": "21.6"
+        "eps_estimate": "21.6",
+        "qqq_weight": "0.47%"
     },
     "LULU": {
         "ticker": "LULU",
         "stock_price": "169.62",
-        "eps_estimate": "13.43"
+        "eps_estimate": "13.43",
+        "qqq_weight": "0.06%"
     },
     "GS": {
         "ticker": "GS",
@@ -137,7 +147,8 @@ var financialData = {
     "TSLA": {
         "ticker": "TSLA",
         "stock_price": "426.07",
-        "eps_estimate": "2.43"
+        "eps_estimate": "2.43",
+        "qqq_weight": "4.23%"
     },
     "EPD": {
         "ticker": "EPD",
@@ -157,7 +168,8 @@ var financialData = {
     "GOOGL": {
         "ticker": "GOOGL",
         "stock_price": "254.72",
-        "eps_estimate": "10.62"
+        "eps_estimate": "10.62",
+        "qqq_weight": "9.54%"
     },
     "DIS": {
         "ticker": "DIS",
@@ -167,6 +179,7 @@ var financialData = {
     "META": {
         "ticker": "META",
         "stock_price": "778.38",
-        "eps_estimate": "30.03"
+        "eps_estimate": "30.03",
+        "qqq_weight": "6.03%"
     }
 };

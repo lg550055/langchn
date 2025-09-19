@@ -94,7 +94,44 @@ class YahooFinanceAgent:
         return result
 
 
-    def get_qqq_comp(self) -> None:
+    def parse_qqq_comp(self, res_text) -> list:
+        comp = []
+        soup = BeautifulSoup(res_text, 'html.parser')
+        table_body = soup.find(id='companyListComponent')
+        if not table_body:
+            print("Table_body not found.")
+            return comp
+        # 'table_body' has 'tr' children, half have 'id' attributes and half have 'style' attributes; keep only those with 'id'
+        if type(table_body) is Tag:
+            rows = [row for row in table_body.find_all('tr') if type(row) is Tag and row.get('id')]
+            print(f"Found {len(rows)} rows")
+            # from each row, get the 3rd an 4th 'td' children; 3rd is an 'a' tag whose contents is the ticker, 4th is the weight
+            for row in rows:
+                cells = row.find_all('td')
+                if len(cells) > 3:
+                    ticker = cells[2].get_text().strip()
+                    weight = cells[3].get_text().strip()
+                    comp.append((ticker, weight))
+            # consolidate GOOGL and GOOG into one entry
+            googl = next((item for item in comp if item[0] == 'GOOGL'), None)
+            goog = next((item for item in comp if item[0] == 'GOOG'), None)
+            if googl and goog:
+                combined_weight = float(googl[1].replace('%', '')) + float(goog[1].replace('%', ''))
+                comp = [item for item in comp if item[0] not in ('GOOGL', 'GOOG')]
+                # insert combined GOOGL entry right before the next largest weight
+                inserted = False
+                for i, item in enumerate(comp):
+                    if float(item[1].replace('%', '')) < combined_weight:
+                        comp.insert(i, ('GOOGL', f"{combined_weight:.2f}%"))
+                        inserted = True
+                        break
+                if not inserted:
+                    comp.append(('GOOGL', f"{combined_weight:.2f}%"))
+        else:
+            print("Table_body is not a Tag.")
+        return comp
+
+    def get_comp(self) -> None:
         comp = []
         # check if 'archive/qqq_comp.json' is less than 1 day old; if so, skip
         if os.path.exists('archive/qqq_comp.json'):
@@ -112,40 +149,7 @@ class YahooFinanceAgent:
             response = self.session.get(url)
             response.raise_for_status()
             print("Page fetched; code: ", response.status_code, type(response.content), response.text[:10], response.headers.get('Content-Type'), response.encoding)
-            
-            soup = BeautifulSoup(response.text, 'html.parser')
-            table_body = soup.find(id='companyListComponent')
-            if not table_body:
-                print("Table_body not found.")
-                return
-            # 'table_body' has 'tr' children, half have 'id' attributes and half have 'style' attributes; keep only those with 'id'
-            if type(table_body) is Tag:
-                rows = [row for row in table_body.find_all('tr') if type(row) is Tag and row.get('id')]
-                print(f"Found {len(rows)} rows")
-                # from each row, get the 3rd an 4th 'td' children; 3rd is an 'a' tag whose contents is the ticker, 4th is the weight
-                for row in rows:
-                    cells = row.find_all('td')
-                    if len(cells) > 3:
-                        ticker = cells[2].get_text().strip()
-                        weight = cells[3].get_text().strip()
-                        comp.append((ticker, weight))
-                # consolidate GOOGL and GOOG into one entry
-                googl = next((item for item in comp if item[0] == 'GOOGL'), None)
-                goog = next((item for item in comp if item[0] == 'GOOG'), None)
-                if googl and goog:
-                    combined_weight = float(googl[1].replace('%', '')) + float(goog[1].replace('%', ''))
-                    comp = [item for item in comp if item[0] not in ('GOOGL', 'GOOG')]
-                    # insert combined GOOGL entry right before the next largest weight
-                    inserted = False
-                    for i, item in enumerate(comp):
-                        if float(item[1].replace('%', '')) < combined_weight:
-                            comp.insert(i, ('GOOGL', f"{combined_weight:.2f}%"))
-                            inserted = True
-                            break
-                    if not inserted:
-                        comp.append(('GOOGL', f"{combined_weight:.2f}%"))
-            else:
-                print("Table_body is not a Tag.")
+            comp = self.parse_qqq_comp(response.text)
 
         except requests.RequestException as e:
             print(f"Error fetching data: {e}")
@@ -242,6 +246,6 @@ if __name__ == "__main__":
     spy_top = ["brk-b", "xom"]
     other = ["et", "lulu", "epd", "wmb", "kmi"]
     all = list(set(dow + qqq + spy_top + other))
-    agent.get_multiple_stocks(all)
+    # agent.get_multiple_stocks(all)
     # agent.get_stock_data("nflx")
-    # agent.get_qqq_comp()
+    agent.get_comp()
