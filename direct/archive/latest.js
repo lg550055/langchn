@@ -2,27 +2,32 @@ var financialData = {
     "VZ": {
         "ticker": "VZ",
         "stock_price": "43.48",
-        "eps_estimate": "4.85"
+        "eps_estimate": "4.85",
+        "dow_weight": "0.58%"
     },
     "NKE": {
         "ticker": "NKE",
         "stock_price": "70.89",
-        "eps_estimate": "2.5"
+        "eps_estimate": "2.5",
+        "dow_weight": "0.94%"
     },
     "WMT": {
         "ticker": "WMT",
         "stock_price": "102.33",
-        "eps_estimate": "2.94"
+        "eps_estimate": "2.94",
+        "dow_weight": "1.36%"
     },
     "V": {
         "ticker": "V",
         "stock_price": "341.61",
-        "eps_estimate": "12.84"
+        "eps_estimate": "12.84",
+        "dow_weight": "4.54%"
     },
     "MCD": {
         "ticker": "MCD",
         "stock_price": "302.38",
-        "eps_estimate": "13.36"
+        "eps_estimate": "13.36",
+        "dow_weight": "4.02%"
     },
     "PLTR": {
         "ticker": "PLTR",
@@ -33,12 +38,14 @@ var financialData = {
     "JPM": {
         "ticker": "JPM",
         "stock_price": "314.78",
-        "eps_estimate": "20.67"
+        "eps_estimate": "20.67",
+        "dow_weight": "4.14%"
     },
     "SHW": {
         "ticker": "SHW",
         "stock_price": "346.80",
-        "eps_estimate": "12.76"
+        "eps_estimate": "12.76",
+        "dow_weight": "4.61%"
     },
     "AVGO": {
         "ticker": "AVGO",
@@ -49,24 +56,28 @@ var financialData = {
     "HD": {
         "ticker": "HD",
         "stock_price": "415.69",
-        "eps_estimate": "16.3"
+        "eps_estimate": "16.3",
+        "dow_weight": "5.52%"
     },
     "TRV": {
         "ticker": "TRV",
         "stock_price": "277.00",
-        "eps_estimate": "25.6"
+        "eps_estimate": "25.6",
+        "dow_weight": "3.68%"
     },
     "NVDA": {
         "ticker": "NVDA",
         "stock_price": "176.67",
         "eps_estimate": "6.34",
-        "qqq_weight": "13.26%"
+        "qqq_weight": "13.26%",
+        "dow_weight": "2.34%"
     },
     "AMZN": {
         "ticker": "AMZN",
         "stock_price": "231.48",
         "eps_estimate": "7.56",
-        "qqq_weight": "7.64%"
+        "qqq_weight": "7.64%",
+        "dow_weight": "3.08%"
     },
     "XOM": {
         "ticker": "XOM",
@@ -91,13 +102,15 @@ var financialData = {
     "CAT": {
         "ticker": "CAT",
         "stock_price": "466.54",
-        "eps_estimate": "21.16"
+        "eps_estimate": "21.16",
+        "dow_weight": "6.18%"
     },
     "AAPL": {
         "ticker": "AAPL",
         "stock_price": "245.50",
         "eps_estimate": "7.98",
-        "qqq_weight": "11.26%"
+        "qqq_weight": "11.26%",
+        "dow_weight": "3.26%"
     },
     "NFLX": {
         "ticker": "NFLX",
@@ -108,18 +121,21 @@ var financialData = {
     "CRM": {
         "ticker": "CRM",
         "stock_price": "247.09",
-        "eps_estimate": "12.7"
+        "eps_estimate": "12.7",
+        "dow_weight": "3.28%"
     },
     "MSFT": {
         "ticker": "MSFT",
         "stock_price": "517.93",
         "eps_estimate": "18.2",
-        "qqq_weight": "11.88%"
+        "qqq_weight": "11.88%",
+        "dow_weight": "6.87%"
     },
     "UNH": {
         "ticker": "UNH",
         "stock_price": "336.69",
-        "eps_estimate": "18.08"
+        "eps_estimate": "18.08",
+        "dow_weight": "4.48%"
     },
     "COST": {
         "ticker": "COST",
@@ -131,7 +147,8 @@ var financialData = {
         "ticker": "AMGN",
         "stock_price": "285.41",
         "eps_estimate": "21.6",
-        "qqq_weight": "0.47%"
+        "qqq_weight": "0.47%",
+        "dow_weight": "3.78%"
     },
     "LULU": {
         "ticker": "LULU",
@@ -142,7 +159,8 @@ var financialData = {
     "GS": {
         "ticker": "GS",
         "stock_price": "805.00",
-        "eps_estimate": "52.3"
+        "eps_estimate": "52.3",
+        "dow_weight": "10.68%"
     },
     "TSLA": {
         "ticker": "TSLA",
@@ -163,7 +181,8 @@ var financialData = {
     "AXP": {
         "ticker": "AXP",
         "stock_price": "341.12",
-        "eps_estimate": "17.31"
+        "eps_estimate": "17.31",
+        "dow_weight": "4.54%"
     },
     "GOOGL": {
         "ticker": "GOOGL",
@@ -174,7 +193,8 @@ var financialData = {
     "DIS": {
         "ticker": "DIS",
         "stock_price": "113.76",
-        "eps_estimate": "6.48"
+        "eps_estimate": "6.48",
+        "dow_weight": "1.51%"
     },
     "META": {
         "ticker": "META",

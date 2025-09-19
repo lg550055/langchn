@@ -98,14 +98,11 @@ class YahooFinanceAgent:
         comp = []
         soup = BeautifulSoup(res_text, 'html.parser')
         table_body = soup.find(id='companyListComponent')
-        if not table_body:
-            print("Table_body not found.")
-            return comp
-        # 'table_body' has 'tr' children, half have 'id' attributes and half have 'style' attributes; keep only those with 'id'
-        if type(table_body) is Tag:
+        # 'table_body' has 'tr' children, half have 'id' attributes and half have 'style' attributes; keep those with 'id'
+        if table_body and type(table_body) is Tag:
             rows = [row for row in table_body.find_all('tr') if type(row) is Tag and row.get('id')]
             print(f"Found {len(rows)} rows")
-            # from each row, get the 3rd an 4th 'td' children; 3rd is an 'a' tag whose contents is the ticker, 4th is the weight
+            # from each row, get the 3rd an 4th 'td' children; 3rd is 'a' tag enclosing the ticker, 4th is the weight
             for row in rows:
                 cells = row.find_all('td')
                 if len(cells) > 3:
@@ -128,20 +125,43 @@ class YahooFinanceAgent:
                 if not inserted:
                     comp.append(('GOOGL', f"{combined_weight:.2f}%"))
         else:
-            print("Table_body is not a Tag.")
+            print("Error: table_body not found or is not type Tag: ", table_body)
         return comp
 
-    def get_comp(self) -> None:
+
+    def parse_dow_comp(self, res_text) -> list:
         comp = []
-        # check if 'archive/qqq_comp.json' is less than 1 day old; if so, skip
-        if os.path.exists('archive/qqq_comp.json'):
-            file_mtime = os.path.getmtime('archive/qqq_comp.json')
+        soup = BeautifulSoup(res_text, 'html.parser')
+        table_body = soup.find('tbody')
+
+        if table_body and type(table_body) is Tag:
+            rows = [row for row in table_body.find_all('tr') if type(row) is Tag]
+            print(f"Found {len(rows)} rows")
+            # from each row, get the 3rd an 4th 'td' children; 3rd is 'a' tag containing ticker, 4th is the weight
+            for row in rows:
+                cells = row.find_all('td')
+                if len(cells) > 3:
+                    ticker = cells[2].get_text().strip()
+                    weight = cells[3].get_text().strip()
+                    comp.append((ticker, weight))
+        else:
+            print("Error: table_body not found or is not type Tag: ", table_body)
+        return comp
+    
+
+    def get_comp(self, indx: str = 'dow') -> None:
+        comp = []
+        comp_file = f"archive/{indx}_comp.json"
+        # check if file is less than 1 day old; if so, skip
+        if os.path.exists(comp_file):
+            file_mtime = os.path.getmtime(comp_file)
             if (time.time() - file_mtime) < (1 * 24 * 60 * 60):
-                print("qqq_comp.json is less than 1 days old; skipping fetch.")
+                print("File is less than 1 days old; skipping fetch.")
                 return
         try:
-            print("\nFetching QQQ components...")
-            url = "https://www.slickcharts.com/nasdaq100"
+            print(f"\nFetching {indx} components...")
+            suffix = "nasdaq100" if indx == "qqq" else "dowjones"
+            url = f"https://www.slickcharts.com/{suffix}"
             # update headers for this request to only Accept-Encoding: identity
             self.session.headers.update({
                 'Accept-Encoding': 'identity'
@@ -149,38 +169,39 @@ class YahooFinanceAgent:
             response = self.session.get(url)
             response.raise_for_status()
             print("Page fetched; code: ", response.status_code, type(response.content), response.text[:10], response.headers.get('Content-Type'), response.encoding)
-            comp = self.parse_qqq_comp(response.text)
+            comp = self.parse_qqq_comp(response.text) if indx == "qqq" else self.parse_dow_comp(response.text)
 
         except requests.RequestException as e:
             print(f"Error fetching data: {e}")
         except Exception as e:
             print(f"Error parsing data: {e}")
-        # save to qqq_comp.json in format [{"AAPL": "12.34%"}]
-        with open('archive/qqq_comp.json', 'w') as f:
-            json.dump({ticker: weight for ticker, weight in comp}, f)
-        # open 'archive/latest.js' and add or rplace the field qqq_weight for each matching ticker
-        if os.path.exists('archive/latest.js'):
-            with open('archive/latest.js', 'r') as f:
-                latest_data = f.read()
-            # remove 'var financialData = ' and the trailing ';'
-            if latest_data.startswith('var financialData = '):
-                latest_data = latest_data[len('var financialData = '):]
-            if latest_data.endswith(';'):
-                latest_data = latest_data[:-1]
-            try:
-                latest_json = json.loads(latest_data)
-                for ticker, weight in comp:
-                    if ticker in latest_json:
-                        latest_json[ticker]['qqq_weight'] = weight
-                with open('archive/latest.js', 'w') as f:
-                    f.write('var financialData = ')
-                    json.dump(latest_json, f, indent=4)
-                    f.write(';')
-                print("Updated archive/latest.js with QQQ weights.")
-            except json.JSONDecodeError as e:
-                print(f"Error decoding latest.js JSON: {e}")
-    
-        print(f"Top QQQ components: ", comp[:9])
+        # save comp to file in format {"AAPL": "12.34%"}
+        if comp:
+            with open(comp_file, 'w') as f:
+                json.dump({ticker: weight for ticker, weight in comp}, f)
+            # open 'archive/latest.js' and add or rplace the field {indx}_weight for each matching ticker
+            if os.path.exists('archive/latest.js'):
+                with open('archive/latest.js', 'r') as f:
+                    latest_data = f.read()
+                # remove 'var financialData = ' and the trailing ';'
+                if latest_data.startswith('var financialData = '):
+                    latest_data = latest_data[len('var financialData = '):]
+                if latest_data.endswith(';'):
+                    latest_data = latest_data[:-1]
+                try:
+                    latest_json = json.loads(latest_data)
+                    for ticker, weight in comp:
+                        if ticker in latest_json:
+                            latest_json[ticker][f'{indx}_weight'] = weight
+                    with open('archive/latest.js', 'w') as f:
+                        f.write('var financialData = ')
+                        json.dump(latest_json, f, indent=4)
+                        f.write(';')
+                    print(f"Updated archive/latest.js with {indx} weights.")
+                except json.JSONDecodeError as e:
+                    print(f"Error decoding latest.js JSON: {e}")
+        
+            print(f"Top {indx} components: ", comp[:9])
         return
 
 
@@ -248,4 +269,4 @@ if __name__ == "__main__":
     all = list(set(dow + qqq + spy_top + other))
     # agent.get_multiple_stocks(all)
     # agent.get_stock_data("nflx")
-    agent.get_comp()
+    agent.get_comp("dow")
