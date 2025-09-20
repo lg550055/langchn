@@ -22,7 +22,7 @@
         <div class="filter-buttons" id="filterButtons" style="display: none;">
             <button id="allBtn" class="filter-btn active" onclick="filterStocks('all')">All Stocks</button>
             <button id="qqqBtn" class="filter-btn" onclick="filterStocks('qqq')">QQQ Top</button>
-            <button id="dowBtn" class="filter-btn" onclick="filterStocks('dow')">DOW</button>
+            <button id="dowBtn" class="filter-btn" onclick="filterStocks('dow')">DJIA</button>
         </div>
 
         <table id="dataTable">
@@ -32,6 +32,7 @@
                     <th class="sortable right-align" data-sort="price">Price</th>
                     <th class="right-align">Fwd EPS</th>
                     <th class="sortable right-align" data-sort="pe">Fwd P/E</th>
+                    <th class="weight-column sortable right-align" data-sort="weight" id="weightHeader">Weight</th>
                 </tr>
             </thead>
             <tbody id="tableBody">
@@ -43,6 +44,7 @@
         let currentData = {};
         let allData = {};
         let currentSort = { column: null, direction: 'asc' };
+        let currentFilter = 'all';
 
         // Filter lists
         const filters = {
@@ -51,13 +53,28 @@
         };
 
         function filterStocks(filterType) {
+            currentFilter = filterType;
             // Update button states
             document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
             document.getElementById(filterType + 'Btn').classList.add('active');
 
+            // Show/hide weight column and update header
+            const table = document.getElementById('dataTable');
+            const weightHeader = document.getElementById('weightHeader');
+
             if (filterType === 'all') {
+                table.classList.remove('show-weight');
                 currentData = allData;
             } else {
+                table.classList.add('show-weight');
+
+                // Update weight column header based on filter
+                if (filterType === 'qqq') {
+                    weightHeader.textContent = 'QQQ Weight';
+                } else if (filterType === 'dow') {
+                    weightHeader.textContent = 'DOW Weight';
+                }
+
                 const filterList = filters[filterType];
                 currentData = {};
                 filterList.forEach(symbol => {
@@ -142,6 +159,12 @@
                         valueA = epsA !== 0 ? priceA / epsA : Infinity;
                         valueB = epsB !== 0 ? priceB / epsB : Infinity;
                         break;
+                    case 'weight':
+                        const weightKeyA = currentFilter === 'qqq' ? 'qqq_weight' : 'dow_weight';
+                        const weightKeyB = currentFilter === 'qqq' ? 'qqq_weight' : 'dow_weight';
+                        valueA = a[1][weightKeyA] ? parseFloat(a[1][weightKeyA].replace('%', '')) : 0;
+                        valueB = b[1][weightKeyB] ? parseFloat(b[1][weightKeyB].replace('%', '')) : 0;
+                        break;
                 }
 
                 if (typeof valueA === 'string') {
@@ -187,13 +210,22 @@
                 const price = stockData.stock_price;
                 const eps = stockData.eps_estimate;
                 const pe = eps !== 0 ? (price / eps).toFixed(1) : 'N/A';
-                const target = `https://finance.yahoo.com/quote/${symbol}/analysis/`
+                const target = `https://finance.yahoo.com/quote/${symbol}/analysis/`;
+
+                // Get weight based on current filter
+                let weight = '';
+                if (currentFilter === 'qqq' && stockData.qqq_weight) {
+                    weight = stockData.qqq_weight;
+                } else if (currentFilter === 'dow' && stockData.dow_weight) {
+                    weight = stockData.dow_weight;
+                }
 
                 row.innerHTML = `
                     <td class="symbol"><a href=${target} target="_blank">${symbol}</a></td>
                     <td class="price right-align">${price.toFixed(2)}</td>
                     <td class="eps right-align">${eps.toFixed(2)}</td>
                     <td class="pe right-align">${pe}</td>
+                    <td class="weight-column right-align">${weight}</td>
                 `;
                 
                 tableBody.appendChild(row);

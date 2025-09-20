@@ -63,11 +63,17 @@ h1 {
 
 table {
     width: 100%;
-    max-width: 500px;
+    max-width: 600px;
     margin: 2rem auto;
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+.weight-column {
+    display: none;
+}
+.show-weight .weight-column {
+    display: table-cell;
 }
 th {
     background: var(--highlight-bg);
