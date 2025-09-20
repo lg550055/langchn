@@ -271,7 +271,7 @@ if __name__ == "__main__":
     dow = ["gs", "msft", "cat", "hd", "shw", "v", "unh", "axp", "jpm", "mcd", "amgn", "trv", "crm", "nvda", "aapl", "amzn", "wmt", "dis", "nke", "vz"]
     qqq = ["nvda", "msft", "aapl", "amzn", "tsla", "meta", "googl", "cost", "avgo", "nflx", "pltr"]
     spy_top = ["brk-b", "xom"]
-    other = ["et", "lulu", "epd", "wmb", "kmi"]
+    other = ["et", "lulu", "epd", "wmb", "kmi", "orcl"]
     all = list(set(dow + qqq + spy_top + other))
     # agent.get_stock_data("nflx")  # test single stock
     agent.get_multiple_stocks(all, wait_time)
