@@ -1,47 +1,39 @@
-var financialData = {
+{
     "ORCL": {
         "stock_price": "328.07",
         "eps_estimate": "8.05"
     },
     "CAT": {
         "stock_price": "472.12",
-        "eps_estimate": "21.16",
-        "dow_weight": "6.25%"
+        "eps_estimate": "21.16"
     },
     "WMT": {
         "stock_price": "102.81",
-        "eps_estimate": "2.94",
-        "dow_weight": "1.36%"
+        "eps_estimate": "2.94"
     },
     "MCD": {
         "stock_price": "303.14",
-        "eps_estimate": "13.36",
-        "dow_weight": "4.02%"
+        "eps_estimate": "13.36"
     },
     "COST": {
         "stock_price": "943.26",
-        "eps_estimate": "20.03",
-        "qqq_weight": "1.28%"
+        "eps_estimate": "20.03"
     },
     "V": {
         "stock_price": "344.38",
-        "eps_estimate": "12.84",
-        "dow_weight": "4.54%"
+        "eps_estimate": "12.84"
     },
     "JPM": {
         "stock_price": "312.44",
-        "eps_estimate": "20.67",
-        "dow_weight": "4.14%"
+        "eps_estimate": "20.67"
     },
     "GOOGL": {
         "stock_price": "252.53",
-        "eps_estimate": "10.63",
-        "qqq_weight": "9.36%"
+        "eps_estimate": "10.63"
     },
     "UNH": {
         "stock_price": "341.30",
-        "eps_estimate": "18.08",
-        "dow_weight": "4.52%"
+        "eps_estimate": "18.08"
     },
     "EPD": {
         "stock_price": "31.37",
@@ -49,25 +41,19 @@ var financialData = {
     },
     "AAPL": {
         "stock_price": "256.08",
-        "eps_estimate": "7.98",
-        "dow_weight": "3.39%",
-        "qqq_weight": "11.65%"
+        "eps_estimate": "7.98"
     },
     "AMZN": {
         "stock_price": "227.63",
-        "eps_estimate": "7.56",
-        "dow_weight": "3.02%",
-        "qqq_weight": "7.44%"
+        "eps_estimate": "7.56"
     },
     "AVGO": {
         "stock_price": "338.79",
-        "eps_estimate": "9.19",
-        "qqq_weight": "4.90%"
+        "eps_estimate": "9.19"
     },
     "CRM": {
         "stock_price": "249.69",
-        "eps_estimate": "12.7",
-        "dow_weight": "3.30%"
+        "eps_estimate": "12.7"
     },
     "WMB": {
         "stock_price": "60.16",
@@ -75,44 +61,35 @@ var financialData = {
     },
     "TRV": {
         "stock_price": "276.11",
-        "eps_estimate": "25.62",
-        "dow_weight": "3.66%"
+        "eps_estimate": "25.62"
     },
     "VZ": {
         "stock_price": "43.16",
-        "eps_estimate": "4.85",
-        "dow_weight": "0.57%"
+        "eps_estimate": "4.85"
     },
     "HD": {
         "stock_price": "412.00",
-        "eps_estimate": "16.3",
-        "dow_weight": "5.47%"
+        "eps_estimate": "16.3"
     },
     "AXP": {
         "stock_price": "340.98",
-        "eps_estimate": "17.31",
-        "dow_weight": "4.52%"
+        "eps_estimate": "17.31"
     },
     "PLTR": {
         "stock_price": "179.33",
-        "eps_estimate": "0.85",
-        "qqq_weight": "1.30%"
+        "eps_estimate": "0.85"
     },
     "NKE": {
         "stock_price": "71.28",
-        "eps_estimate": "2.5",
-        "dow_weight": "0.95%"
+        "eps_estimate": "2.5"
     },
     "NVDA": {
         "stock_price": "183.61",
-        "eps_estimate": "6.34",
-        "dow_weight": "2.43%",
-        "qqq_weight": "13.66%"
+        "eps_estimate": "6.34"
     },
     "TSLA": {
         "stock_price": "434.21",
-        "eps_estimate": "2.43",
-        "qqq_weight": "4.42%"
+        "eps_estimate": "2.43"
     },
     "ET": {
         "stock_price": "17.13",
@@ -120,9 +97,7 @@ var financialData = {
     },
     "AMGN": {
         "stock_price": "286.00",
-        "eps_estimate": "21.6",
-        "dow_weight": "3.77%",
-        "qqq_weight": "0.47%"
+        "eps_estimate": "21.6"
     },
     "XOM": {
         "stock_price": "112.02",
@@ -130,23 +105,19 @@ var financialData = {
     },
     "LULU": {
         "stock_price": "173.41",
-        "eps_estimate": "13.43",
-        "qqq_weight": "0.06%"
+        "eps_estimate": "13.43"
     },
     "DIS": {
         "stock_price": "112.56",
-        "eps_estimate": "6.48",
-        "dow_weight": "1.49%"
+        "eps_estimate": "6.48"
     },
     "SHW": {
         "stock_price": "346.41",
-        "eps_estimate": "12.77",
-        "dow_weight": "4.64%"
+        "eps_estimate": "12.77"
     },
     "META": {
         "stock_price": "765.16",
-        "eps_estimate": "30.03",
-        "qqq_weight": "5.89%"
+        "eps_estimate": "30.03"
     },
     "BRK-B": {
         "stock_price": "493.71",
@@ -154,9 +125,7 @@ var financialData = {
     },
     "MSFT": {
         "stock_price": "514.45",
-        "eps_estimate": "18.2",
-        "dow_weight": "6.83%",
-        "qqq_weight": "11.73%"
+        "eps_estimate": "18.2"
     },
     "KMI": {
         "stock_price": "27.18",
@@ -164,12 +133,10 @@ var financialData = {
     },
     "NFLX": {
         "stock_price": "1,227.37",
-        "eps_estimate": "32.39",
-        "qqq_weight": "1.60%"
+        "eps_estimate": "32.39"
     },
     "GS": {
         "stock_price": "805.56",
-        "eps_estimate": "52.3",
-        "dow_weight": "10.67%"
+        "eps_estimate": "52.3"
     }
-};
+}
