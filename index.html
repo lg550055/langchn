@@ -9,7 +9,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>📈 Fwd p/e of stocks representing 50%+ of market</h1>
+        <h1>📈 Fwd p/e of top stocks<br>50%+ market</h1>
         <p id="subtitle"></p>
         
         <div id="loadingMessage" class="loading">
@@ -108,7 +108,7 @@
                     document.getElementById('dow_stats')
                         .innerHTML = `DJIA w.avg. ${allData.metadata.dow_wafpe}, median ${allData.metadata.dow_median_pe}`;
                     document.getElementById('subtitle')
-                        .innerHTML = `As of market close ${allData.metadata.date}`
+                        .innerHTML = `As of close ${allData.metadata.date}`
                 } else {
                     throw new Error('Financial data not found. Make sure latest.js is properly loaded.');
                 }
