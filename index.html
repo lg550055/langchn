@@ -10,6 +10,7 @@
 <body>
     <div class="container">
         <h1>📈 Fwd p/e of stocks representing 50%+ of market</h1>
+        <p id="subtitle"></p>
         
         <div id="loadingMessage" class="loading">
             Loading financial data...
@@ -19,8 +20,11 @@
             Please wait while financial data loads...
         </div>
 
-        <p id="qqq_stats"></p>
-        <p id="dow_stats"></p>
+        <div class="stats">
+            <h5>Market fwd pe</h5>
+            <p id="qqq_stats"></p>
+            <p id="dow_stats"></p>
+        </div>
         <div class="filter-buttons" id="filterButtons" style="display: none;">
             <button id="allBtn" class="filter-btn active" onclick="filterStocks('all')">All Stocks</button>
             <button id="qqqBtn" class="filter-btn" onclick="filterStocks('qqq')">QQQ Top</button>
@@ -40,7 +44,6 @@
             <tbody id="tableBody">
             </tbody>
         </table>
-        <p id="subtitle"></p>
     </div>
 
     <script>
@@ -101,9 +104,9 @@
                     populateTable(allData);
                     document.getElementById('filterButtons').style.display = 'block';
                     document.getElementById('qqq_stats')
-                        .innerHTML = `QQQ - fwd pe: w.avg. ${allData.metadata.qqq_wafpe}, median ${allData.metadata.qqq_median_pe}`;
+                        .innerHTML = `QQQ w.avg. ${allData.metadata.qqq_wafpe}, median ${allData.metadata.qqq_median_pe}`;
                     document.getElementById('dow_stats')
-                        .innerHTML = `DJIA - fwd pe: w.avg. ${allData.metadata.dow_wafpe}, median ${allData.metadata.dow_median_pe}`;
+                        .innerHTML = `DJIA w.avg. ${allData.metadata.dow_wafpe}, median ${allData.metadata.dow_median_pe}`;
                     document.getElementById('subtitle')
                         .innerHTML = `As of market close ${allData.metadata.date}`
                 } else {
