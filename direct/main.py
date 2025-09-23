@@ -1,11 +1,23 @@
 from bs4 import BeautifulSoup, Tag
 from datetime import datetime
 from enum import StrEnum, auto
-from typing import Dict, Optional
+from typing import Dict
 import json
 import os
 import requests
+import statistics
 import time
+
+dow = ["gs", "msft", "cat", "hd", "shw", "v", "unh", "axp", "jpm", "mcd", "amgn", "trv", "crm", "ibm","nvda", "aapl", "amzn", "wmt", "dis", "nke", "vz"]
+qqq = ["nvda", "msft", "aapl", "amzn", "tsla", "meta", "googl", "cost", "avgo", "nflx", "pltr"]
+
+# If today is not a trading day, calculate the most recent trading date
+# for now, just use today if weekday, else go back to last Friday
+date = datetime.now()
+if date.weekday() > 4:  # Saturday or Sunday
+    days_to_subtract = date.weekday() - 4  # Go back to Friday
+    date = date.replace(day=date.day - days_to_subtract)
+date_str = date.strftime('%Y-%m-%d')
 
 class Index(StrEnum):
     DOW = auto()
@@ -31,17 +43,18 @@ class YahooFinanceAgent:
             'Cache-Control': 'max-age=0'
         })
     
-    def get_stock_data(self, ticker: str) -> Dict[str, Optional[str]]:
+    def get_stock_data(self, ticker: str) -> Dict[str, float]:
         """
         Get most recent price and eps estimate for a given stock
         Args:
             ticker (str): Stock symbol
         Returns:
-            dict: Dictionary containing stock_price and eps_estimate
+            dict: Dictionary containing price, fwd_eps and fwd_pe
         """
         result = {
-            'stock_price': None,
-            'eps_estimate': ""
+            'price': None,
+            'fwd_eps': 0.0,
+            'fwd_pe': 0.0
         }
         
         try:
@@ -55,7 +68,7 @@ class YahooFinanceAgent:
             # Extract stock price using 'data-testid'
             price_element = soup.find('span', {'data-testid': 'qsp-price'})
             if price_element:
-                result['stock_price'] = price_element.text.strip()
+                result['price'] = round(float(price_element.text.strip().replace(',', '')), 2)
             else:
                 print(f"===== Price element not found for {ticker}")
             
@@ -81,26 +94,22 @@ class YahooFinanceAgent:
                                 last_cell = cells[-1]
                                 estimate = last_cell.get_text().strip()
                                 if estimate and estimate != '-':
-                                    result['eps_estimate'] = estimate
+                                    result['fwd_eps'] = round(float(estimate), 2)
 
         except requests.RequestException as e:
             print(f"Error fetching data for {ticker}: {e}")
         except Exception as e:
             print(f"Error parsing data for {ticker}: {e}")
 
-        fwd_pe = "N/A"
-        price = float(result['stock_price'].replace(',', ''))
-        if price and result['eps_estimate']:
-            fwd_eps = float(result['eps_estimate'].replace(',', ''))
-            if fwd_eps and fwd_eps > 0:
-                fwd_pe = round(price / fwd_eps, 1)
-            else:
-                print(f"\n--- Missing or negative fwd eps for {ticker}")
-        print(f"{ticker} {price}, fwd eps: {result['eps_estimate']}, fwd p/e {fwd_pe}")
+        if result['price'] and result['fwd_eps'] > 0:
+            result['fwd_pe'] = round(result['price'] / result['fwd_eps'], 1)
+        else:
+            print(f"\n--- {ticker} missing or negative fwd eps: {result['fwd_eps']}")
+        print(f"{ticker} {result['price']}, fwd eps: {result['fwd_eps']}, fwd p/e {result['fwd_pe']}")
         return result
 
 
-    def parse_qqq_comp(self, res_text) -> list:
+    def parse_qqq_comp(self, res_text) -> list[tuple[str, str]]:
         comp = []
         soup = BeautifulSoup(res_text, 'html.parser')
         table_body = soup.find(id='companyListComponent')
@@ -135,7 +144,7 @@ class YahooFinanceAgent:
         return comp
 
 
-    def parse_dow_comp(self, res_text) -> list:
+    def parse_dow_comp(self, res_text) -> list[tuple[str, str]]:
         comp = []
         soup = BeautifulSoup(res_text, 'html.parser')
         table_body = soup.find('tbody')
@@ -154,7 +163,6 @@ class YahooFinanceAgent:
             print("Error: table_body not found or is not type Tag: ", table_body)
         return comp
     
-
     def get_comp(self, indx: Index) -> None:
         comp = []
         comp_file = f"archive/{indx}_comp.json"
@@ -162,7 +170,7 @@ class YahooFinanceAgent:
         if os.path.exists(comp_file):
             file_mtime = os.path.getmtime(comp_file)
             if (time.time() - file_mtime) < (8 * 60 * 60):
-                print("File is less than 8 hrs old; skipped fetch - ", file_mtime)
+                print("File is less than 8 hrs old; skipped fetch")
                 return
         try:
             print(f"\nFetching {indx} components...")
@@ -196,9 +204,23 @@ class YahooFinanceAgent:
                     latest_data = latest_data[:-1]
                 try:
                     latest_json = json.loads(latest_data)
+                    # Add logic to calculate and add wafpe and median_pe for QQQ and DOW
+                    if 'metadata' not in latest_json:
+                        latest_json['metadata'] = {"date": date_str}
+                    fwd_pes = []
+                    wafpe = 0.0
                     for ticker, weight in comp:
                         if ticker in latest_json:
                             latest_json[ticker][f'{indx}_weight'] = weight
+                            # Add ticker's fwd pe to later caclulate median and add to wafpe
+                            fwd_pe = latest_json[ticker]['fwd_pe']
+                            fwd_pes.append(fwd_pe)
+                            wafpe += fwd_pe * float(weight.strip('%')) / 100
+                    # Add wafpe and median to metadata
+                    med = statistics.median(fwd_pes)
+                    latest_json['metadata'][f'{indx}_wafpe'] = round(wafpe, 1)
+                    latest_json['metadata'][f'{indx}_median_pe'] = round(med, 1)
+
                     with open('archive/latest.js', 'w') as f:
                         f.write('var financialData = ')
                         json.dump(latest_json, f, indent=4)
@@ -219,13 +241,6 @@ class YahooFinanceAgent:
         Returns:
             None
         """
-        # If today is not a trading day, calculate the most recent trading date
-        # for now, just use today if weekday, else go back to last Friday
-        date = datetime.now()
-        if date.weekday() > 4:  # Saturday or Sunday
-            days_to_subtract = date.weekday() - 4  # Go back to Friday
-            date = date.replace(day=date.day - days_to_subtract)
-        date_str = date.strftime('%Y-%m-%d')
         # check if a file named 'date_str.json' exists; if so, load it and assign to results
         cache_file_path = f"archive/{date_str}.json"
         if os.path.exists(cache_file_path):
@@ -251,6 +266,14 @@ class YahooFinanceAgent:
         if new_data_count == 0:
             print("No new data fetched; all tickers already in results.")
             return
+        # Before saving, add a metadata object with fetch date
+        results['metadata'] = {
+            'date': date_str,
+            'qqq_wafpe': '',
+            "qqq_median_pe": '',
+            'dow_wafpe': '',
+            "dow_median_pe": ''
+        }
         # Save results to file named 'date_str.json'
         with open(cache_file_path, 'w') as f:
             json.dump(results, f, indent=4)
@@ -268,12 +291,10 @@ if __name__ == "__main__":
     # Wait time, 2 - 6 sec, to respect server load
     wait_time = 2 + (4 * (time.time() % 1))  # % 1 -> decimal = nanoseconds part
 
-    dow = ["gs", "msft", "cat", "hd", "shw", "v", "unh", "axp", "jpm", "mcd", "amgn", "trv", "crm", "nvda", "aapl", "amzn", "wmt", "dis", "nke", "vz"]
-    qqq = ["nvda", "msft", "aapl", "amzn", "tsla", "meta", "googl", "cost", "avgo", "nflx", "pltr"]
-    spy_top = ["brk-b", "xom"]
-    other = ["et", "lulu", "epd", "wmb", "kmi", "orcl"]
+    spy_top = ["brk-b", "orcl", "xom"]
+    other = ["et", "lulu", "epd", "wmb", "kmi"]
     all = list(set(dow + qqq + spy_top + other))
-    # agent.get_stock_data("nflx")  # test single stock
+    # agent.get_stock_data("ibm")  # test single stock
     agent.get_multiple_stocks(all, wait_time)
     agent.get_comp(Index.DOW)
     time.sleep(wait_time)

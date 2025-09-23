@@ -1,142 +1,189 @@
 {
-    "ORCL": {
-        "stock_price": "328.07",
-        "eps_estimate": "8.05"
-    },
-    "CAT": {
-        "stock_price": "472.12",
-        "eps_estimate": "21.16"
-    },
-    "WMT": {
-        "stock_price": "102.81",
-        "eps_estimate": "2.94"
-    },
-    "MCD": {
-        "stock_price": "303.14",
-        "eps_estimate": "13.36"
-    },
-    "COST": {
-        "stock_price": "943.26",
-        "eps_estimate": "20.03"
-    },
-    "V": {
-        "stock_price": "344.38",
-        "eps_estimate": "12.84"
-    },
-    "JPM": {
-        "stock_price": "312.44",
-        "eps_estimate": "20.67"
-    },
-    "GOOGL": {
-        "stock_price": "252.53",
-        "eps_estimate": "10.63"
-    },
-    "UNH": {
-        "stock_price": "341.30",
-        "eps_estimate": "18.08"
-    },
-    "EPD": {
-        "stock_price": "31.37",
-        "eps_estimate": "2.87"
-    },
-    "AAPL": {
-        "stock_price": "256.08",
-        "eps_estimate": "7.98"
-    },
-    "AMZN": {
-        "stock_price": "227.63",
-        "eps_estimate": "7.56"
-    },
-    "AVGO": {
-        "stock_price": "338.79",
-        "eps_estimate": "9.19"
-    },
-    "CRM": {
-        "stock_price": "249.69",
-        "eps_estimate": "12.7"
-    },
-    "WMB": {
-        "stock_price": "60.16",
-        "eps_estimate": "2.44"
-    },
-    "TRV": {
-        "stock_price": "276.11",
-        "eps_estimate": "25.62"
-    },
-    "VZ": {
-        "stock_price": "43.16",
-        "eps_estimate": "4.85"
-    },
-    "HD": {
-        "stock_price": "412.00",
-        "eps_estimate": "16.3"
-    },
-    "AXP": {
-        "stock_price": "340.98",
-        "eps_estimate": "17.31"
-    },
-    "PLTR": {
-        "stock_price": "179.33",
-        "eps_estimate": "0.85"
-    },
     "NKE": {
-        "stock_price": "71.28",
-        "eps_estimate": "2.5"
-    },
-    "NVDA": {
-        "stock_price": "183.61",
-        "eps_estimate": "6.34"
-    },
-    "TSLA": {
-        "stock_price": "434.21",
-        "eps_estimate": "2.43"
-    },
-    "ET": {
-        "stock_price": "17.13",
-        "eps_estimate": "1.57"
-    },
-    "AMGN": {
-        "stock_price": "286.00",
-        "eps_estimate": "21.6"
-    },
-    "XOM": {
-        "stock_price": "112.02",
-        "eps_estimate": "7.49"
-    },
-    "LULU": {
-        "stock_price": "173.41",
-        "eps_estimate": "13.43"
-    },
-    "DIS": {
-        "stock_price": "112.56",
-        "eps_estimate": "6.48"
-    },
-    "SHW": {
-        "stock_price": "346.41",
-        "eps_estimate": "12.77"
-    },
-    "META": {
-        "stock_price": "765.16",
-        "eps_estimate": "30.03"
+        "price": 71.28,
+        "fwd_eps": 2.5,
+        "fwd_pe": 28.5
     },
     "BRK-B": {
-        "stock_price": "493.71",
-        "eps_estimate": "21.7"
+        "price": 493.71,
+        "fwd_eps": 21.7,
+        "fwd_pe": 22.8
     },
-    "MSFT": {
-        "stock_price": "514.45",
-        "eps_estimate": "18.2"
+    "ORCL": {
+        "price": 328.15,
+        "fwd_eps": 8.05,
+        "fwd_pe": 40.8
     },
-    "KMI": {
-        "stock_price": "27.18",
-        "eps_estimate": "1.37"
+    "IBM": {
+        "price": 271.37,
+        "fwd_eps": 11.94,
+        "fwd_pe": 22.7
+    },
+    "AMGN": {
+        "price": 286.0,
+        "fwd_eps": 21.6,
+        "fwd_pe": 13.2
+    },
+    "MCD": {
+        "price": 302.99,
+        "fwd_eps": 13.36,
+        "fwd_pe": 22.7
+    },
+    "COST": {
+        "price": 943.26,
+        "fwd_eps": 20.05,
+        "fwd_pe": 47.0
+    },
+    "VZ": {
+        "price": 43.16,
+        "fwd_eps": 4.85,
+        "fwd_pe": 8.9
+    },
+    "PLTR": {
+        "price": 179.33,
+        "fwd_eps": 0.85,
+        "fwd_pe": 211.0
+    },
+    "XOM": {
+        "price": 112.02,
+        "fwd_eps": 7.49,
+        "fwd_pe": 15.0
+    },
+    "WMB": {
+        "price": 60.16,
+        "fwd_eps": 2.44,
+        "fwd_pe": 24.7
+    },
+    "GOOGL": {
+        "price": 252.53,
+        "fwd_eps": 10.63,
+        "fwd_pe": 23.8
+    },
+    "META": {
+        "price": 765.16,
+        "fwd_eps": 30.03,
+        "fwd_pe": 25.5
     },
     "NFLX": {
-        "stock_price": "1,227.37",
-        "eps_estimate": "32.39"
+        "price": 1227.37,
+        "fwd_eps": 32.39,
+        "fwd_pe": 37.9
+    },
+    "LULU": {
+        "price": 173.41,
+        "fwd_eps": 13.43,
+        "fwd_pe": 12.9
+    },
+    "SHW": {
+        "price": 346.41,
+        "fwd_eps": 12.77,
+        "fwd_pe": 27.1
     },
     "GS": {
-        "stock_price": "805.56",
-        "eps_estimate": "52.3"
+        "price": 805.56,
+        "fwd_eps": 52.3,
+        "fwd_pe": 15.4
+    },
+    "NVDA": {
+        "price": 183.61,
+        "fwd_eps": 6.34,
+        "fwd_pe": 29.0
+    },
+    "AAPL": {
+        "price": 256.08,
+        "fwd_eps": 7.98,
+        "fwd_pe": 32.1
+    },
+    "CRM": {
+        "price": 249.69,
+        "fwd_eps": 12.7,
+        "fwd_pe": 19.7
+    },
+    "DIS": {
+        "price": 112.56,
+        "fwd_eps": 6.48,
+        "fwd_pe": 17.4
+    },
+    "AXP": {
+        "price": 340.98,
+        "fwd_eps": 17.31,
+        "fwd_pe": 19.7
+    },
+    "KMI": {
+        "price": 27.18,
+        "fwd_eps": 1.37,
+        "fwd_pe": 19.8
+    },
+    "V": {
+        "price": 344.36,
+        "fwd_eps": 12.84,
+        "fwd_pe": 26.8
+    },
+    "CAT": {
+        "price": 472.1,
+        "fwd_eps": 21.16,
+        "fwd_pe": 22.3
+    },
+    "EPD": {
+        "price": 31.37,
+        "fwd_eps": 2.87,
+        "fwd_pe": 10.9
+    },
+    "WMT": {
+        "price": 102.82,
+        "fwd_eps": 2.94,
+        "fwd_pe": 35.0
+    },
+    "ET": {
+        "price": 17.13,
+        "fwd_eps": 1.57,
+        "fwd_pe": 10.9
+    },
+    "HD": {
+        "price": 412.0,
+        "fwd_eps": 16.3,
+        "fwd_pe": 25.3
+    },
+    "UNH": {
+        "price": 341.3,
+        "fwd_eps": 18.08,
+        "fwd_pe": 18.9
+    },
+    "TRV": {
+        "price": 276.11,
+        "fwd_eps": 25.62,
+        "fwd_pe": 10.8
+    },
+    "AVGO": {
+        "price": 338.79,
+        "fwd_eps": 9.2,
+        "fwd_pe": 36.8
+    },
+    "MSFT": {
+        "price": 514.45,
+        "fwd_eps": 18.2,
+        "fwd_pe": 28.3
+    },
+    "AMZN": {
+        "price": 227.63,
+        "fwd_eps": 7.56,
+        "fwd_pe": 30.1
+    },
+    "TSLA": {
+        "price": 434.21,
+        "fwd_eps": 2.43,
+        "fwd_pe": 178.7
+    },
+    "JPM": {
+        "price": 312.44,
+        "fwd_eps": 20.67,
+        "fwd_pe": 15.1
+    },
+    "metadata": {
+        "date": "2025-09-22",
+        "qqq_wafpe": "",
+        "qqq_median_pe": "",
+        "dow_wafpe": "",
+        "dow_median_pe": ""
     }
 }
