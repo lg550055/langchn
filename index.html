@@ -70,9 +70,9 @@
 
                 // Update weight column header based on filter
                 if (filterType === 'qqq') {
-                    weightHeader.textContent = 'QQQ Weight';
+                    weightHeader.textContent = 'QQQ weight';
                 } else if (filterType === 'dow') {
-                    weightHeader.textContent = 'DOW Weight';
+                    weightHeader.textContent = 'DOW weight';
                 }
 
                 const filterList = filters[filterType];
@@ -94,11 +94,6 @@
                 if (typeof financialData !== 'undefined') {
                     currentData = financialData;
                     allData = financialData;
-                    // Parse numeric fields (price may have comma); to avoid double parsing later
-                    Object.values(allData).forEach(item => {
-                        item.stock_price = parseFloat(item.stock_price.replace(/,/g, ''));
-                        item.eps_estimate = parseFloat(item.eps_estimate);
-                    });
                     populateTable(allData);
                     document.getElementById('filterButtons').style.display = 'block';
                 } else {
@@ -148,16 +143,12 @@
                         valueB = b[0];
                         break;
                     case 'price':
-                        valueA = a[1].stock_price;
-                        valueB = b[1].stock_price;
+                        valueA = a[1].price;
+                        valueB = b[1].price;
                         break;
                     case 'pe':
-                        const priceA = a[1].stock_price;
-                        const epsA = a[1].eps_estimate;
-                        const priceB = b[1].stock_price;
-                        const epsB = b[1].eps_estimate;
-                        valueA = epsA !== 0 ? priceA / epsA : Infinity;
-                        valueB = epsB !== 0 ? priceB / epsB : Infinity;
+                        valueA = a[1].fwd_pe;
+                        valueB = b[1].fwd_pe;
                         break;
                     case 'weight':
                         const weightKeyA = currentFilter === 'qqq' ? 'qqq_weight' : 'dow_weight';
@@ -205,11 +196,11 @@
                 : Object.entries(data);
 
             entries.forEach(([symbol, stockData]) => {
+                // Skip metadata entry
+                if (symbol == 'metadata') { return }
+
                 const row = document.createElement('tr');
                 row.className = 'fade-in';
-                const price = stockData.stock_price;
-                const eps = stockData.eps_estimate;
-                const pe = eps !== 0 ? (price / eps).toFixed(1) : 'N/A';
                 const target = `https://finance.yahoo.com/quote/${symbol}/analysis/`;
 
                 // Get weight based on current filter
@@ -222,9 +213,9 @@
 
                 row.innerHTML = `
                     <td class="symbol"><a href=${target} target="_blank">${symbol}</a></td>
-                    <td class="price right-align">${price.toFixed(2)}</td>
-                    <td class="eps right-align">${eps.toFixed(2)}</td>
-                    <td class="pe right-align">${pe}</td>
+                    <td class="price right-align">${stockData.price.toFixed(2)}</td>
+                    <td class="eps right-align">${stockData.fwd_eps.toFixed(2)}</td>
+                    <td class="pe right-align">${stockData.fwd_pe.toFixed(1)}</td>
                     <td class="weight-column right-align">${weight}</td>
                 `;
                 
