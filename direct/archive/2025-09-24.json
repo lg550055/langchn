@@ -1,77 +1,63 @@
-var financialData = {
+{
     "TSLA": {
         "price": 442.79,
         "fwd_eps": 2.42,
-        "fwd_pe": 183.0,
-        "qqq_weight": "4.57%"
+        "fwd_pe": 183.0
     },
     "META": {
         "price": 760.66,
         "fwd_eps": 30.03,
-        "fwd_pe": 25.3,
-        "qqq_weight": "5.93%"
+        "fwd_pe": 25.3
     },
     "AAPL": {
         "price": 252.31,
         "fwd_eps": 7.98,
-        "fwd_pe": 31.6,
-        "dow_weight": "3.36%",
-        "qqq_weight": "11.62%"
+        "fwd_pe": 31.6
     },
     "COST": {
         "price": 945.27,
         "fwd_eps": 20.05,
-        "fwd_pe": 47.1,
-        "qqq_weight": "1.30%"
+        "fwd_pe": 47.1
     },
     "AVGO": {
         "price": 339.31,
         "fwd_eps": 9.23,
-        "fwd_pe": 36.8,
-        "qqq_weight": "4.97%"
+        "fwd_pe": 36.8
     },
     "CRM": {
         "price": 245.89,
         "fwd_eps": 12.7,
-        "fwd_pe": 19.4,
-        "dow_weight": "3.28%"
+        "fwd_pe": 19.4
     },
     "HD": {
         "price": 409.77,
         "fwd_eps": 16.3,
-        "fwd_pe": 25.1,
-        "dow_weight": "5.46%"
+        "fwd_pe": 25.1
     },
     "IBM": {
         "price": 267.53,
         "fwd_eps": 11.94,
-        "fwd_pe": 22.4,
-        "dow_weight": "3.57%"
+        "fwd_pe": 22.4
     },
     "LULU": {
         "price": 179.22,
         "fwd_eps": 13.39,
-        "fwd_pe": 13.4,
-        "qqq_weight": "0.07%"
+        "fwd_pe": 13.4
     },
     "MSFT": {
         "price": 510.15,
         "fwd_eps": 18.2,
-        "fwd_pe": 28.0,
-        "dow_weight": "6.80%",
-        "qqq_weight": "11.77%"
+        "fwd_pe": 28.0
     },
     "PLTR": {
         "price": 179.56,
         "fwd_eps": 0.85,
-        "fwd_pe": 211.2,
-        "qqq_weight": "1.32%"
+        "fwd_pe": 211.2
     },
     "V": {
         "price": 338.68,
         "fwd_eps": 12.84,
-        "fwd_pe": 26.4,
-        "dow_weight": "4.51%"
+        "fwd_pe": 26.4
     },
     "ET": {
         "price": 17.4,
@@ -81,8 +67,7 @@ var financialData = {
     "AXP": {
         "price": 340.48,
         "fwd_eps": 17.31,
-        "fwd_pe": 19.7,
-        "dow_weight": "4.54%"
+        "fwd_pe": 19.7
     },
     "BRK-B": {
         "price": 497.09,
@@ -92,8 +77,7 @@ var financialData = {
     "SHW": {
         "price": 342.96,
         "fwd_eps": 12.77,
-        "fwd_pe": 26.9,
-        "dow_weight": "4.57%"
+        "fwd_pe": 26.9
     },
     "XOM": {
         "price": 114.56,
@@ -103,20 +87,17 @@ var financialData = {
     "GOOGL": {
         "price": 247.14,
         "fwd_eps": 10.63,
-        "fwd_pe": 23.2,
-        "qqq_weight": "9.29%"
+        "fwd_pe": 23.2
     },
     "GS": {
         "price": 792.43,
         "fwd_eps": 52.37,
-        "fwd_pe": 15.1,
-        "dow_weight": "10.56%"
+        "fwd_pe": 15.1
     },
     "VZ": {
         "price": 43.18,
         "fwd_eps": 4.84,
-        "fwd_pe": 8.9,
-        "dow_weight": "0.58%"
+        "fwd_pe": 8.9
     },
     "ORCL": {
         "price": 308.46,
@@ -131,21 +112,17 @@ var financialData = {
     "AMZN": {
         "price": 220.21,
         "fwd_eps": 7.57,
-        "fwd_pe": 29.1,
-        "dow_weight": "2.93%",
-        "qqq_weight": "7.29%"
+        "fwd_pe": 29.1
     },
     "CAT": {
         "price": 469.79,
         "fwd_eps": 21.16,
-        "fwd_pe": 22.2,
-        "dow_weight": "6.26%"
+        "fwd_pe": 22.2
     },
     "NKE": {
         "price": 71.22,
         "fwd_eps": 2.5,
-        "fwd_pe": 28.5,
-        "dow_weight": "0.95%"
+        "fwd_pe": 28.5
     },
     "KMI": {
         "price": 27.82,
@@ -155,45 +132,37 @@ var financialData = {
     "WMT": {
         "price": 102.73,
         "fwd_eps": 2.94,
-        "fwd_pe": 34.9,
-        "dow_weight": "1.37%"
+        "fwd_pe": 34.9
     },
     "UNH": {
         "price": 351.81,
         "fwd_eps": 18.09,
-        "fwd_pe": 19.4,
-        "dow_weight": "4.69%"
+        "fwd_pe": 19.4
     },
     "MCD": {
         "price": 304.33,
         "fwd_eps": 13.36,
-        "fwd_pe": 22.8,
-        "dow_weight": "4.06%"
+        "fwd_pe": 22.8
     },
     "NFLX": {
         "price": 1203.95,
         "fwd_eps": 32.39,
-        "fwd_pe": 37.2,
-        "qqq_weight": "1.59%"
+        "fwd_pe": 37.2
     },
     "AMGN": {
         "price": 279.22,
         "fwd_eps": 21.6,
-        "fwd_pe": 12.9,
-        "dow_weight": "3.72%",
-        "qqq_weight": "0.47%"
+        "fwd_pe": 12.9
     },
     "JPM": {
         "price": 313.42,
         "fwd_eps": 20.73,
-        "fwd_pe": 15.1,
-        "dow_weight": "4.18%"
+        "fwd_pe": 15.1
     },
     "DIS": {
         "price": 113.43,
         "fwd_eps": 6.48,
-        "fwd_pe": 17.5,
-        "dow_weight": "1.51%"
+        "fwd_pe": 17.5
     },
     "EPD": {
         "price": 31.7,
@@ -203,21 +172,18 @@ var financialData = {
     "TRV": {
         "price": 276.66,
         "fwd_eps": 25.6,
-        "fwd_pe": 10.8,
-        "dow_weight": "3.69%"
+        "fwd_pe": 10.8
     },
     "NVDA": {
         "price": 176.97,
         "fwd_eps": 6.34,
-        "fwd_pe": 27.9,
-        "dow_weight": "2.36%",
-        "qqq_weight": "13.37%"
+        "fwd_pe": 27.9
     },
     "metadata": {
         "date": "2025-09-25",
-        "qqq_wafpe": 30.7,
-        "qqq_median_pe": 29.1,
-        "dow_wafpe": 18.0,
-        "dow_median_pe": 22.4
+        "qqq_wafpe": "",
+        "qqq_median_pe": "",
+        "dow_wafpe": "",
+        "dow_median_pe": ""
     }
-};
+}
