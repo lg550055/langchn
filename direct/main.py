@@ -229,7 +229,7 @@ class YahooFinanceAgent:
                 except json.JSONDecodeError as e:
                     print(f"Error decoding latest.js JSON: {e}")
         
-            print(f"Top {indx} components: ", comp[:9])
+            print(f"Top 5 {indx} components: ", comp[:5])
         return
 
 
