@@ -185,5 +185,40 @@
         "qqq_median_pe": "",
         "dow_wafpe": "",
         "dow_median_pe": ""
+    },
+    "LLY": {
+        "price": 839.87,
+        "fwd_eps": 30.36,
+        "fwd_pe": 27.7
+    },
+    "MA": {
+        "price": 580.45,
+        "fwd_eps": 18.99,
+        "fwd_pe": 30.6
+    },
+    "JNJ": {
+        "price": 188.64,
+        "fwd_eps": 11.39,
+        "fwd_pe": 16.6
+    },
+    "PG": {
+        "price": 152.27,
+        "fwd_eps": 7.39,
+        "fwd_pe": 20.6
+    },
+    "MMM": {
+        "price": 158.66,
+        "fwd_eps": 8.6,
+        "fwd_pe": 18.4
+    },
+    "CVX": {
+        "price": 153.55,
+        "fwd_eps": 9.23,
+        "fwd_pe": 16.6
+    },
+    "KO": {
+        "price": 66.65,
+        "fwd_eps": 3.21,
+        "fwd_pe": 20.8
     }
 }

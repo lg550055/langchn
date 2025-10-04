@@ -8,7 +8,7 @@ import requests
 import statistics
 import time
 
-dow = ["gs", "msft", "cat", "hd", "shw", "v", "unh", "axp", "jpm", "mcd", "amgn", "trv", "crm", "ibm","nvda", "aapl", "amzn", "wmt", "dis", "nke", "vz"]
+dow = ["gs", "msft", "cat", "hd", "shw", "v", "unh", "axp", "jpm", "mcd", "amgn", "trv", "crm", "ibm","nvda", "aapl", "amzn", "wmt", "dis", "jnj", "pg", "mmm", "cvx", "ko", "nke", "vz"]
 qqq = ["nvda", "msft", "aapl", "amzn", "tsla", "meta", "googl", "cost", "avgo", "nflx", "pltr"]
 
 # If today is not a trading day, calculate the most recent trading date
@@ -291,11 +291,13 @@ if __name__ == "__main__":
     # Wait time, 2 - 6 sec, to respect server load
     wait_time = 2 + (4 * (time.time() % 1))  # % 1 -> decimal = nanoseconds part
 
-    spy_top = ["brk-b", "orcl", "xom"]
+    spy_top = ["brk-b", "orcl", "xom", "lly", "ma"]
     other = ["et", "lulu", "epd", "wmb", "kmi"]
-    all = list(set(dow + qqq + spy_top + other))
+    all_xdow = list(set(qqq + spy_top + other))
     # agent.get_stock_data("ibm")  # test single stock
-    agent.get_multiple_stocks(all, wait_time)
+    agent.get_multiple_stocks(all_xdow, wait_time)
+    time.sleep(wait_time)
+    agent.get_multiple_stocks(dow, wait_time)
     agent.get_comp(Index.DOW)
     time.sleep(wait_time)
     agent.get_comp(Index.QQQ)
