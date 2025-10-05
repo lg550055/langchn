@@ -11,6 +11,12 @@ import time
 dow = ["gs", "msft", "cat", "hd", "shw", "v", "unh", "axp", "jpm", "mcd", "amgn", "trv", "crm", "ibm","nvda", "aapl", "amzn", "wmt", "dis", "jnj", "pg", "mmm", "cvx", "ko", "nke", "vz"]
 qqq = ["nvda", "msft", "aapl", "amzn", "tsla", "meta", "googl", "cost", "avgo", "nflx", "pltr"]
 
+suffix_table = {
+    'qqq': 'nasdaq100',
+    'dow': 'dowjones',
+    'spy': 'sp500'
+}
+
 # If today is not a trading day, calculate the most recent trading date
 # for now, just use today if weekday, else go back to last Friday
 date = datetime.now()
@@ -22,9 +28,9 @@ date_str = date.strftime('%Y-%m-%d')
 class Index(StrEnum):
     DOW = auto()
     QQQ = auto()
-    # SPY = auto()
+    SPY = auto()
 
-class YahooFinanceAgent:
+class FinanceAgent:
     def __init__(self):
         self.session = requests.Session()
         # Set comprehensive headers
@@ -144,7 +150,7 @@ class YahooFinanceAgent:
         return comp
 
 
-    def parse_dow_comp(self, res_text) -> list[tuple[str, str]]:
+    def parse_comp(self, res_text) -> list[tuple[str, str]]:
         comp = []
         soup = BeautifulSoup(res_text, 'html.parser')
         table_body = soup.find('tbody')
@@ -159,10 +165,26 @@ class YahooFinanceAgent:
                     ticker = cells[2].get_text().strip()
                     weight = cells[3].get_text().strip()
                     comp.append((ticker, weight))
+            # consolidate GOOGL and GOOG into one entry
+            googl = next((item for item in comp if item[0] == 'GOOGL'), None)
+            goog = next((item for item in comp if item[0] == 'GOOG'), None)
+            if googl and goog:
+                combined_weight = float(googl[1].replace('%', '')) + float(goog[1].replace('%', ''))
+                comp = [item for item in comp if item[0] not in ('GOOGL', 'GOOG')]
+                # insert combined GOOGL entry right before the next largest weight
+                inserted = False
+                for i, item in enumerate(comp):
+                    if float(item[1].replace('%', '')) < combined_weight:
+                        comp.insert(i, ('GOOGL', f"{combined_weight:.2f}%"))
+                        inserted = True
+                        break
+                if not inserted:
+                    comp.append(('GOOGL', f"{combined_weight:.2f}%"))
         else:
-            print("Error: table_body not found or is not type Tag: ", table_body)
+            print("Error: table_body not found or is not type Tag: ", table_body, type(table_body))
         return comp
     
+
     def get_comp(self, indx: Index) -> None:
         comp = []
         comp_file = f"archive/{indx}_comp.json"
@@ -174,7 +196,7 @@ class YahooFinanceAgent:
                 return
         try:
             print(f"\nFetching {indx} components...")
-            suffix = "nasdaq100" if indx == "qqq" else "dowjones"
+            suffix = suffix_table[indx]
             url = f"https://www.slickcharts.com/{suffix}"
             # update headers for this request to only Accept-Encoding: identity
             self.session.headers.update({
@@ -183,7 +205,8 @@ class YahooFinanceAgent:
             response = self.session.get(url)
             response.raise_for_status()
             print("Page fetched; code: ", response.status_code, type(response.content), response.text[:10], response.headers.get('Content-Type'), response.encoding)
-            comp = self.parse_qqq_comp(response.text) if indx == "qqq" else self.parse_dow_comp(response.text)
+            # comp = self.parse_qqq_comp(response.text) if indx == "qqq" else self.parse_comp(response.text)
+            comp = self.parse_comp(response.text)
 
         except requests.RequestException as e:
             print(f"Error fetching data: {e}")
@@ -287,7 +310,7 @@ class YahooFinanceAgent:
 
 
 if __name__ == "__main__":
-    agent = YahooFinanceAgent()
+    agent = FinanceAgent()
     # Wait time, 2 - 6 sec, to respect server load
     wait_time = 2 + (4 * (time.time() % 1))  # % 1 -> decimal = nanoseconds part
 
@@ -295,9 +318,11 @@ if __name__ == "__main__":
     other = ["et", "lulu", "epd", "wmb", "kmi"]
     all_xdow = list(set(qqq + spy_top + other))
     # agent.get_stock_data("ibm")  # test single stock
-    agent.get_multiple_stocks(all_xdow, wait_time)
-    time.sleep(wait_time)
-    agent.get_multiple_stocks(dow, wait_time)
+    # agent.get_multiple_stocks(all_xdow, wait_time)
+    # time.sleep(wait_time)
+    # agent.get_multiple_stocks(dow, wait_time)
     agent.get_comp(Index.DOW)
     time.sleep(wait_time)
     agent.get_comp(Index.QQQ)
+    time.sleep(wait_time)
+    agent.get_comp(Index.SPY)
