@@ -1,305 +1,308 @@
 var financialData = {
-    "MSFT": {
-        "price": 528.57,
-        "fwd_eps": 18.13,
-        "fwd_pe": 29.2,
-        "spy_weight": "6.43%",
-        "dow_weight": "6.95%",
-        "qqq_weight": "11.93%"
-    },
-    "BRK-B": {
-        "price": 500.02,
-        "fwd_eps": 21.7,
-        "fwd_pe": 23.0
-    },
-    "META": {
-        "price": 715.66,
-        "fwd_eps": 30.07,
-        "fwd_pe": 23.8,
-        "spy_weight": "2.95%",
-        "qqq_weight": "5.48%"
-    },
-    "NFLX": {
-        "price": 1163.31,
-        "fwd_eps": 32.5,
-        "fwd_pe": 35.8,
-        "spy_weight": "0.82%",
-        "qqq_weight": "1.52%"
-    },
-    "LULU": {
-        "price": 174.12,
-        "fwd_eps": 13.36,
-        "fwd_pe": 13.0,
-        "spy_weight": "0.03%",
-        "qqq_weight": "0.06%"
-    },
-    "ET": {
-        "price": 16.66,
-        "fwd_eps": 1.56,
-        "fwd_pe": 10.7
+    "TSLA": {
+        "price": 433.09,
+        "fwd_eps": 2.42,
+        "fwd_pe": 179.0,
+        "qqq_weight": "4.42%",
+        "spy_weight": "2.38%"
     },
     "KMI": {
-        "price": 27.93,
+        "price": 28.01,
         "fwd_eps": 1.37,
         "fwd_pe": 20.4,
         "spy_weight": "0.10%"
     },
-    "AMZN": {
-        "price": 220.9,
-        "fwd_eps": 7.58,
-        "fwd_pe": 29.1,
-        "spy_weight": "3.87%",
-        "dow_weight": "2.91%",
-        "qqq_weight": "7.18%"
+    "LULU": {
+        "price": 173.17,
+        "fwd_eps": 13.36,
+        "fwd_pe": 13.0,
+        "qqq_weight": "0.06%",
+        "spy_weight": "0.03%"
     },
-    "WMB": {
-        "price": 63.58,
-        "fwd_eps": 2.42,
-        "fwd_pe": 26.3,
-        "spy_weight": "0.13%"
+    "AVGO": {
+        "price": 336.41,
+        "fwd_eps": 9.22,
+        "fwd_pe": 36.5,
+        "qqq_weight": "4.88%",
+        "spy_weight": "2.62%"
     },
-    "ORCL": {
-        "price": 291.59,
-        "fwd_eps": 8.0,
-        "fwd_pe": 36.4,
-        "spy_weight": "1.37%"
+    "BRK-B": {
+        "price": 502.34,
+        "fwd_eps": 21.7,
+        "fwd_pe": 23.1
     },
-    "MA": {
-        "price": 578.81,
-        "fwd_eps": 19.0,
-        "fwd_pe": 30.5,
-        "spy_weight": "0.86%"
+    "META": {
+        "price": 713.08,
+        "fwd_eps": 30.07,
+        "fwd_pe": 23.7,
+        "qqq_weight": "5.48%",
+        "spy_weight": "2.95%"
     },
     "GOOGL": {
-        "price": 250.43,
+        "price": 245.76,
         "fwd_eps": 10.67,
-        "fwd_pe": 23.5,
-        "spy_weight": "4.94%",
-        "qqq_weight": "9.16%"
+        "fwd_pe": 23.0,
+        "qqq_weight": "9.13%",
+        "spy_weight": "4.91%"
+    },
+    "AAPL": {
+        "price": 256.48,
+        "fwd_eps": 7.99,
+        "fwd_pe": 32.1,
+        "dow_weight": "3.38%",
+        "qqq_weight": "11.66%",
+        "spy_weight": "6.27%"
     },
     "LLY": {
-        "price": 845.05,
+        "price": 843.69,
         "fwd_eps": 30.36,
         "fwd_pe": 27.8,
         "spy_weight": "1.25%"
     },
-    "XOM": {
-        "price": 114.2,
-        "fwd_eps": 7.45,
-        "fwd_pe": 15.3,
-        "spy_weight": "0.80%"
-    },
-    "TSLA": {
-        "price": 453.25,
-        "fwd_eps": 2.42,
-        "fwd_pe": 187.3,
-        "spy_weight": "2.45%",
-        "qqq_weight": "4.55%"
-    },
-    "COST": {
-        "price": 910.94,
-        "fwd_eps": 22.19,
-        "fwd_pe": 41.1,
-        "spy_weight": "0.66%",
-        "qqq_weight": "1.23%"
-    },
-    "AVGO": {
-        "price": 335.49,
-        "fwd_eps": 9.22,
-        "fwd_pe": 36.4,
-        "spy_weight": "2.61%",
-        "qqq_weight": "4.84%"
-    },
     "NVDA": {
-        "price": 185.54,
+        "price": 185.04,
         "fwd_eps": 6.37,
-        "fwd_pe": 29.1,
-        "spy_weight": "7.43%",
-        "dow_weight": "2.45%",
-        "qqq_weight": "13.79%"
-    },
-    "AAPL": {
-        "price": 256.69,
-        "fwd_eps": 7.99,
-        "fwd_pe": 32.1,
-        "spy_weight": "6.22%",
-        "dow_weight": "3.37%",
-        "qqq_weight": "11.55%"
-    },
-    "PLTR": {
-        "price": 179.53,
-        "fwd_eps": 0.85,
-        "fwd_pe": 211.2,
-        "spy_weight": "0.70%",
-        "qqq_weight": "1.29%"
+        "fwd_pe": 29.0,
+        "dow_weight": "2.44%",
+        "qqq_weight": "13.78%",
+        "spy_weight": "7.41%"
     },
     "EPD": {
-        "price": 31.5,
+        "price": 31.72,
         "fwd_eps": 2.87,
-        "fwd_pe": 11.0
+        "fwd_pe": 11.1
+    },
+    "PLTR": {
+        "price": 182.17,
+        "fwd_eps": 0.85,
+        "fwd_pe": 214.3,
+        "qqq_weight": "1.32%",
+        "spy_weight": "0.71%"
+    },
+    "MA": {
+        "price": 579.4,
+        "fwd_eps": 19.0,
+        "fwd_pe": 30.5,
+        "spy_weight": "0.87%"
+    },
+    "ET": {
+        "price": 16.67,
+        "fwd_eps": 1.56,
+        "fwd_pe": 10.7
+    },
+    "MSFT": {
+        "price": 523.98,
+        "fwd_eps": 18.13,
+        "fwd_pe": 28.9,
+        "dow_weight": "6.90%",
+        "qqq_weight": "11.91%",
+        "spy_weight": "6.41%"
+    },
+    "NFLX": {
+        "price": 1191.06,
+        "fwd_eps": 32.47,
+        "fwd_pe": 36.7,
+        "qqq_weight": "1.55%",
+        "spy_weight": "0.83%"
+    },
+    "COST": {
+        "price": 914.8,
+        "fwd_eps": 22.19,
+        "fwd_pe": 41.2,
+        "qqq_weight": "1.24%",
+        "spy_weight": "0.67%"
+    },
+    "ORCL": {
+        "price": 284.67,
+        "fwd_eps": 8.0,
+        "fwd_pe": 35.6,
+        "spy_weight": "1.33%"
+    },
+    "WMB": {
+        "price": 63.95,
+        "fwd_eps": 2.42,
+        "fwd_pe": 26.4,
+        "spy_weight": "0.13%"
+    },
+    "AMZN": {
+        "price": 221.78,
+        "fwd_eps": 7.58,
+        "fwd_pe": 29.3,
+        "dow_weight": "2.93%",
+        "qqq_weight": "7.25%",
+        "spy_weight": "3.90%"
+    },
+    "XOM": {
+        "price": 114.25,
+        "fwd_eps": 7.44,
+        "fwd_pe": 15.4,
+        "spy_weight": "0.80%"
     },
     "metadata": {
         "date": "2025-10-07",
-        "qqq_wafpe": 30.9,
-        "qqq_median_pe": 29.2,
-        "dow_wafpe": 19.9,
-        "dow_median_pe": 20.5,
-        "spy_wafpe": 20.3,
-        "spy_median_pe": 23.6
+        "qqq_wafpe": 30.4,
+        "qqq_median_pe": 29.3,
+        "dow_wafpe": 19.8,
+        "dow_median_pe": 20.7,
+        "dow_sample_weight": "92.27%",
+        "qqq_sample_weight": "73.17%",
+        "spy_wafpe": 20.0,
+        "spy_median_pe": 23.4,
+        "spy_sample_weight": "54.71%"
     },
     "GS": {
-        "price": 796.78,
-        "fwd_eps": 53.52,
-        "fwd_pe": 14.9,
-        "spy_weight": "0.40%",
-        "dow_weight": "10.51%"
+        "price": 789.64,
+        "fwd_eps": 53.72,
+        "fwd_pe": 14.7,
+        "dow_weight": "10.41%",
+        "spy_weight": "0.39%"
     },
     "CAT": {
-        "price": 495.38,
-        "fwd_eps": 21.21,
-        "fwd_pe": 23.4,
-        "spy_weight": "0.38%",
-        "dow_weight": "6.51%"
+        "price": 487.03,
+        "fwd_eps": 21.23,
+        "fwd_pe": 22.9,
+        "dow_weight": "6.44%",
+        "spy_weight": "0.38%"
     },
     "HD": {
-        "price": 389.33,
+        "price": 386.84,
         "fwd_eps": 16.27,
-        "fwd_pe": 23.9,
-        "spy_weight": "0.64%",
-        "dow_weight": "5.13%"
+        "fwd_pe": 23.8,
+        "dow_weight": "5.12%",
+        "spy_weight": "0.64%"
     },
     "SHW": {
-        "price": 336.91,
+        "price": 337.02,
         "fwd_eps": 12.73,
         "fwd_pe": 26.5,
-        "spy_weight": "0.14%",
-        "dow_weight": "4.44%"
+        "dow_weight": "4.44%",
+        "spy_weight": "0.14%"
     },
     "V": {
-        "price": 349.28,
+        "price": 352.47,
         "fwd_eps": 12.85,
-        "fwd_pe": 27.2,
-        "spy_weight": "1.11%",
-        "dow_weight": "4.59%"
+        "fwd_pe": 27.4,
+        "dow_weight": "4.64%",
+        "spy_weight": "1.12%"
     },
     "UNH": {
-        "price": 358.77,
+        "price": 363.82,
         "fwd_eps": 18.01,
-        "fwd_pe": 19.9,
-        "spy_weight": "0.54%",
-        "dow_weight": "4.75%"
+        "fwd_pe": 20.2,
+        "dow_weight": "4.80%",
+        "spy_weight": "0.54%"
     },
     "AXP": {
-        "price": 331.99,
-        "fwd_eps": 17.31,
-        "fwd_pe": 19.2,
-        "spy_weight": "0.38%",
-        "dow_weight": "4.36%"
+        "price": 327.92,
+        "fwd_eps": 17.33,
+        "fwd_pe": 18.9,
+        "dow_weight": "4.33%",
+        "spy_weight": "0.38%"
     },
     "JPM": {
-        "price": 309.18,
-        "fwd_eps": 20.98,
-        "fwd_pe": 14.7,
-        "spy_weight": "1.39%",
-        "dow_weight": "4.07%"
+        "price": 307.68,
+        "fwd_eps": 21.01,
+        "fwd_pe": 14.6,
+        "dow_weight": "4.06%",
+        "spy_weight": "1.39%"
     },
     "MCD": {
-        "price": 296.04,
+        "price": 296.32,
         "fwd_eps": 13.35,
         "fwd_pe": 22.2,
-        "spy_weight": "0.35%",
-        "dow_weight": "3.89%"
+        "dow_weight": "3.91%",
+        "spy_weight": "0.35%"
     },
     "AMGN": {
-        "price": 294.12,
+        "price": 295.54,
         "fwd_eps": 21.6,
-        "fwd_pe": 13.6,
-        "spy_weight": "0.26%",
-        "dow_weight": "3.85%",
-        "qqq_weight": "0.48%"
+        "fwd_pe": 13.7,
+        "dow_weight": "3.90%",
+        "qqq_weight": "0.49%",
+        "spy_weight": "0.26%"
     },
     "TRV": {
-        "price": 282.73,
+        "price": 285.02,
         "fwd_eps": 25.62,
-        "fwd_pe": 11.0,
-        "spy_weight": "0.10%",
-        "dow_weight": "3.57%"
+        "fwd_pe": 11.1,
+        "dow_weight": "3.76%",
+        "spy_weight": "0.11%"
     },
     "CRM": {
-        "price": 245.78,
+        "price": 239.76,
         "fwd_eps": 12.7,
-        "fwd_pe": 19.4,
-        "spy_weight": "0.38%",
-        "dow_weight": "3.25%"
+        "fwd_pe": 18.9,
+        "dow_weight": "3.16%",
+        "spy_weight": "0.38%"
     },
     "IBM": {
-        "price": 289.42,
+        "price": 293.89,
         "fwd_eps": 11.94,
-        "fwd_pe": 24.2,
-        "spy_weight": "0.46%",
-        "dow_weight": "3.98%"
+        "fwd_pe": 24.6,
+        "dow_weight": "3.88%",
+        "spy_weight": "0.45%"
     },
     "WMT": {
-        "price": 102.7,
+        "price": 103.24,
         "fwd_eps": 2.94,
-        "fwd_pe": 34.9,
-        "spy_weight": "1.34%",
-        "dow_weight": "1.35%"
+        "fwd_pe": 35.1,
+        "dow_weight": "1.36%",
+        "spy_weight": "1.36%"
     },
     "DIS": {
-        "price": 112.75,
+        "price": 112.55,
         "fwd_eps": 6.47,
         "fwd_pe": 17.4,
-        "spy_weight": "0.33%",
-        "dow_weight": "1.48%"
+        "dow_weight": "1.48%",
+        "spy_weight": "0.33%"
     },
     "JNJ": {
-        "price": 188.16,
+        "price": 188.88,
         "fwd_eps": 11.38,
-        "fwd_pe": 16.5,
-        "spy_weight": "0.73%",
-        "dow_weight": "2.42%"
+        "fwd_pe": 16.6,
+        "dow_weight": "2.49%",
+        "spy_weight": "0.75%"
     },
     "PG": {
-        "price": 150.41,
+        "price": 152.55,
         "fwd_eps": 7.39,
-        "fwd_pe": 20.4,
-        "spy_weight": "0.58%",
-        "dow_weight": "1.98%"
+        "fwd_pe": 20.6,
+        "dow_weight": "2.01%",
+        "spy_weight": "0.59%"
     },
     "MMM": {
-        "price": 155.93,
+        "price": 155.3,
         "fwd_eps": 8.59,
-        "fwd_pe": 18.2,
-        "spy_weight": "0.14%",
-        "dow_weight": "2.06%"
+        "fwd_pe": 18.1,
+        "dow_weight": "2.05%",
+        "spy_weight": "0.14%"
     },
     "CVX": {
-        "price": 154.02,
+        "price": 154.9,
         "fwd_eps": 9.17,
-        "fwd_pe": 16.8,
-        "spy_weight": "0.51%",
-        "dow_weight": "2.03%"
+        "fwd_pe": 16.9,
+        "dow_weight": "2.04%",
+        "spy_weight": "0.51%"
     },
     "KO": {
-        "price": 66.1,
+        "price": 66.79,
         "fwd_eps": 3.21,
-        "fwd_pe": 20.6,
-        "spy_weight": "0.47%",
-        "dow_weight": "0.87%"
+        "fwd_pe": 20.8,
+        "dow_weight": "0.88%",
+        "spy_weight": "0.47%"
     },
     "NKE": {
-        "price": 71.17,
+        "price": 68.92,
         "fwd_eps": 2.52,
-        "fwd_pe": 28.2,
-        "spy_weight": "0.17%",
-        "dow_weight": "0.93%"
+        "fwd_pe": 27.3,
+        "dow_weight": "0.91%",
+        "spy_weight": "0.17%"
     },
     "VZ": {
-        "price": 41.44,
+        "price": 41.42,
         "fwd_eps": 4.84,
         "fwd_pe": 8.6,
-        "spy_weight": "0.29%",
-        "dow_weight": "0.55%"
+        "dow_weight": "0.55%",
+        "spy_weight": "0.29%"
     }
 };
