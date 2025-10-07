@@ -23,13 +23,15 @@
 
         <div class="stats">
             <h5>Market fwd pe</h5>
+            <p id="spy_stats"></p>
             <p id="qqq_stats"></p>
             <p id="dow_stats"></p>
         </div>
         <div class="filter-buttons" id="filterButtons" style="display: none;">
             <button id="allBtn" class="filter-btn active" onclick="filterStocks('all')">All Stocks</button>
-            <button id="qqqBtn" class="filter-btn" onclick="filterStocks('qqq')">QQQ Top</button>
-            <button id="dowBtn" class="filter-btn" onclick="filterStocks('dow')">DJIA</button>
+            <button id="spyBtn" class="filter-btn" onclick="filterStocks('spy')">SPY</button>
+            <button id="qqqBtn" class="filter-btn" onclick="filterStocks('qqq')">QQQ</button>
+            <button id="dowBtn" class="filter-btn" onclick="filterStocks('dow')">DOW</button>
         </div>
 
         <table id="dataTable">
@@ -53,36 +55,37 @@
         let currentSort = { column: null, direction: 'asc' };
         let currentFilter = 'all';
 
-        // Filter lists
         const filters = {
+            spy: ["AAPL", "MSFT", "AMZN", "GOOGL", "META", "TSLA", "NVDA", "BRK.B", "UNH", "JNJ", "XOM", "V", "JPM", "PG", "HD", "MA", "CVX", "LLY", "MRK", "PEP", "ABBV", "KO", "AVGO", "COST", "TMO", "WMT"],
             qqq: ["AAPL", "NVDA", "MSFT", "GOOGL", "META", "TSLA", "AMZN", "AVGO", "NFLX", "COST", "PLTR"],
             dow: ["GS", "MSFT", "HD", "V", "SHW", "UNH", "CAT", "SHW", "AXP", "JPM", "MCD", "TRV", "WMT", "DIS", "IBM", "MMM", "NKE", "KO", "NVDA", "CVX", "BA", "JNJ", "PG", "AAPL", "AMZN", "CRM", "VZ"]
         };
 
-        function filterStocks(filterType) {
-            currentFilter = filterType;
+        function filterStocks(filterStr) {
+            currentFilter = filterStr;
             // Update button states
             document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-            document.getElementById(filterType + 'Btn').classList.add('active');
+            document.getElementById(filterStr + 'Btn').classList.add('active');
 
             // Show/hide weight column and update header
             const table = document.getElementById('dataTable');
             const weightHeader = document.getElementById('weightHeader');
 
-            if (filterType === 'all') {
+            if (filterStr === 'all') {
                 table.classList.remove('show-weight');
                 currentData = allData;
             } else {
                 table.classList.add('show-weight');
-
                 // Update weight column header based on filter
-                if (filterType === 'qqq') {
+                if (filterStr === 'qqq') {
                     weightHeader.textContent = 'QQQ weight';
-                } else if (filterType === 'dow') {
+                } else if (filterStr === 'dow') {
                     weightHeader.textContent = 'DOW weight';
+                } else {
+                    weightHeader.textContent = 'SPY Weight';
                 }
 
-                const filterList = filters[filterType];
+                const filterList = filters[filterStr];
                 currentData = {};
                 filterList.forEach(symbol => {
                     const upperSymbol = symbol.toUpperCase();
@@ -104,10 +107,12 @@
 
                     populateTable(allData);
                     document.getElementById('filterButtons').style.display = 'block';
+                    document.getElementById('spy_stats')
+                        .innerHTML = `SPY w.avg. ${allData.metadata.spy_wafpe}, median ${allData.metadata.spy_median_pe}`;
                     document.getElementById('qqq_stats')
                         .innerHTML = `QQQ w.avg. ${allData.metadata.qqq_wafpe}, median ${allData.metadata.qqq_median_pe}`;
                     document.getElementById('dow_stats')
-                        .innerHTML = `DJIA w.avg. ${allData.metadata.dow_wafpe}, median ${allData.metadata.dow_median_pe}`;
+                        .innerHTML = `DIA w.avg. ${allData.metadata.dow_wafpe}, median ${allData.metadata.dow_median_pe}`;
                     document.getElementById('subtitle')
                         .innerHTML = `As of close ${allData.metadata.date}`
                 } else {
@@ -146,6 +151,11 @@
             const currentHeader = document.querySelector(`th[data-sort="${column}"]`);
             currentHeader.classList.add(currentSort.direction === 'asc' ? 'sort-asc' : 'sort-desc');
 
+            const weightKeyTable = {
+                spy: 'spy_weight',
+                qqq: 'qqq_weight',
+                dow: 'dow_weight'
+            }
             // Sort the data
             const entries = Object.entries(currentData);
             entries.sort((a, b) => {
@@ -165,10 +175,9 @@
                         valueB = b[1].fwd_pe;
                         break;
                     case 'weight':
-                        const weightKeyA = currentFilter === 'qqq' ? 'qqq_weight' : 'dow_weight';
-                        const weightKeyB = currentFilter === 'qqq' ? 'qqq_weight' : 'dow_weight';
-                        valueA = a[1][weightKeyA] ? parseFloat(a[1][weightKeyA].replace('%', '')) : 0;
-                        valueB = b[1][weightKeyB] ? parseFloat(b[1][weightKeyB].replace('%', '')) : 0;
+                        const weightKey = weightKeyTable[currentFilter] || 'spy_weight';
+                        valueA = a[1][weightKey] ? parseFloat(a[1][weightKey].replace('%', '')) : 0;
+                        valueB = b[1][weightKey] ? parseFloat(b[1][weightKey].replace('%', '')) : 0;
                         break;
                 }
 
@@ -223,6 +232,8 @@
                     weight = stockData.qqq_weight;
                 } else if (currentFilter === 'dow' && stockData.dow_weight) {
                     weight = stockData.dow_weight;
+                } else {
+                    weight = stockData.spy_weight;
                 }
 
                 row.innerHTML = `
