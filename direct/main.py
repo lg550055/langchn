@@ -192,7 +192,7 @@ class FinanceAgent:
         if os.path.exists(comp_file):
             file_mtime = os.path.getmtime(comp_file)
             if (time.time() - file_mtime) < (8 * 60 * 60):
-                print("File is less than 8 hrs old; skipped fetch")
+                print(f"{comp_file} is less than 8 hrs old; skipped fetch")
                 return
         try:
             print(f"\nFetching {indx} components...")
@@ -318,9 +318,9 @@ if __name__ == "__main__":
     other = ["et", "lulu", "epd", "wmb", "kmi"]
     all_xdow = list(set(qqq + spy_top + other))
     # agent.get_stock_data("ibm")  # test single stock
-    # agent.get_multiple_stocks(all_xdow, wait_time)
-    # time.sleep(wait_time)
-    # agent.get_multiple_stocks(dow, wait_time)
+    agent.get_multiple_stocks(all_xdow, wait_time)
+    time.sleep(wait_time)
+    agent.get_multiple_stocks(dow, wait_time)
     agent.get_comp(Index.DOW)
     time.sleep(wait_time)
     agent.get_comp(Index.QQQ)

@@ -1,4 +1,4 @@
-var financialData = {
+{
     "MSFT": {
         "price": 528.57,
         "fwd_eps": 18.13,
@@ -221,4 +221,4 @@ var financialData = {
         "fwd_eps": 4.84,
         "fwd_pe": 8.6
     }
-};
+}
