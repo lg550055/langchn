@@ -115,6 +115,7 @@ class FinanceAgent:
         return result
 
 
+    # TODO: delete; not used
     def parse_qqq_comp(self, res_text) -> list[tuple[str, str]]:
         comp = []
         soup = BeautifulSoup(res_text, 'html.parser')
@@ -205,7 +206,6 @@ class FinanceAgent:
             response = self.session.get(url)
             response.raise_for_status()
             print("Page fetched; code: ", response.status_code, type(response.content), response.text[:10], response.headers.get('Content-Type'), response.encoding)
-            # comp = self.parse_qqq_comp(response.text) if indx == "qqq" else self.parse_comp(response.text)
             comp = self.parse_comp(response.text)
 
         except requests.RequestException as e:
@@ -216,7 +216,7 @@ class FinanceAgent:
         if comp:
             with open(comp_file, 'w') as f:
                 json.dump({ticker: weight for ticker, weight in comp}, f)
-            # open 'archive/latest.js' and add or rplace the field {indx}_weight for each matching ticker
+            # open 'archive/latest.js' and add or replace the field {indx}_weight for each matching ticker
             if os.path.exists('archive/latest.js'):
                 with open('archive/latest.js', 'r') as f:
                     latest_data = f.read()
@@ -227,22 +227,27 @@ class FinanceAgent:
                     latest_data = latest_data[:-1]
                 try:
                     latest_json = json.loads(latest_data)
-                    # Add logic to calculate and add wafpe and median_pe for QQQ and DOW
+                    # Add logic to calculate and add wafpe and median_pe
                     if 'metadata' not in latest_json:
                         latest_json['metadata'] = {"date": date_str}
                     fwd_pes = []
                     wafpe = 0.0
+                    sample_weight = 0.0
                     for ticker, weight in comp:
                         if ticker in latest_json:
                             latest_json[ticker][f'{indx}_weight'] = weight
                             # Add ticker's fwd pe to later caclulate median and add to wafpe
                             fwd_pe = latest_json[ticker]['fwd_pe']
                             fwd_pes.append(fwd_pe)
-                            wafpe += fwd_pe * float(weight.strip('%')) / 100
-                    # Add wafpe and median to metadata
+                            weight_decimal = float(weight.strip('%')) / 100
+                            wafpe += fwd_pe * weight_decimal
+                            sample_weight += weight_decimal
+                    sample_weight_str = f"{sample_weight*100:.2f}%"
+                    # Add wafpe, median and sample weight to metadata
                     med = statistics.median(fwd_pes)
                     latest_json['metadata'][f'{indx}_wafpe'] = round(wafpe, 1)
                     latest_json['metadata'][f'{indx}_median_pe'] = round(med, 1)
+                    latest_json['metadata'][f'{indx}_sample_weight'] = sample_weight_str
 
                     with open('archive/latest.js', 'w') as f:
                         f.write('var financialData = ')
