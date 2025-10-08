@@ -22,7 +22,7 @@
         </div>
 
         <div class="stats">
-            <h5>Market fwd pe</h5>
+            <h5>Sample fwd pe</h5>
             <p id="spy_stats"></p>
             <p id="qqq_stats"></p>
             <p id="dow_stats"></p>
@@ -108,11 +108,11 @@
                     populateTable(allData);
                     document.getElementById('filterButtons').style.display = 'block';
                     document.getElementById('spy_stats')
-                        .innerHTML = `SPY w.avg. ${allData.metadata.spy_wafpe}, median ${allData.metadata.spy_median_pe}`;
+                        .innerHTML = `SPY (${allData.metadata.spy_sample_weight}) w.avg. ${allData.metadata.spy_wafpe}, med ${allData.metadata.spy_median_pe}`;
                     document.getElementById('qqq_stats')
-                        .innerHTML = `QQQ w.avg. ${allData.metadata.qqq_wafpe}, median ${allData.metadata.qqq_median_pe}`;
+                        .innerHTML = `QQQ (${allData.metadata.qqq_sample_weight}) w.avg. ${allData.metadata.qqq_wafpe}, med ${allData.metadata.qqq_median_pe}`;
                     document.getElementById('dow_stats')
-                        .innerHTML = `DIA w.avg. ${allData.metadata.dow_wafpe}, median ${allData.metadata.dow_median_pe}`;
+                        .innerHTML = `DIA (${allData.metadata.dow_sample_weight}) w.avg. ${allData.metadata.dow_wafpe}, med ${allData.metadata.dow_median_pe}`;
                     document.getElementById('subtitle')
                         .innerHTML = `As of close ${allData.metadata.date}`
                 } else {
