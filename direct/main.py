@@ -243,9 +243,9 @@ class FinanceAgent:
                             wafpe += fwd_pe * weight_decimal
                             sample_weight += weight_decimal
                     sample_weight_str = f"{sample_weight*100:.2f}%"
-                    # Add wafpe, median and sample weight to metadata
+                    # Add wafpe (divided by sample weight to normalize), median and sample weight to metadata
                     med = statistics.median(fwd_pes)
-                    latest_json['metadata'][f'{indx}_wafpe'] = round(wafpe, 1)
+                    latest_json['metadata'][f'{indx}_wafpe'] = round(wafpe / sample_weight, 1)
                     latest_json['metadata'][f'{indx}_median_pe'] = round(med, 1)
                     latest_json['metadata'][f'{indx}_sample_weight'] = sample_weight_str
 
