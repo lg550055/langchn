@@ -3,6 +3,7 @@ import json
 import sqlite3
 from aiohttp import web, ClientSession
 
+DB_METHODS = ["query_db", "insert_db", "update_db", "delete_db"]
 # Initialize SQLite database with sample data
 def init_db():
     conn = sqlite3.connect("example.db")
@@ -22,7 +23,7 @@ def init_db():
     conn.commit()
     conn.close()
 
-# MCP Server: Exposes database query capability
+# MCP Server: Exposes database query or file read capability
 async def mcp_server(request):
     try:
         # Parse JSON-RPC 2.0 request
@@ -37,7 +38,7 @@ async def mcp_server(request):
         method = data["method"]
         params = data.get("params", {})
 
-        # Handle MCP capability: read_file
+        # Handle MCP: read_file
         if method == "read_file":
             file_path = params.get("file_path")
             if not file_path:
@@ -62,8 +63,8 @@ async def mcp_server(request):
                     "id": data["id"]
                 })
 
-        # Handle MCP capability: query_db
-        if method == "query_db":
+        # Handle MCP: db operations
+        if method in DB_METHODS:
             query = params.get("query")
             query_params = params.get("query_params", [])
             if not query:
@@ -78,12 +79,31 @@ async def mcp_server(request):
                 conn.row_factory = sqlite3.Row
                 cursor = conn.cursor()
                 cursor.execute(query, query_params)
-                rows = cursor.fetchall()
-                results = [dict(row) for row in rows]
-                conn.close()
+                result = None
+                if method == "query_db":
+                    rows = cursor.fetchall()
+                    results = [dict(row) for row in rows]
+                    conn.close()
+                    result = {"rows": results}
+                elif method == "insert_db":
+                    conn.commit()
+                    last_id = cursor.lastrowid
+                    conn.close()
+                    result = {"last_insert_id": last_id}
+                elif method == "update_db":
+                    conn.commit()
+                    affected = cursor.rowcount
+                    conn.close()
+                    result = {"rows_affected": affected}
+                elif method == "delete_db":
+                    conn.commit()
+                    affected = cursor.rowcount
+                    conn.close()
+                    result = {"rows_affected": affected}
+
                 return web.json_response({
                     "jsonrpc": "2.0",
-                    "result": {"rows": results},
+                    "result": result,
                     "id": data["id"]
                 })
             except sqlite3.Error as e:
@@ -139,23 +159,54 @@ async def main():
     query_params = ["Alice"]
     params = {"query": query, "query_params": query_params}
     response = await mcp_client(method, params)
-    print("Client received:", json.dumps(response, indent=2))
+    print("Query response:", json.dumps(response, indent=2))
+
+    # Simulate AI request to insert a new user
+    method = "insert_db"
+    query = "INSERT INTO users (name, email) VALUES (?, ?)"
+    query_params = ["Charlie", "charlie@example.com"]
+    params = {"query": query, "query_params": query_params}
+    response = await mcp_client(method, params)
+    print("Insert response:", json.dumps(response, indent=2))
+
+    # Simulate AI host request: UPDATE a user's email
+    method = "update_db"
+    update_query = "UPDATE users SET email = ? WHERE name = ?"
+    update_params = ["charlie@updated.com", "Charlie"]
+    params = {"query": update_query, "query_params": update_params}
+    response = await mcp_client(method, params)
+    print("Update response:", json.dumps(response, indent=2))
 
     # Simulate another AI request: Get all users
+    method = "query_db"
     query = "SELECT id, name, email FROM users"
     params = {"query": query, "query_params": []}
     response = await mcp_client(method, params)
-    print("Client received:", json.dumps(response, indent=2))
+    print("Query response:", json.dumps(response, indent=2))
+
+    # Simulate AI request to delete a user
+    method = "delete_db"
+    delete_query = "DELETE FROM users WHERE name = ?"
+    delete_params = ["Charlie"]
+    params = {"query": delete_query, "query_params": delete_params}
+    response = await mcp_client(method, params)
+    print("Delete response:", json.dumps(response, indent=2))
+    # Verify deletion
+    method = "query_db"
+    query = "SELECT id, name, email FROM users"
+    params = {"query": query, "query_params": []}
+    response = await mcp_client(method, params)
+    print("Post-deletion query response:", json.dumps(response, indent=2))
 
     # Simulate AI request to read a file
     method = "read_file"
     params = {"file_path": "example.txt"}
     response = await mcp_client(method, params)
-    print("Client received:", json.dumps(response, indent=2))
+    print("Read file response:", json.dumps(response, indent=2))
 
     # Cleanup (in practice, server runs indefinitely)
     server_task.cancel()
 
 if __name__ == "__main__":
-    # init_db()  # run once (or if the DB is deleted or need to seed changes)
+    # init_db()  # run once to seed / restore db
     asyncio.run(main())
