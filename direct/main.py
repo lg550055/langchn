@@ -9,7 +9,7 @@ import statistics
 import time
 
 dow = ["gs", "msft", "cat", "hd", "shw", "v", "unh", "axp", "jpm", "mcd", "amgn", "trv", "crm", "ibm","nvda", "aapl", "amzn", "wmt", "dis", "jnj", "pg", "mmm", "cvx", "ko", "nke", "vz"]
-qqq = ["nvda", "msft", "aapl", "amzn", "tsla", "meta", "googl", "cost", "avgo", "nflx", "pltr"]
+qqq = ["nvda", "msft", "aapl", "amzn", "tsla", "meta", "googl", "cost", "avgo", "nflx", "pltr", "asml", "amd"]
 
 suffix_table = {
     'qqq': 'nasdaq100',
