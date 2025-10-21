@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup, Tag
 from datetime import datetime
+from dotenv import load_dotenv
 from enum import StrEnum, auto
 from typing import Dict
 import json
@@ -7,6 +8,11 @@ import os
 import requests
 import statistics
 import time
+
+load_dotenv()
+STOCK_URL = os.getenv('STOCK_URL')
+STOCK_SUFFIX = os.getenv('STOCK_SUFFIX')
+COMP_URL = os.getenv('COMP_URL')
 
 dow = ["gs", "msft", "cat", "hd", "shw", "v", "unh", "axp", "jpm", "mcd", "amgn", "trv", "crm", "ibm","nvda", "aapl", "amzn", "wmt", "dis", "jnj", "pg", "mmm", "cvx", "ko", "nke", "vz"]
 qqq = ["nvda", "msft", "aapl", "amzn", "tsla", "meta", "googl", "cost", "avgo", "nflx", "pltr", "asml", "amd"]
@@ -64,24 +70,21 @@ class FinanceAgent:
         }
         
         try:
-            # Get the analysis page; contains both price and earnings data
-            analysis_url = f"https://finance.yahoo.com/quote/{ticker}/analysis/"
-            response = self.session.get(analysis_url)
+            # Get page; contains both price and earnings data
+            url = f"{STOCK_URL}/{ticker}/{STOCK_SUFFIX}/"
+            response = self.session.get(url)
             response.raise_for_status()
 
             soup = BeautifulSoup(response.content, 'html.parser')
 
-            # Extract stock price using 'data-testid'
+            # Get stock price using 'data-testid'
             price_element = soup.find('span', {'data-testid': 'qsp-price'})
             if price_element:
                 result['price'] = round(float(price_element.text.strip().replace(',', '')), 2)
             else:
                 print(f"===== Price element not found for {ticker}")
             
-            # Extract date from market time notice -only has time; using today as noted above
-            # block deleted
-            
-            # Extract earnings estimate from earnings estimate section
+            # Get earnings estimate from earnings estimate section
             earnings_section = soup.find('section', {'data-testid': 'earningsEstimate'})
             if earnings_section:
                 # Find the table within the earnings estimate section
@@ -113,42 +116,6 @@ class FinanceAgent:
             print(f"\n--- {ticker} missing or negative fwd eps: {result['fwd_eps']}")
         print(f"{ticker} {result['price']}, fwd eps: {result['fwd_eps']}, fwd p/e {result['fwd_pe']}")
         return result
-
-
-    # TODO: delete; not used
-    def parse_qqq_comp(self, res_text) -> list[tuple[str, str]]:
-        comp = []
-        soup = BeautifulSoup(res_text, 'html.parser')
-        table_body = soup.find(id='companyListComponent')
-        # 'table_body' has 'tr' children, half have 'id' attributes and half have 'style' attributes; keep those with 'id'
-        if table_body and type(table_body) is Tag:
-            rows = [row for row in table_body.find_all('tr') if type(row) is Tag and row.get('id')]
-            print(f"Found {len(rows)} rows")
-            # from each row, get the 3rd an 4th 'td' children; 3rd is 'a' tag enclosing the ticker, 4th is the weight
-            for row in rows:
-                cells = row.find_all('td')
-                if len(cells) > 3:
-                    ticker = cells[2].get_text().strip()
-                    weight = cells[3].get_text().strip()
-                    comp.append((ticker, weight))
-            # consolidate GOOGL and GOOG into one entry
-            googl = next((item for item in comp if item[0] == 'GOOGL'), None)
-            goog = next((item for item in comp if item[0] == 'GOOG'), None)
-            if googl and goog:
-                combined_weight = float(googl[1].replace('%', '')) + float(goog[1].replace('%', ''))
-                comp = [item for item in comp if item[0] not in ('GOOGL', 'GOOG')]
-                # insert combined GOOGL entry right before the next largest weight
-                inserted = False
-                for i, item in enumerate(comp):
-                    if float(item[1].replace('%', '')) < combined_weight:
-                        comp.insert(i, ('GOOGL', f"{combined_weight:.2f}%"))
-                        inserted = True
-                        break
-                if not inserted:
-                    comp.append(('GOOGL', f"{combined_weight:.2f}%"))
-        else:
-            print("Error: table_body not found or is not type Tag: ", table_body)
-        return comp
 
 
     def parse_comp(self, res_text) -> list[tuple[str, str]]:
@@ -198,7 +165,7 @@ class FinanceAgent:
         try:
             print(f"\nFetching {indx} components...")
             suffix = suffix_table[indx]
-            url = f"https://www.slickcharts.com/{suffix}"
+            url = f"{COMP_URL}/{suffix}"
             # update headers for this request to only Accept-Encoding: identity
             self.session.headers.update({
                 'Accept-Encoding': 'identity'
