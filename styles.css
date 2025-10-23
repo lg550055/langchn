@@ -28,6 +28,8 @@ h1 {
     font-weight: 500;
     opacity: 0.9;
 }
+h2 { font-weight: normal; }
+#sub { font-size: 0.75em; }
 .stats {
     border: 1px solid var(--highlight-bg);
     /* border-radius: 10px; */
