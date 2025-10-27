@@ -21,6 +21,7 @@ cryptography==46.0.0
 dataclasses-json==0.6.7
 ddgs==9.5.5
 distro==1.9.0
+dnspython==2.8.0
 duckduckgo_search==8.1.1
 frozenlist==1.7.0
 google-api-core==2.25.1
@@ -81,6 +82,7 @@ pycparser==2.23
 pydantic==2.11.9
 pydantic-settings==2.10.1
 pydantic_core==2.33.2
+pymongo==4.15.3
 pyotp==2.9.0
 pyparsing==3.2.4
 pypdf==6.0.0
