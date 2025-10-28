@@ -1,8 +1,8 @@
 import os
 import json
-from mongo import Mongo
+from mongo import MongoWrapper
 
-mongo = Mongo()
+mongo = MongoWrapper()
 
 # ping to confirm a successful connection
 try:

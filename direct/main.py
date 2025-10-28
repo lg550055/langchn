@@ -8,6 +8,7 @@ import os
 import requests
 import statistics
 import time
+from mongo import MongoWrapper
 
 load_dotenv()
 STOCK_URL = os.getenv('STOCK_URL')
@@ -30,6 +31,7 @@ if date.weekday() > 4:  # Saturday or Sunday
     days_to_subtract = date.weekday() - 4  # Go back to Friday
     date = date.replace(day=date.day - days_to_subtract)
 date_str = date.strftime('%Y-%m-%d')
+cache_file_path = f"archive/{date_str}.json"
 
 class Index(StrEnum):
     DOW = auto()
@@ -237,7 +239,6 @@ class FinanceAgent:
             None
         """
         # check if a file named 'date_str.json' exists; if so, load it and assign to results
-        cache_file_path = f"archive/{date_str}.json"
         if os.path.exists(cache_file_path):
             with open(cache_file_path, 'r') as f:
                 results = json.load(f)
@@ -298,3 +299,6 @@ if __name__ == "__main__":
     agent.get_comp(Index.QQQ)
     time.sleep(wait_time)
     agent.get_comp(Index.SPY)
+    # Save to db
+    mongo = MongoWrapper()
+    mongo.save_file_data_to_db(cache_file_path, date_str)
