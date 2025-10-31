@@ -115,7 +115,9 @@ class FinanceAgent:
         if result['price'] and result['fwd_eps'] > 0:
             result['fwd_pe'] = round(result['price'] / result['fwd_eps'], 1)
         else:
+            # Avoid adding empty null data
             print(f"\n--- {ticker} missing or negative fwd eps: {result['fwd_eps']}")
+            return {}
         print(f"{ticker} {result['price']}, fwd eps: {result['fwd_eps']}, fwd p/e {result['fwd_pe']}")
         return result
 
@@ -225,8 +227,8 @@ class FinanceAgent:
                     print(f"Updated archive/latest.js with {indx} weights.")
                 except json.JSONDecodeError as e:
                     print(f"Error decoding latest.js JSON: {e}")
-        
-            print(f"Top 5 {indx} components: ", comp[:5])
+            top5_weight = round(sum([float(c[1][:-1]) for c in comp[:5]]), 1)
+            print(f"Top 5 {indx} components: ", comp[:5], " -agg weight: ", top5_weight, "%")
         return
 
 
@@ -254,8 +256,13 @@ class FinanceAgent:
                 print(f"Skipping {ticker}, already in results: {results[ticker]}")
                 continue
             print(f"\nFetching data for {ticker}...")
-            results[ticker] = self.get_stock_data(ticker)
-            new_data_count += 1
+            result = self.get_stock_data(ticker)
+            # Avoid adding empty data
+            if result:
+                results[ticker] = result
+                new_data_count += 1
+            else:
+                print("--- Error: empty fetch result for ", ticker)
             time.sleep(wait_time)
 
         # Only save if new data was fetched
