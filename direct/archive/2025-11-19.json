@@ -1,4 +1,4 @@
-var financialData = {
+{
     "AAPL": {
         "price": 268.56,
         "fwd_eps": 9.1,
@@ -231,4 +231,4 @@ var financialData = {
         "fwd_eps": 4.83,
         "fwd_pe": 8.5
     }
-};
+}
