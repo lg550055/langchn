@@ -1,118 +1,118 @@
 {
-    "GOOGL": {
-        "price": 313.0,
-        "fwd_eps": 11.2,
-        "fwd_pe": 27.9
-    },
-    "LULU": {
-        "price": 207.81,
-        "fwd_eps": 12.63,
-        "fwd_pe": 16.5
-    },
-    "AMZN": {
-        "price": 230.82,
-        "fwd_eps": 7.86,
-        "fwd_pe": 29.4
-    },
-    "TSLA": {
-        "price": 449.72,
-        "fwd_eps": 2.22,
-        "fwd_pe": 202.6
-    },
-    "NFLX": {
-        "price": 93.76,
-        "fwd_eps": 3.23,
-        "fwd_pe": 29.0
-    },
-    "ORCL": {
-        "price": 194.91,
-        "fwd_eps": 7.96,
-        "fwd_pe": 24.5
-    },
-    "NVDA": {
-        "price": 186.5,
-        "fwd_eps": 7.57,
-        "fwd_pe": 24.6
-    },
-    "ASML": {
-        "price": 1069.86,
-        "fwd_eps": 25.91,
-        "fwd_pe": 41.3
-    },
     "MSFT": {
-        "price": 483.62,
+        "price": 472.94,
         "fwd_eps": 18.64,
-        "fwd_pe": 25.9
+        "fwd_pe": 25.4
     },
-    "PLTR": {
-        "price": 177.75,
-        "fwd_eps": 1.01,
-        "fwd_pe": 176.0
-    },
-    "WMB": {
-        "price": 60.11,
-        "fwd_eps": 2.32,
-        "fwd_pe": 25.9
-    },
-    "LLY": {
-        "price": 1074.68,
-        "fwd_eps": 32.63,
-        "fwd_pe": 32.9
-    },
-    "META": {
-        "price": 660.09,
-        "fwd_eps": 29.62,
-        "fwd_pe": 22.3
-    },
-    "BRK-B": {
-        "price": 502.65,
-        "fwd_eps": 24.19,
-        "fwd_pe": 20.8
-    },
-    "MA": {
-        "price": 570.88,
-        "fwd_eps": 19.11,
-        "fwd_pe": 29.9
-    },
-    "KMI": {
-        "price": 27.49,
-        "fwd_eps": 1.38,
-        "fwd_pe": 19.9
-    },
-    "ET": {
-        "price": 16.49,
-        "fwd_eps": 1.57,
-        "fwd_pe": 10.5
-    },
-    "COST": {
-        "price": 862.34,
-        "fwd_eps": 22.24,
-        "fwd_pe": 38.8
-    },
-    "AMD": {
-        "price": 214.16,
-        "fwd_eps": 6.46,
-        "fwd_pe": 33.2
-    },
-    "AAPL": {
-        "price": 271.86,
-        "fwd_eps": 9.14,
-        "fwd_pe": 29.7
+    "XOM": {
+        "price": 122.65,
+        "fwd_eps": 7.19,
+        "fwd_pe": 17.1
     },
     "EPD": {
-        "price": 32.06,
+        "price": 32.16,
         "fwd_eps": 2.86,
         "fwd_pe": 11.2
     },
-    "AVGO": {
-        "price": 346.1,
-        "fwd_eps": 14.0,
-        "fwd_pe": 24.7
+    "MA": {
+        "price": 563.13,
+        "fwd_eps": 19.11,
+        "fwd_pe": 29.5
     },
-    "XOM": {
-        "price": 120.34,
-        "fwd_eps": 7.19,
+    "LULU": {
+        "price": 210.81,
+        "fwd_eps": 12.63,
         "fwd_pe": 16.7
+    },
+    "ORCL": {
+        "price": 195.71,
+        "fwd_eps": 7.96,
+        "fwd_pe": 24.6
+    },
+    "AAPL": {
+        "price": 271.01,
+        "fwd_eps": 9.14,
+        "fwd_pe": 29.7
+    },
+    "COST": {
+        "price": 854.5,
+        "fwd_eps": 22.24,
+        "fwd_pe": 38.4
+    },
+    "BRK-B": {
+        "price": 496.85,
+        "fwd_eps": 24.19,
+        "fwd_pe": 20.5
+    },
+    "LLY": {
+        "price": 1080.36,
+        "fwd_eps": 32.63,
+        "fwd_pe": 33.1
+    },
+    "WMB": {
+        "price": 60.85,
+        "fwd_eps": 2.32,
+        "fwd_pe": 26.2
+    },
+    "ET": {
+        "price": 16.59,
+        "fwd_eps": 1.57,
+        "fwd_pe": 10.6
+    },
+    "KMI": {
+        "price": 27.71,
+        "fwd_eps": 1.38,
+        "fwd_pe": 20.1
+    },
+    "PLTR": {
+        "price": 167.86,
+        "fwd_eps": 1.01,
+        "fwd_pe": 166.2
+    },
+    "ASML": {
+        "price": 1163.78,
+        "fwd_eps": 26.17,
+        "fwd_pe": 44.5
+    },
+    "GOOGL": {
+        "price": 315.15,
+        "fwd_eps": 11.2,
+        "fwd_pe": 28.1
+    },
+    "AMD": {
+        "price": 223.47,
+        "fwd_eps": 6.46,
+        "fwd_pe": 34.6
+    },
+    "NFLX": {
+        "price": 90.99,
+        "fwd_eps": 3.23,
+        "fwd_pe": 28.2
+    },
+    "META": {
+        "price": 650.41,
+        "fwd_eps": 29.62,
+        "fwd_pe": 22.0
+    },
+    "NVDA": {
+        "price": 188.85,
+        "fwd_eps": 7.57,
+        "fwd_pe": 24.9
+    },
+    "AMZN": {
+        "price": 226.5,
+        "fwd_eps": 7.86,
+        "fwd_pe": 28.8
+    },
+    "AVGO": {
+        "price": 347.62,
+        "fwd_eps": 14.0,
+        "fwd_pe": 24.8
+    },
+    "TSLA": {
+        "price": 438.07,
+        "fwd_eps": 2.21,
+        "fwd_pe": 198.2
     },
     "metadata": {
         "date": "2026-01-02",
@@ -122,113 +122,113 @@
         "dow_median_pe": ""
     },
     "GS": {
-        "price": 879.0,
-        "fwd_eps": 55.3,
-        "fwd_pe": 15.9
+        "price": 914.34,
+        "fwd_eps": 55.33,
+        "fwd_pe": 16.5
     },
     "CAT": {
-        "price": 572.87,
+        "price": 598.41,
         "fwd_eps": 22.39,
-        "fwd_pe": 25.6
+        "fwd_pe": 26.7
     },
     "HD": {
-        "price": 344.1,
+        "price": 345.82,
         "fwd_eps": 15.13,
-        "fwd_pe": 22.7
+        "fwd_pe": 22.9
     },
     "SHW": {
-        "price": 324.03,
-        "fwd_eps": 12.58,
-        "fwd_pe": 25.8
+        "price": 327.84,
+        "fwd_eps": 12.54,
+        "fwd_pe": 26.1
     },
     "V": {
-        "price": 350.71,
+        "price": 346.48,
         "fwd_eps": 14.43,
-        "fwd_pe": 24.3
+        "fwd_pe": 24.0
     },
     "UNH": {
-        "price": 330.11,
+        "price": 336.4,
         "fwd_eps": 17.77,
-        "fwd_pe": 18.6
+        "fwd_pe": 18.9
     },
     "AXP": {
-        "price": 369.95,
+        "price": 372.73,
         "fwd_eps": 17.48,
-        "fwd_pe": 21.2
+        "fwd_pe": 21.3
     },
     "JPM": {
-        "price": 322.22,
+        "price": 325.48,
         "fwd_eps": 21.18,
-        "fwd_pe": 15.2
+        "fwd_pe": 15.4
     },
     "MCD": {
-        "price": 305.63,
+        "price": 303.26,
         "fwd_eps": 13.23,
-        "fwd_pe": 23.1
+        "fwd_pe": 22.9
     },
     "AMGN": {
-        "price": 327.31,
-        "fwd_eps": 21.94,
+        "price": 327.64,
+        "fwd_eps": 21.95,
         "fwd_pe": 14.9
     },
     "TRV": {
-        "price": 290.06,
+        "price": 285.19,
         "fwd_eps": 26.65,
-        "fwd_pe": 10.9
+        "fwd_pe": 10.7
     },
     "CRM": {
-        "price": 264.91,
+        "price": 253.62,
         "fwd_eps": 13.12,
-        "fwd_pe": 20.2
+        "fwd_pe": 19.3
     },
     "IBM": {
-        "price": 296.21,
+        "price": 291.5,
         "fwd_eps": 12.19,
-        "fwd_pe": 24.3
+        "fwd_pe": 23.9
     },
     "WMT": {
-        "price": 111.41,
+        "price": 112.76,
         "fwd_eps": 2.98,
-        "fwd_pe": 37.4
+        "fwd_pe": 37.8
     },
     "DIS": {
-        "price": 113.77,
+        "price": 111.85,
         "fwd_eps": 7.36,
-        "fwd_pe": 15.5
+        "fwd_pe": 15.2
     },
     "JNJ": {
-        "price": 206.95,
+        "price": 207.35,
         "fwd_eps": 11.53,
-        "fwd_pe": 17.9
+        "fwd_pe": 18.0
     },
     "PG": {
-        "price": 143.31,
+        "price": 141.79,
         "fwd_eps": 7.35,
-        "fwd_pe": 19.5
+        "fwd_pe": 19.3
     },
     "MMM": {
-        "price": 160.1,
+        "price": 161.82,
         "fwd_eps": 8.64,
-        "fwd_pe": 18.5
+        "fwd_pe": 18.7
     },
     "CVX": {
-        "price": 152.41,
-        "fwd_eps": 7.55,
-        "fwd_pe": 20.2
+        "price": 155.9,
+        "fwd_eps": 7.53,
+        "fwd_pe": 20.7
     },
     "KO": {
-        "price": 69.91,
+        "price": 69.12,
         "fwd_eps": 3.22,
-        "fwd_pe": 21.7
+        "fwd_pe": 21.5
     },
     "NKE": {
-        "price": 63.71,
+        "price": 63.28,
         "fwd_eps": 2.41,
-        "fwd_pe": 26.4
+        "fwd_pe": 26.3
     },
     "VZ": {
-        "price": 40.73,
+        "price": 40.52,
         "fwd_eps": 4.8,
-        "fwd_pe": 8.5
+        "fwd_pe": 8.4
     }
 }
