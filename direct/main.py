@@ -93,11 +93,12 @@ class FinanceAgent:
                 table = soup.select_one('section[data-testid="earningsEstimate"] table')
                 if table:
                     tbody = table.find('tbody')
-                    # print(f"Table found for earnings estimate: {type(table)}")
                     if tbody and type(tbody) is Tag:
                         rows = tbody.contents
-                        if len(rows) >= 2 and type(rows[1]) is Tag:  # Second row (index 1)
-                            second_row = rows[1]
+                        # for i, row in enumerate(rows):
+                        #     print(f"Row {i}: {row}; type: {type(row)}")
+                        if len(rows) >= 4 and type(rows[3]) is Tag:  # 4th row (index 3)
+                            second_row = rows[3]
                             cells = second_row.find_all('td')
                             # print(f"Cells found in second row: {cells}; type: {type(cells[-1])}")
                             if cells:
