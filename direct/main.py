@@ -95,8 +95,6 @@ class FinanceAgent:
                     tbody = table.find('tbody')
                     if tbody and type(tbody) is Tag:
                         rows = tbody.contents
-                        # for i, row in enumerate(rows):
-                        #     print(f"Row {i}: {row}; type: {type(row)}")
                         if len(rows) >= 4 and type(rows[3]) is Tag:  # 4th row (index 3)
                             second_row = rows[3]
                             cells = second_row.find_all('td')
@@ -177,7 +175,7 @@ class FinanceAgent:
             })
             response = self.session.get(url)
             response.raise_for_status()
-            print("Page fetched; code: ", response.status_code, type(response.content), response.text[:10], response.headers.get('Content-Type'), response.encoding)
+            # print("Page fetched; code: ", response.status_code, type(response.content), response.text[:10], response.headers.get('Content-Type'), response.encoding)
             comp = self.parse_comp(response.text)
 
         except requests.RequestException as e:
