@@ -91,20 +91,25 @@ class FinanceAgent:
             if earnings_section:
                 # Find the table within the earnings estimate section
                 table = soup.select_one('section[data-testid="earningsEstimate"] table')
-                if table:
-                    tbody = table.find('tbody')
-                    if tbody and type(tbody) is Tag:
-                        rows = tbody.contents
-                        if len(rows) >= 4 and type(rows[3]) is Tag:  # 4th row (index 3)
-                            second_row = rows[3]
-                            cells = second_row.find_all('td')
-                            # print(f"Cells found in second row: {cells}; type: {type(cells[-1])}")
-                            if cells:
-                                # Get the last cell value (earnings estimate for next year)
-                                last_cell = cells[-1]
-                                estimate = last_cell.get_text().strip()
-                                if estimate and estimate != '-':
-                                    result['fwd_eps'] = round(float(estimate), 2)
+                assert table is not None, f"Table not found for earnings estimate for {ticker}"
+                tbody = table.find('tbody')
+                if tbody and type(tbody) is Tag:
+                    rows = tbody.contents
+                    if len(rows) >= 4 and type(rows[3]) is Tag and type(rows[1]) is Tag:
+                        analysts_row = rows[1]  # 3rd row (index 2) analysts
+                        analysts_cells = analysts_row.find_all('td')
+                        analysts = analysts_cells[-1].get_text().strip()
+                        print(analysts_cells[0].get_text().strip(), " - ", analysts)
+                        esp_estimate_row = rows[3]  # 4th row (index 3) avg. estimate
+                        cells = esp_estimate_row.find_all('td')
+                        # print(f"Cells found in second row: {cells}; type: {type(cells[-1])}")
+                        assert len(cells) > 0, f"No cells found in row of earnings est for {ticker}"
+                        # Get the last cell value (earnings estimate for next year)
+                        last_cell = cells[-1]
+                        estimate = last_cell.get_text().strip()
+                        print(cells[0].get_text().strip(), " - ", estimate)
+                        if estimate and estimate != '-':
+                            result['fwd_eps'] = round(float(estimate), 2)
 
         except requests.RequestException as e:
             print(f"Error fetching data for {ticker}: {e}")
