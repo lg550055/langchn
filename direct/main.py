@@ -85,31 +85,53 @@ class FinanceAgent:
                 result['price'] = round(float(price_element.text.strip().replace(',', '')), 2)
             else:
                 print(f"===== Price element not found for {ticker}")
+            # Get revenue estimate from revenue estimate section
+            revenue_section = soup.find('section', {'data-testid': 'revenueEstimate'})
+            assert revenue_section is not None, f"revenue estimate section not found for {ticker}"
+            # Find the table within the revenue estimate section
+            table = soup.select_one('section[data-testid="revenueEstimate"] table')
+            assert table is not None, f"Table not found for revenue estimate for {ticker}"
+            tbody = table.find('tbody')
+            if tbody and type(tbody) is Tag:
+                rows = tbody.contents
+                if len(rows) >= 9 and type(rows[3]) is Tag and type(rows[1]) is Tag and type(rows[9]) is Tag:
+                    analysts_row = rows[1]  # row index 2 analysts
+                    analysts_cells = analysts_row.find_all('td')
+                    analyst_coun = analysts_cells[-1].get_text().strip()
+                    print(analysts_cells[0].get_text(), analyst_coun)
+                    yragoRev_row = rows[9]  # row index 2 analysts
+                    yragoRev_cells = yragoRev_row.find_all('td')
+                    yragoRev = yragoRev_cells[-1].get_text().strip()
+                    print(yragoRev_cells[0].get_text(), yragoRev, ", 2yrs ago:", yragoRev_cells[-2].get_text().strip())
+                    rev_estimate_row = rows[3]  # row index 3 avg. estimate
+                    cells = rev_estimate_row.find_all('td')
+                    estimate = cells[-1].get_text().strip()
+                    print(cells[0].get_text(), estimate)
             
             # Get earnings estimate from earnings estimate section
             earnings_section = soup.find('section', {'data-testid': 'earningsEstimate'})
-            if earnings_section:
-                # Find the table within the earnings estimate section
-                table = soup.select_one('section[data-testid="earningsEstimate"] table')
-                assert table is not None, f"Table not found for earnings estimate for {ticker}"
-                tbody = table.find('tbody')
-                if tbody and type(tbody) is Tag:
-                    rows = tbody.contents
-                    if len(rows) >= 4 and type(rows[3]) is Tag and type(rows[1]) is Tag:
-                        analysts_row = rows[1]  # 3rd row (index 2) analysts
-                        analysts_cells = analysts_row.find_all('td')
-                        analysts = analysts_cells[-1].get_text().strip()
-                        print(analysts_cells[0].get_text().strip(), " - ", analysts)
-                        esp_estimate_row = rows[3]  # 4th row (index 3) avg. estimate
-                        cells = esp_estimate_row.find_all('td')
-                        # print(f"Cells found in second row: {cells}; type: {type(cells[-1])}")
-                        assert len(cells) > 0, f"No cells found in row of earnings est for {ticker}"
-                        # Get the last cell value (earnings estimate for next year)
-                        last_cell = cells[-1]
-                        estimate = last_cell.get_text().strip()
-                        print(cells[0].get_text().strip(), " - ", estimate)
-                        if estimate and estimate != '-':
-                            result['fwd_eps'] = round(float(estimate), 2)
+            assert earnings_section is not None, f"Earnings estimate section not found for {ticker}"
+            # Find the table within the earnings estimate section
+            table = soup.select_one('section[data-testid="earningsEstimate"] table')
+            assert table is not None, f"Table not found for earnings estimate for {ticker}"
+            tbody = table.find('tbody')
+            if tbody and type(tbody) is Tag:
+                rows = tbody.contents
+                if len(rows) >= 9 and type(rows[3]) is Tag and type(rows[1]) is Tag and type(rows[9]) is Tag:
+                    analysts_row = rows[1]  # row index 2 analysts
+                    analysts_cells = analysts_row.find_all('td')
+                    analyst_coun = analysts_cells[-1].get_text().strip()
+                    print(analysts_cells[0].get_text(), analyst_coun)
+                    yragoeps_row = rows[9]  # row index 2 analysts
+                    yragoeps_cells = yragoeps_row.find_all('td')
+                    yragoeps = yragoeps_cells[-1].get_text().strip()
+                    print(yragoeps_cells[0].get_text(), yragoeps, ", 2yrs ago:", yragoeps_cells[-2].get_text().strip())
+                    eps_estimate_row = rows[3]  # row index 3 avg. estimate
+                    cells = eps_estimate_row.find_all('td')
+                    estimate = cells[-1].get_text().strip()
+                    print(cells[0].get_text(), estimate)
+                    if estimate and estimate != '-':
+                        result['fwd_eps'] = round(float(estimate), 2)
 
         except requests.RequestException as e:
             print(f"Error fetching data for {ticker}: {e}")
@@ -297,7 +319,8 @@ if __name__ == "__main__":
     agent = FinanceAgent()
     # Wait time, 2 - 6 sec, to respect server load
     wait_time = 2 + (4 * (time.time() % 1))  # % 1 -> decimal = nanoseconds part
-
+    agent.get_stock_data("msft")  # test single stock
+    print("--- Fetching multiple stocks ---")
     spy_top = ["brk-b", "orcl", "xom", "lly", "ma"]
     other = ["et", "lulu", "epd", "wmb", "kmi"]
     all_xdow = list(set(qqq + spy_top + other))
