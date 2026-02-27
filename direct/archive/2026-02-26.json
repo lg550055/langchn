@@ -1,4 +1,4 @@
-var financialData = {
+{
     "ASML": {
         "price": 1463.8,
         "fwd_eps": 37.33,
@@ -9,8 +9,7 @@ var financialData = {
         "fwd_rev": "43.84B",
         "fwd_rev_curFY": "37.38B",
         "rev_recentFY": "32.67B",
-        "fwd_rev_analyst_count": "36",
-        "qqq_weight": "1.69%"
+        "fwd_rev_analyst_count": "36"
     },
     "GOOGL": {
         "price": 307.38,
@@ -22,9 +21,7 @@ var financialData = {
         "fwd_rev": "540.62B",
         "fwd_rev_curFY": "470.32B",
         "rev_recentFY": "402.84B",
-        "fwd_rev_analyst_count": "54",
-        "qqq_weight": "11.04%",
-        "spy_weight": "5.94%"
+        "fwd_rev_analyst_count": "54"
     },
     "MA": {
         "price": 514.77,
@@ -36,8 +33,7 @@ var financialData = {
         "fwd_rev": "41.5B",
         "fwd_rev_curFY": "36.99B",
         "rev_recentFY": "32.79B",
-        "fwd_rev_analyst_count": "34",
-        "spy_weight": "0.73%"
+        "fwd_rev_analyst_count": "34"
     },
     "EPD": {
         "price": 35.98,
@@ -61,9 +57,7 @@ var financialData = {
         "fwd_rev": "135.27B",
         "fwd_rev_curFY": "97.58B",
         "rev_recentFY": "63.89B",
-        "fwd_rev_analyst_count": "44",
-        "qqq_weight": "4.53%",
-        "spy_weight": "2.44%"
+        "fwd_rev_analyst_count": "44"
     },
     "BRK-B": {
         "price": 502.67,
@@ -87,9 +81,7 @@ var financialData = {
         "fwd_rev": "66.14B",
         "fwd_rev_curFY": "46.52B",
         "rev_recentFY": "34.64B",
-        "fwd_rev_analyst_count": "47",
-        "qqq_weight": "0.99%",
-        "spy_weight": "0.53%"
+        "fwd_rev_analyst_count": "47"
     },
     "NVDA": {
         "price": 184.89,
@@ -101,10 +93,7 @@ var financialData = {
         "fwd_rev": "444.4B",
         "fwd_rev_curFY": "360.44B",
         "rev_recentFY": "215.94B",
-        "fwd_rev_analyst_count": "53",
-        "dow_weight": "2.30%",
-        "qqq_weight": "13.35%",
-        "spy_weight": "7.18%"
+        "fwd_rev_analyst_count": "53"
     },
     "ET": {
         "price": 18.69,
@@ -128,8 +117,7 @@ var financialData = {
         "fwd_rev": "13.59B",
         "fwd_rev_curFY": "12.23B",
         "rev_recentFY": "11.95B",
-        "fwd_rev_analyst_count": "4",
-        "spy_weight": "0.15%"
+        "fwd_rev_analyst_count": "4"
     },
     "XOM": {
         "price": 148.54,
@@ -141,8 +129,7 @@ var financialData = {
         "fwd_rev": "352.29B",
         "fwd_rev_curFY": "320.8B",
         "rev_recentFY": "332.24B",
-        "fwd_rev_analyst_count": "11",
-        "spy_weight": "0.99%"
+        "fwd_rev_analyst_count": "11"
     },
     "NFLX": {
         "price": 84.59,
@@ -154,9 +141,7 @@ var financialData = {
         "fwd_rev": "57.08B",
         "fwd_rev_curFY": "51.13B",
         "rev_recentFY": "45.18B",
-        "fwd_rev_analyst_count": "40",
-        "qqq_weight": "1.06%",
-        "spy_weight": "0.57%"
+        "fwd_rev_analyst_count": "40"
     },
     "TSLA": {
         "price": 408.58,
@@ -168,9 +153,7 @@ var financialData = {
         "fwd_rev": "120.49B",
         "fwd_rev_curFY": "102.88B",
         "rev_recentFY": "94.83B",
-        "fwd_rev_analyst_count": "40",
-        "qqq_weight": "4.55%",
-        "spy_weight": "2.45%"
+        "fwd_rev_analyst_count": "40"
     },
     "META": {
         "price": 657.01,
@@ -182,9 +165,7 @@ var financialData = {
         "fwd_rev": "295.45B",
         "fwd_rev_curFY": "251.11B",
         "rev_recentFY": "200.97B",
-        "fwd_rev_analyst_count": "60",
-        "qqq_weight": "4.94%",
-        "spy_weight": "2.65%"
+        "fwd_rev_analyst_count": "60"
     },
     "COST": {
         "price": 986.74,
@@ -196,9 +177,7 @@ var financialData = {
         "fwd_rev": "319.79B",
         "fwd_rev_curFY": "297.6B",
         "rev_recentFY": "275.24B",
-        "fwd_rev_analyst_count": "30",
-        "qqq_weight": "1.30%",
-        "spy_weight": "0.70%"
+        "fwd_rev_analyst_count": "30"
     },
     "AMZN": {
         "price": 207.92,
@@ -210,10 +189,7 @@ var financialData = {
         "fwd_rev": "897.89B",
         "fwd_rev_curFY": "806.86B",
         "rev_recentFY": "716.92B",
-        "fwd_rev_analyst_count": "58",
-        "dow_weight": "2.59%",
-        "qqq_weight": "6.63%",
-        "spy_weight": "3.56%"
+        "fwd_rev_analyst_count": "58"
     },
     "LLY": {
         "price": 1022.02,
@@ -225,8 +201,7 @@ var financialData = {
         "fwd_rev": "94.42B",
         "fwd_rev_curFY": "80.79B",
         "rev_recentFY": "65.18B",
-        "fwd_rev_analyst_count": "27",
-        "spy_weight": "1.54%"
+        "fwd_rev_analyst_count": "27"
     },
     "ORCL": {
         "price": 150.31,
@@ -238,8 +213,7 @@ var financialData = {
         "fwd_rev": "86.37B",
         "fwd_rev_curFY": "66.94B",
         "rev_recentFY": "57.4B",
-        "fwd_rev_analyst_count": "39",
-        "spy_weight": "0.69%"
+        "fwd_rev_analyst_count": "39"
     },
     "AAPL": {
         "price": 272.95,
@@ -251,10 +225,7 @@ var financialData = {
         "fwd_rev": "495.66B",
         "fwd_rev_curFY": "465.18B",
         "rev_recentFY": "416.16B",
-        "fwd_rev_analyst_count": "42",
-        "dow_weight": "3.39%",
-        "qqq_weight": "11.90%",
-        "spy_weight": "6.40%"
+        "fwd_rev_analyst_count": "42"
     },
     "MSFT": {
         "price": 401.72,
@@ -266,10 +237,7 @@ var financialData = {
         "fwd_rev": "378.33B",
         "fwd_rev_curFY": "327.83B",
         "rev_recentFY": "281.72B",
-        "fwd_rev_analyst_count": "53",
-        "dow_weight": "5.00%",
-        "qqq_weight": "8.86%",
-        "spy_weight": "4.76%"
+        "fwd_rev_analyst_count": "53"
     },
     "LULU": {
         "price": 186.1,
@@ -281,8 +249,7 @@ var financialData = {
         "fwd_rev": "11.52B",
         "fwd_rev_curFY": "11.04B",
         "rev_recentFY": "10.59B",
-        "fwd_rev_analyst_count": "31",
-        "spy_weight": "0.03%"
+        "fwd_rev_analyst_count": "31"
     },
     "PLTR": {
         "price": 135.94,
@@ -294,9 +261,7 @@ var financialData = {
         "fwd_rev": "10.26B",
         "fwd_rev_curFY": "7.25B",
         "rev_recentFY": "4.48B",
-        "fwd_rev_analyst_count": "26",
-        "qqq_weight": "0.97%",
-        "spy_weight": "0.52%"
+        "fwd_rev_analyst_count": "26"
     },
     "KMI": {
         "price": 33.06,
@@ -308,20 +273,14 @@ var financialData = {
         "fwd_rev": "18.79B",
         "fwd_rev_curFY": "17.79B",
         "rev_recentFY": "16.94B",
-        "fwd_rev_analyst_count": "10",
-        "spy_weight": "0.12%"
+        "fwd_rev_analyst_count": "10"
     },
     "metadata": {
         "date": "2026-02-26",
-        "qqq_wafpe": 31.7,
-        "qqq_median_pe": 22.2,
-        "dow_wafpe": 19.9,
-        "dow_median_pe": 19.8,
-        "dow_sample_weight": "92%",
-        "qqq_sample_weight": "75%",
-        "spy_wafpe": 28.5,
-        "spy_median_pe": 21.8,
-        "spy_sample_weight": "53%"
+        "qqq_wafpe": "",
+        "qqq_median_pe": "",
+        "dow_wafpe": "",
+        "dow_median_pe": ""
     },
     "GS": {
         "price": 929.0,
@@ -333,9 +292,7 @@ var financialData = {
         "fwd_rev": "67.01B",
         "fwd_rev_curFY": "63.97B",
         "rev_recentFY": "58.28B",
-        "fwd_rev_analyst_count": "19",
-        "dow_weight": "11.55%",
-        "spy_weight": "0.44%"
+        "fwd_rev_analyst_count": "19"
     },
     "CAT": {
         "price": 752.93,
@@ -347,9 +304,7 @@ var financialData = {
         "fwd_rev": "79.96B",
         "fwd_rev_curFY": "73.13B",
         "rev_recentFY": "67.59B",
-        "fwd_rev_analyst_count": "19",
-        "dow_weight": "9.36%",
-        "spy_weight": "0.56%"
+        "fwd_rev_analyst_count": "19"
     },
     "HD": {
         "price": 375.09,
@@ -361,9 +316,7 @@ var financialData = {
         "fwd_rev": "178.36B",
         "fwd_rev_curFY": "171.12B",
         "rev_recentFY": "164.68B",
-        "fwd_rev_analyst_count": "32",
-        "dow_weight": "4.67%",
-        "spy_weight": "0.60%"
+        "fwd_rev_analyst_count": "32"
     },
     "SHW": {
         "price": 360.5,
@@ -375,9 +328,7 @@ var financialData = {
         "fwd_rev": "25.7B",
         "fwd_rev_curFY": "24.57B",
         "rev_recentFY": "23.57B",
-        "fwd_rev_analyst_count": "23",
-        "dow_weight": "4.48%",
-        "spy_weight": "0.14%"
+        "fwd_rev_analyst_count": "23"
     },
     "V": {
         "price": 316.7,
@@ -389,9 +340,7 @@ var financialData = {
         "fwd_rev": "49.27B",
         "fwd_rev_curFY": "44.61B",
         "rev_recentFY": "40B",
-        "fwd_rev_analyst_count": "34",
-        "dow_weight": "3.94%",
-        "spy_weight": "0.97%"
+        "fwd_rev_analyst_count": "34"
     },
     "UNH": {
         "price": 286.66,
@@ -403,9 +352,7 @@ var financialData = {
         "fwd_rev": "459.3B",
         "fwd_rev_curFY": "443.95B",
         "rev_recentFY": "447.57B",
-        "fwd_rev_analyst_count": "23",
-        "dow_weight": "3.57%",
-        "spy_weight": "0.41%"
+        "fwd_rev_analyst_count": "23"
     },
     "AXP": {
         "price": 335.32,
@@ -417,9 +364,7 @@ var financialData = {
         "fwd_rev": "86.08B",
         "fwd_rev_curFY": "78.79B",
         "rev_recentFY": "72.23B",
-        "fwd_rev_analyst_count": "22",
-        "dow_weight": "4.17%",
-        "spy_weight": "0.37%"
+        "fwd_rev_analyst_count": "22"
     },
     "JPM": {
         "price": 306.13,
@@ -431,9 +376,7 @@ var financialData = {
         "fwd_rev": "202.34B",
         "fwd_rev_curFY": "194.57B",
         "rev_recentFY": "182.45B",
-        "fwd_rev_analyst_count": "10",
-        "dow_weight": "3.81%",
-        "spy_weight": "1.32%"
+        "fwd_rev_analyst_count": "10"
     },
     "MCD": {
         "price": 334.53,
@@ -445,9 +388,7 @@ var financialData = {
         "fwd_rev": "30.25B",
         "fwd_rev_curFY": "28.63B",
         "rev_recentFY": "26.89B",
-        "fwd_rev_analyst_count": "31",
-        "dow_weight": "4.16%",
-        "spy_weight": "0.38%"
+        "fwd_rev_analyst_count": "31"
     },
     "AMGN": {
         "price": 379.33,
@@ -459,10 +400,7 @@ var financialData = {
         "fwd_rev": "38.75B",
         "fwd_rev_curFY": "37.84B",
         "rev_recentFY": "36.75B",
-        "fwd_rev_analyst_count": "28",
-        "dow_weight": "4.72%",
-        "qqq_weight": "0.61%",
-        "spy_weight": "0.33%"
+        "fwd_rev_analyst_count": "28"
     },
     "TRV": {
         "price": 306.24,
@@ -474,9 +412,7 @@ var financialData = {
         "fwd_rev": "46.1B",
         "fwd_rev_curFY": "44.8B",
         "rev_recentFY": "43.91B",
-        "fwd_rev_analyst_count": "11",
-        "dow_weight": "3.81%",
-        "spy_weight": "0.11%"
+        "fwd_rev_analyst_count": "11"
     },
     "CRM": {
         "price": 199.47,
@@ -488,9 +424,7 @@ var financialData = {
         "fwd_rev": "50.36B",
         "fwd_rev_curFY": "46.1B",
         "rev_recentFY": "41.52B",
-        "fwd_rev_analyst_count": "42",
-        "dow_weight": "2.48%",
-        "spy_weight": "0.30%"
+        "fwd_rev_analyst_count": "42"
     },
     "IBM": {
         "price": 242.01,
@@ -502,9 +436,7 @@ var financialData = {
         "fwd_rev": "74.26B",
         "fwd_rev_curFY": "71.19B",
         "rev_recentFY": "67.53B",
-        "fwd_rev_analyst_count": "17",
-        "dow_weight": "3.01%",
-        "spy_weight": "0.36%"
+        "fwd_rev_analyst_count": "17"
     },
     "WMT": {
         "price": 124.42,
@@ -516,10 +448,7 @@ var financialData = {
         "fwd_rev": "776.57B",
         "fwd_rev_curFY": "741.35B",
         "rev_recentFY": "706.41B",
-        "fwd_rev_analyst_count": "18",
-        "dow_weight": "1.55%",
-        "qqq_weight": "2.95%",
-        "spy_weight": "1.58%"
+        "fwd_rev_analyst_count": "18"
     },
     "DIS": {
         "price": 105.55,
@@ -531,9 +460,7 @@ var financialData = {
         "fwd_rev": "105.42B",
         "fwd_rev_curFY": "101.14B",
         "rev_recentFY": "94.42B",
-        "fwd_rev_analyst_count": "27",
-        "dow_weight": "1.31%",
-        "spy_weight": "0.30%"
+        "fwd_rev_analyst_count": "27"
     },
     "JNJ": {
         "price": 243.47,
@@ -545,9 +472,7 @@ var financialData = {
         "fwd_rev": "105.94B",
         "fwd_rev_curFY": "100.59B",
         "rev_recentFY": "94.19B",
-        "fwd_rev_analyst_count": "23",
-        "dow_weight": "3.03%",
-        "spy_weight": "0.94%"
+        "fwd_rev_analyst_count": "23"
     },
     "PG": {
         "price": 163.75,
@@ -559,9 +484,7 @@ var financialData = {
         "fwd_rev": "89.06B",
         "fwd_rev_curFY": "86.67B",
         "rev_recentFY": "84.28B",
-        "fwd_rev_analyst_count": "21",
-        "dow_weight": "2.04%",
-        "spy_weight": "0.61%"
+        "fwd_rev_analyst_count": "21"
     },
     "MMM": {
         "price": 166.17,
@@ -573,9 +496,7 @@ var financialData = {
         "fwd_rev": "25.98B",
         "fwd_rev_curFY": "25.15B",
         "rev_recentFY": "24.28B",
-        "fwd_rev_analyst_count": "13",
-        "dow_weight": "2.07%",
-        "spy_weight": "0.14%"
+        "fwd_rev_analyst_count": "13"
     },
     "CVX": {
         "price": 184.16,
@@ -587,9 +508,7 @@ var financialData = {
         "fwd_rev": "190.83B",
         "fwd_rev_curFY": "184.21B",
         "rev_recentFY": "189.03B",
-        "fwd_rev_analyst_count": "12",
-        "dow_weight": "2.29%",
-        "spy_weight": "0.58%"
+        "fwd_rev_analyst_count": "12"
     },
     "KO": {
         "price": 80.5,
@@ -601,9 +520,7 @@ var financialData = {
         "fwd_rev": "50.34B",
         "fwd_rev_curFY": "48.95B",
         "rev_recentFY": "48.06B",
-        "fwd_rev_analyst_count": "19",
-        "dow_weight": "1.00%",
-        "spy_weight": "0.55%"
+        "fwd_rev_analyst_count": "19"
     },
     "NKE": {
         "price": 63.95,
@@ -615,9 +532,7 @@ var financialData = {
         "fwd_rev": "48.62B",
         "fwd_rev_curFY": "46.71B",
         "rev_recentFY": "46.31B",
-        "fwd_rev_analyst_count": "35",
-        "dow_weight": "0.80%",
-        "spy_weight": "0.15%"
+        "fwd_rev_analyst_count": "35"
     },
     "VZ": {
         "price": 48.89,
@@ -629,8 +544,6 @@ var financialData = {
         "fwd_rev": "145.71B",
         "fwd_rev_curFY": "144.01B",
         "rev_recentFY": "138.19B",
-        "fwd_rev_analyst_count": "19",
-        "dow_weight": "0.61%",
-        "spy_weight": "0.33%"
+        "fwd_rev_analyst_count": "19"
     }
-};
+}
