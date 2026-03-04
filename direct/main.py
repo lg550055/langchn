@@ -9,6 +9,7 @@ import requests
 import statistics
 import time
 from mongo import MongoWrapper
+from util import get_pct_change
 
 load_dotenv()
 STOCK_URL = os.getenv('STOCK_URL')
@@ -110,11 +111,12 @@ class FinanceAgent:
                     rev_cells = rev_row.find_all('td')
                     fwd_rev_curFY = rev_cells[-1].get_text().strip()
                     rev_recentFY = rev_cells[-2].get_text().strip()
-                    print("Fwd rev current FY:", fwd_rev_curFY, ", mostRecentFY:", rev_recentFY)
                     fwd_rev_row = rows[3]
                     cells = fwd_rev_row.find_all('td')
                     fwd_rev = cells[-1].get_text().strip()
-                    print(cells[0].get_text(), fwd_rev)
+                    cy_ly = str(get_pct_change(fwd_rev_curFY[:-1], rev_recentFY[:-1])) + "%"
+                    fwd_cy = str(get_pct_change(fwd_rev[:-1], fwd_rev_curFY[:-1])) + "%"
+                    print("Rev LYa", rev_recentFY,", CYe", fwd_rev_curFY, ", Fwd", fwd_rev, ", CY/LY", cy_ly, ", Fwd/CY", fwd_cy)
                     result['fwd_rev'] = fwd_rev if fwd_rev else ""
                     result['fwd_rev_analyst_count'] = rev_analyst_count if rev_analyst_count else ""
                     result['fwd_rev_curFY'] = fwd_rev_curFY if fwd_rev_curFY else ""
@@ -138,13 +140,14 @@ class FinanceAgent:
                     fwd_eps_curFY_cells = fwd_eps_curFY_row.find_all('td')
                     fwd_eps_curFY = fwd_eps_curFY_cells[-1].get_text().strip()
                     eps_recentFY = fwd_eps_curFY_cells[-2].get_text().strip()
-                    print("Fwd eps current FY:", fwd_eps_curFY, ", mostRecentFY:", eps_recentFY)
                     eps_estimate_row = rows[3]
                     cells = eps_estimate_row.find_all('td')
-                    estimate = cells[-1].get_text().strip()
-                    print(cells[0].get_text(), estimate)
-                    if estimate and estimate != '-':
-                        result['fwd_eps'] = round(float(estimate), 2)
+                    fwd_eps = cells[-1].get_text().strip()
+                    cy_ly = str(get_pct_change(fwd_eps_curFY, eps_recentFY)) + "%"
+                    fwd_cy = str(get_pct_change(fwd_eps, fwd_eps_curFY)) + "%"
+                    print("EPS LYa", eps_recentFY,", CYe", fwd_eps_curFY, ", Fwd", fwd_eps, ", CY/LY", cy_ly, ", Fwd/CY", fwd_cy)
+                    if fwd_eps and fwd_eps != '-':
+                        result['fwd_eps'] = round(float(fwd_eps), 2)
                         result['fwd_eps_analyst_count'] = analyst_count if analyst_count else ""
                         result['fwd_eps_curFY'] = round(float(fwd_eps_curFY), 2) if fwd_eps_curFY else 0.0
                         result['eps_recentFY'] = round(float(eps_recentFY), 2) if eps_recentFY else 0.0

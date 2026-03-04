@@ -54,17 +54,52 @@ def extract_fwd_eps_data(archive_dir, start_date, end_date):
     return df
 
 
+def get_pct_change(cur: str, prev: str) -> int:
+    """
+    Calculate the percentage change in value from previous to current.
+
+    Args:
+        cur (str): Current value as a string, e.g. '102.3'
+        prev (str): Previous value as a string, e.g. '95.6'
+    Returns:
+        float: Percentage change in value rounded to zero decimal places
+    """
+    if not cur or not prev:
+        return 0
+    try:
+        cy_value = float(cur)
+        ly_value = float(prev)
+        if ly_value == 0:
+            return 0
+        return int(((cy_value - ly_value) / ly_value * 100))
+    except ValueError:
+        return 0
+
+
 # Example usage:
 if __name__ == "__main__":
     # Define paths and dates
-    archive_directory = "/home/polo/projects/langchn/direct/archive"
-    start_date = "2025-09-22"
-    end_date = "2026-02-10"
-    
-    # Extract data
-    df = extract_fwd_eps_data(archive_directory, start_date, end_date)
-    df.to_csv("archive/fwd_eps.csv")
-    # Display the dataframe
-    print(df.head(3))
-    print(df.tail(3))
-    print(f"Shape: {df.shape}")
+    # archive_directory = "/home/polo/projects/langchn/direct/archive"
+    # start_date = "2025-09-22"
+    # end_date = "2026-02-10"
+    # # Extract data
+    # df = extract_fwd_eps_data(archive_directory, start_date, end_date)
+    # df.to_csv("archive/fwd_eps.csv")
+    # # Display the dataframe
+    # print(df.head(3))
+    # print(df.tail(3))
+    # print(f"Shape: {df.shape}")
+
+    # Unit tests for get_pct_change
+    test_cases = [
+        ("100", "80", 25),  # 25%
+        ("80", "100", -20),  # -20%
+        ("0", "100", -100),  # -100%
+        ("100", "0", 0),     # Avoid division by zero
+        ("100", "100", 0),   # No change
+        ("ac", "100", 0),    # Invalid input
+        ("100", "xyz", 0),    # Invalid input
+    ]
+    for cy, ly, expected in test_cases:
+        result = get_pct_change(cy, ly)
+        print(f"CY: {cy}, LY: {ly}, Expected: {expected}%, Result: {result}%")
